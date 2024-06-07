@@ -1,0 +1,25 @@
+<section>
+    <div class="container bg-dark rounded py-4">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="border border-2 rounded-circle border-black">
+                    <img [src]="UserData?.photo" class="w-100 rounded-circle" [alt]="UserData?.userName">
+                </div>
+                <div class="text-white d-flex align-items-center flex-column">
+                    <p>FirstName: {{UserData?.userFName}}</p>
+                    <p>LastName : {{UserData?.userLName}}</p>
+                    <p>University : {{UserData?.university}}</p>
+                    <p>College : {{UserData?.college}}</p>
+                </div>
+            </div>
+            <div class="col-md-8 text-white">
+                <div class="d-flex justify-content-between">
+                    <h2>User Info</h2>
+                    <h2>$ = {{UserData?.walletBalance}}</h2>
+                </div>
+                <p>City: {{UserData?.address?.city}}</p>
+                <p>Country: {{UserData?.address?.country}}</p>
+            </div>
+        </div>
+    </div>
+</section>

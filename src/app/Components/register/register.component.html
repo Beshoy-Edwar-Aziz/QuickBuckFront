@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-center ">
+<section class="container shadow-lg border row">
+    <h3 class="ms-2">Register</h3>
+<div class="col-md-8">
+<form (submit)="handleRegister()" [formGroup]="Register" class="container " enctype="multipart/form-data">
+<h3>UserInfo</h3>
+<input type="text" formControlName="FirstName" class="form-control my-2" placeholder="FirstName">
+<input type="text" formControlName="LastName" class="form-control my-2" placeholder="LastName">
+<input type="text" formControlName="email" class="form-control my-2" placeholder="Email">
+<input type="password" formControlName="password" class="form-control my-2" placeholder="Password">
+<input type="password" formControlName="repassword" class="form-control my-2" placeholder="reEnter Your Password">
+<input type="text" formControlName="Phone" class="form-control my-2" placeholder="Phone">
+<div class="d-flex gap-2" >
+    <label for="JobSeeker" class="form-label ">JobSeeker</label>
+    <input type="radio" formControlName="role" id="JobSeeker" class="form-check"  value="JobSeeker" (click)="check()">
+    <label for="JobProvider" class="form-label ">JobProvider</label>
+    <input type="radio" formControlName="role" id="JobProvider" class="form-check" value="JobProvider" (click)="check()">
+</div>
+<h3>Address</h3>
+<input type="text" formControlName="country" class="form-control my-2" placeholder="Country">
+<input type="text" formControlName="city" class="form-control my-2" placeholder="City">
+<input type="text" formControlName="streetName" class="form-control my-2" placeholder="StreetName">
+<input type="text" formControlName="streetNumber" class="form-control my-2" placeholder="StreetNo">
+@if(Register.value.role=="JobProvider"){
+    <h3>Your Company:</h3>
+    <input type="text" formControlName="companyName" class="form-control my-2" placeholder="Your Company Name" required>
+    <input type="text" formControlName="location" class="form-control my-2" placeholder="Location" required>
+    <div class="d-flex gap-2">
+        <label for="Large">Large</label>
+        <input type="radio" id="Large" formControlName="companySize" class="form-check" value="Large">
+        <label for="Medium">Medium</label>
+        <input type="radio" id="Medium" formControlName="companySize" class="form-check" value="Medium">
+        <label for="Small">Small</label>
+        <input type="radio" id="Small" formControlName="companySize" class="form-check" value="Small">
+    </div>
+    <input type="number" formControlName="noOfEmployees" class="form-control my-2" placeholder="Number of Employees Currently Working" >
+    <input type="text" formControlName="category" class="form-control my-2" placeholder="Which Field Does Your Company belong to?" >
+    <input type="text" formControlName="webSite" class="form-control my-2" placeholder="Company's Website">
+    <input type="file" formControlName="logo" class="form-control my-2">
+    <input type="text" formControlName="description" class="form-control my-2" placeholder="Brief Description About Your Company">
+   
+}
+@else if(Register.value.role=="JobSeeker"){
+    <h3>Personal Info</h3>
+    <input type="text" formControlName="university" class="form-control my-2" placeholder="University">
+    <input type="text" formControlName="college" class="form-control my-2" placeholder="College">
+    <input type="datetime-local" formControlName="birthDate" class="my-2">
+    <label class="form-label d-block">Upload Your Photo (Optional)</label>
+    <input type="file" formControlName="photo" class="form-control my-2" (change)="handlePhotos($event)">
+    <input type="number" formControlName="currentYear" class="form-control my-2" placeholder="Current Year">
+    <div class="d-flex gap-2">
+        <label for="under">UnderGraduate</label>
+        <input type="radio" id="under" formControlName="status" class="form-check" value="UnderGraduate">
+        <label for="grad">Graduate</label>
+        <input type="radio" id="grad" formControlName="status" class="form-check" value="Graduate">
+    </div>
+    <input type="text" formControlName="skillName" class="form-control my-2" placeholder="SkillName">
+}
+<button [disabled]="Register.invalid" class="btn btn-outline-dark ">Submit</button>
+</form>
+</div>
+<div class="col-md-4">
+    <img src="../../../assets/Images/signup-image.jpg" alt="SignUp">
+</div>
+</section>
+</div>

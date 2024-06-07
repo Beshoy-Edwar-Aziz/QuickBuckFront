@@ -1,0 +1,189 @@
+<div class="container">
+    <div class="row font-manrope">
+        <div class="col-md-6">
+            <div class="d-flex justify-content-center">
+                @if (decodedToken?.sub=="JobProvider") {
+                <button class="btn btn-outline-dark my-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Create
+                    Post</button>
+                }
+            </div>
+            @for (item of JobPosts; track $index) {
+
+            <div class="row border rounded p-1 select-card">
+                <div class="col-md-2">
+                    <img [src]="item?.jobProvider.logo" [alt]="item?.title" class="w-100">
+                </div>
+                <div class="col-md-10">
+                    <h3>{{item.title}}</h3>
+                    <p>{{item.jobProvider.companyName}}</p>
+                    <p>{{item.location}}</p>
+                </div>
+            </div>
+        }
+        </div>
+        
+        <div class="col-md-6">
+            
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-fullscreen ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                            <div class="row">
+                            <div class="col-lg-4 col-12">
+                                <h2 class="font-manrope fw-bold font-size-40">Post A New Job</h2>
+                                <div class="nav d-flex flex-column font-manrope">
+                                    <button class="text-decoration-none btn btn-outline-dark w-50 active"
+                                        id="v-pills-profile-tab" data-bs-toggle="pill"
+                                        data-bs-target="#v-pills-profile">
+                                        Job OverView
+                                    </button>
+                                    <button class="btn btn-outline-dark w-50 mt-2" role="tab" id="Req-tab"
+                                        data-bs-toggle="pill" data-bs-target="#Requirments">
+                                        Requirements
+                                    </button>
+                                    <button class="btn btn-outline-dark w-50 my-2" role="tab" id="Skill-tab"
+                                        data-bs-toggle="pill" data-bs-target="#Skills">
+                                        Required Skills
+                                    </button>
+                                    <button class="btn btn-outline-dark w-50 mb-2" role="tab" id="Info-tab"
+                                        data-bs-toggle="pill" data-bs-target="#JobInfo">
+                                        Job Information
+                                    </button>
+                                </div>
+                                <div class="w-50">
+                                    <img src="../../../assets/Images/Container 8.png" alt="Contain" class="w-100">
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-12">
+                                <form (submit)="CreatePost()" [formGroup]="PostJob">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel"
+                                            aria-labelledby="v-pills-profile-tab" tabindex="0">
+                                            <p class="font-manrope font-size-18 fw-bold">Job OverView</p>
+                                            <label class="form-label">Job Title</label>
+                                            <input type="text" class="form-control my-2" placeholder="Enter Post Title"
+                                                formControlName="title">
+                                                <label class="form-label">Email</label>
+                                            <input type="text" class="form-control my-2" placeholder="email"
+                                                formControlName="email">
+                                                <label class="form-label">Brief Description About Your Company</label>
+                                            <input type="text" class="form-control my-2" placeholder="description"
+                                                formControlName="description">
+                                        </div>
+                                        <div class="tab-pane fade" id="Skills" role="tabpanel">
+                                            <p class="font-manrope font-size-18 fw-bold">Required Skills</p>
+                                            <label class="form-label">Skill</label>
+                                            <input type="text" class="form-control my-2" placeholder="requiredSkills"
+                                                formControlName="requiredSkills">
+                                            <label class="form-label">Skill 2</label>
+                                            <input type="text" class="form-control my-2" placeholder="requiredSkills"
+                                                formControlName="requiredSkills2">
+                                            <label class="form-label">Skill 3</label>
+                                            <input type="text" class="form-control my-2" placeholder="requiredSkills"
+                                                formControlName="requiredSkills3">
+                                            <label class="form-label">Skill 4</label>
+                                            <input type="text" class="form-control my-2" placeholder="requiredSkills"
+                                                formControlName="requiredSkills4">
+                                        </div>
+                                        <div class="tab-pane fade" id="Requirments" role="tabpanel" tabindex="0">
+                                            <p class="font-manrope font-size-18 fw-bold">Requirments</p>
+                                            <div class="d-flex gap-2 flex-column" id="RequiredSkills">
+                                                <label class="form-label">Requirment</label>
+                                                <input type="text" class="form-control mb-2" placeholder="reqName"
+                                                    formControlName="reqName">
+                                                <input type="text" class="form-control mb-2" placeholder="reqPriority"
+                                                    formControlName="reqPriority">
+                                                <p class="font-manrope">Requirement 2</p>
+                                                <input type="text" class="form-control mb-2" placeholder="reqName"
+                                                    formControlName="reqName2">
+                                                <input type="text" class="form-control mb-2" placeholder="reqPriority"
+                                                    formControlName="reqPriority2">
+                                                <p class="font-manrope">Requirement 3</p>
+                                                <input type="text" class="form-control mb-2" placeholder="reqName"
+                                                    formControlName="reqName3">
+                                                <input type="text" class="form-control mb-2" placeholder="reqPriority"
+                                                    formControlName="reqPriority3">
+                                                <p class="font-manrope">Requirement 4</p>
+                                                <input type="text" class="form-control mb-2" placeholder="reqName"
+                                                    formControlName="reqName4">
+                                                <input type="text" class="form-control mb-2" placeholder="reqPriority"
+                                                    formControlName="reqPriority4">
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="JobInfo" role="tabpanel" tabindex="0">
+                                            <p class="font-manrope font-size-18 fw-bold">Job Information</p>
+                                            <label class="form-label">Location</label>
+                                            <input type="text" class="form-control my-2" placeholder="location"
+                                                formControlName="location">
+                                            <div class="d-flex gap-2">
+                                                <div>
+                                                    <label class="form-label">Salary Range From :</label>
+                                                    <input type="number" class="form-control" placeholder="salaryRangeFrom" formControlName="salaryRangeFrom">
+                                                </div>
+                                                <div>
+                                                    <label class="form-label">Salary Range To :</label>
+                                                    <input type="number" class="form-control" placeholder="salaryRangeTo" formControlName="salaryRangeTo">
+                                                </div>
+                                                </div>
+                                            <textarea placeholder="content" class="form-control my-2"
+                                                formControlName="content"></textarea>
+                                            <p class="fw-semibold">Employment Type</p>
+                                            <div class="d-flex gap-2">
+                                                <label for="FullTime">FullTime</label>
+                                                <input type="radio" id="FullTime" value="FullTime" class="form-check"
+                                                    formControlName="type">
+                                                <label for="PartTime">PartTime</label>
+                                                <input type="radio" id="PartTime" value="PartTime" class="form-check"
+                                                    formControlName="type">
+                                            </div>
+                                            <button class="btn colored-btn mt-2">Submit</button>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @for (job of JobPosts; track JobPosts.Id) {
+
+            <div class="card text-center">
+                <div class="card-header">
+                    {{job.title}}
+                </div>
+                <div class="card-body">
+                    <div class="text-start">
+                        <p>Company Name : {{job?.jobProvider?.companyName}}</p>
+                        <p class="fw-light fs-6">Company Category : {{job?.jobProvider?.category}}</p>
+                        <p>Job Location : {{job.location}}</p>
+                        <p>Salary : {{job?.salaryRangeFrom|currency:"EGP"}} to {{job?.salaryRangeTo|currency:"EGP"}}</p>
+                    </div>
+                    <h5 class="card-title">{{job.content}}</h5>
+                    <h5 class="text-start">Required Skills</h5>
+                    <div class="d-flex gap-2">
+                        @for (skill of job.requiredSkills; track $index)
+                        {
+                        <p class="card-text">
+                            {{skill.name}}
+                        </p>
+                        }
+                    </div>
+                    <a href="#" class="btn btn-primary">Apply</a>
+                </div>
+                <div class="card-footer text-body-secondary">
+                    {{job.date.split("T")[0]}}
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>

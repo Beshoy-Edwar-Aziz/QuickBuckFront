@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+label{
+    font-family: "Manrope", sans-serif;
+}
+.select-card{
+    transition: background-color .5s;
+}
+.select-card:hover{
+    color: #fff;
+    background-color: #000;
+}
+.colored-btn{
+    background:  #6D31EDFF;
+    color: #fff;
+    font-family: "Manrope", sans-serif;
+}
+.font-size-18{
+    font-size: 18px;
+}
+.font-size-40{
+    font-size: 40px;
+}
+.font-manrope{
+    font-family: "Manrope", sans-serif;
+}
