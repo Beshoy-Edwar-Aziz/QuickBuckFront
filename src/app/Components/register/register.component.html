@@ -36,7 +36,7 @@
     <input type="number" formControlName="noOfEmployees" class="form-control my-2" placeholder="Number of Employees Currently Working" >
     <input type="text" formControlName="category" class="form-control my-2" placeholder="Which Field Does Your Company belong to?" >
     <input type="text" formControlName="webSite" class="form-control my-2" placeholder="Company's Website">
-    <input type="file" formControlName="logo" class="form-control my-2">
+    <input type="file" formControlName="logo" class="form-control my-2" (change)="handlePhotos($event)">
     <input type="text" formControlName="description" class="form-control my-2" placeholder="Brief Description About Your Company">
    
 }

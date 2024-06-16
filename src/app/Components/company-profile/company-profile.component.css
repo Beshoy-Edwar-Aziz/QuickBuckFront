@@ -1,0 +1,18 @@
+section{
+    padding: 80px 0;
+}
+.background-image{
+    background-image: url('../../../assets/Images/Container\ 45.png');
+    background-repeat: no-repeat; 
+    background-position: center top;
+}
+.img-cover{
+    width: 25%;
+    height: 25%;
+    border-radius: 50%;
+    clip-path: circle();
+}
+.logger{
+    left: 15%;
+    top: 35%;
+}

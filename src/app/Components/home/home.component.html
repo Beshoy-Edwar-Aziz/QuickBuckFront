@@ -1,6 +1,10 @@
 <div class="container">
-    <div class="row font-manrope">
-        <div class="col-md-6">
+    <h1 class="font-sarabun font-size-48">Search <span class="font-green">Jobs</span></h1>
+    @if(JobPosts.length==0){
+ <app-loading></app-loading>
+    }
+ <div class="row font-manrope">
+        <div class="col-md-4">
             <div class="d-flex justify-content-center">
                 @if (decodedToken?.sub=="JobProvider") {
                 <button class="btn btn-outline-dark my-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Create
@@ -8,22 +12,21 @@
                 }
             </div>
             @for (item of JobPosts; track $index) {
-
-            <div class="row border rounded p-1 select-card">
+            <div class="row border rounded p-1 mb-2 job-list" (click)="ShowPost(item?.id)">
                 <div class="col-md-2">
                     <img [src]="item?.jobProvider.logo" [alt]="item?.title" class="w-100">
                 </div>
                 <div class="col-md-10">
                     <h3>{{item.title}}</h3>
-                    <p>{{item.jobProvider.companyName}}</p>
-                    <p>{{item.location}}</p>
+                    <p><i class="fa-solid fa-building"></i> {{item.jobProvider.companyName}}</p>
+                    <p><i class="fa-solid fa-location-dot"></i> {{item.location}}</p>
                 </div>
             </div>
-        }
+            }
         </div>
-        
-        <div class="col-md-6">
-            
+
+        <div class="col-md-8">
+
 
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -34,143 +37,308 @@
                         </div>
                         <div class="modal-body">
                             <div class="container">
-                            <div class="row">
-                            <div class="col-lg-4 col-12">
-                                <h2 class="font-manrope fw-bold font-size-40">Post A New Job</h2>
-                                <div class="nav d-flex flex-column font-manrope">
-                                    <button class="text-decoration-none btn btn-outline-dark w-50 active"
-                                        id="v-pills-profile-tab" data-bs-toggle="pill"
-                                        data-bs-target="#v-pills-profile">
-                                        Job OverView
-                                    </button>
-                                    <button class="btn btn-outline-dark w-50 mt-2" role="tab" id="Req-tab"
-                                        data-bs-toggle="pill" data-bs-target="#Requirments">
-                                        Requirements
-                                    </button>
-                                    <button class="btn btn-outline-dark w-50 my-2" role="tab" id="Skill-tab"
-                                        data-bs-toggle="pill" data-bs-target="#Skills">
-                                        Required Skills
-                                    </button>
-                                    <button class="btn btn-outline-dark w-50 mb-2" role="tab" id="Info-tab"
-                                        data-bs-toggle="pill" data-bs-target="#JobInfo">
-                                        Job Information
-                                    </button>
-                                </div>
-                                <div class="w-50">
-                                    <img src="../../../assets/Images/Container 8.png" alt="Contain" class="w-100">
-                                </div>
-                            </div>
-                            <div class="col-lg-8 col-12">
-                                <form (submit)="CreatePost()" [formGroup]="PostJob">
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel"
-                                            aria-labelledby="v-pills-profile-tab" tabindex="0">
-                                            <p class="font-manrope font-size-18 fw-bold">Job OverView</p>
-                                            <label class="form-label">Job Title</label>
-                                            <input type="text" class="form-control my-2" placeholder="Enter Post Title"
-                                                formControlName="title">
-                                                <label class="form-label">Email</label>
-                                            <input type="text" class="form-control my-2" placeholder="email"
-                                                formControlName="email">
-                                                <label class="form-label">Brief Description About Your Company</label>
-                                            <input type="text" class="form-control my-2" placeholder="description"
-                                                formControlName="description">
+                                <div class="row">
+                                    <div class="col-lg-4 col-12">
+                                        <h2 class="font-manrope fw-bold font-size-40">Post A New Job</h2>
+                                        <div class="nav d-flex flex-column font-manrope">
+                                            <button class="text-decoration-none btn btn-outline-dark w-50 active"
+                                                id="v-pills-profile-tab" data-bs-toggle="pill"
+                                                data-bs-target="#v-pills-profile">
+                                                Job OverView
+                                            </button>
+                                            <button class="btn btn-outline-dark w-50 mt-2" role="tab" id="Req-tab"
+                                                data-bs-toggle="pill" data-bs-target="#Requirments">
+                                                Requirements
+                                            </button>
+                                            <button class="btn btn-outline-dark w-50 my-2" role="tab" id="Skill-tab"
+                                                data-bs-toggle="pill" data-bs-target="#Skills">
+                                                Required Skills
+                                            </button>
+                                            <button class="btn btn-outline-dark w-50 mb-2" role="tab" id="Info-tab"
+                                                data-bs-toggle="pill" data-bs-target="#JobInfo">
+                                                Job Information
+                                            </button>
                                         </div>
-                                        <div class="tab-pane fade" id="Skills" role="tabpanel">
-                                            <p class="font-manrope font-size-18 fw-bold">Required Skills</p>
-                                            <label class="form-label">Skill</label>
-                                            <input type="text" class="form-control my-2" placeholder="requiredSkills"
-                                                formControlName="requiredSkills">
-                                            <label class="form-label">Skill 2</label>
-                                            <input type="text" class="form-control my-2" placeholder="requiredSkills"
-                                                formControlName="requiredSkills2">
-                                            <label class="form-label">Skill 3</label>
-                                            <input type="text" class="form-control my-2" placeholder="requiredSkills"
-                                                formControlName="requiredSkills3">
-                                            <label class="form-label">Skill 4</label>
-                                            <input type="text" class="form-control my-2" placeholder="requiredSkills"
-                                                formControlName="requiredSkills4">
-                                        </div>
-                                        <div class="tab-pane fade" id="Requirments" role="tabpanel" tabindex="0">
-                                            <p class="font-manrope font-size-18 fw-bold">Requirments</p>
-                                            <div class="d-flex gap-2 flex-column" id="RequiredSkills">
-                                                <label class="form-label">Requirment</label>
-                                                <input type="text" class="form-control mb-2" placeholder="reqName"
-                                                    formControlName="reqName">
-                                                <input type="text" class="form-control mb-2" placeholder="reqPriority"
-                                                    formControlName="reqPriority">
-                                                <p class="font-manrope">Requirement 2</p>
-                                                <input type="text" class="form-control mb-2" placeholder="reqName"
-                                                    formControlName="reqName2">
-                                                <input type="text" class="form-control mb-2" placeholder="reqPriority"
-                                                    formControlName="reqPriority2">
-                                                <p class="font-manrope">Requirement 3</p>
-                                                <input type="text" class="form-control mb-2" placeholder="reqName"
-                                                    formControlName="reqName3">
-                                                <input type="text" class="form-control mb-2" placeholder="reqPriority"
-                                                    formControlName="reqPriority3">
-                                                <p class="font-manrope">Requirement 4</p>
-                                                <input type="text" class="form-control mb-2" placeholder="reqName"
-                                                    formControlName="reqName4">
-                                                <input type="text" class="form-control mb-2" placeholder="reqPriority"
-                                                    formControlName="reqPriority4">
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="JobInfo" role="tabpanel" tabindex="0">
-                                            <p class="font-manrope font-size-18 fw-bold">Job Information</p>
-                                            <label class="form-label">Location</label>
-                                            <input type="text" class="form-control my-2" placeholder="location"
-                                                formControlName="location">
-                                            <div class="d-flex gap-2">
-                                                <div>
-                                                    <label class="form-label">Salary Range From :</label>
-                                                    <input type="number" class="form-control" placeholder="salaryRangeFrom" formControlName="salaryRangeFrom">
-                                                </div>
-                                                <div>
-                                                    <label class="form-label">Salary Range To :</label>
-                                                    <input type="number" class="form-control" placeholder="salaryRangeTo" formControlName="salaryRangeTo">
-                                                </div>
-                                                </div>
-                                            <textarea placeholder="content" class="form-control my-2"
-                                                formControlName="content"></textarea>
-                                            <p class="fw-semibold">Employment Type</p>
-                                            <div class="d-flex gap-2">
-                                                <label for="FullTime">FullTime</label>
-                                                <input type="radio" id="FullTime" value="FullTime" class="form-check"
-                                                    formControlName="type">
-                                                <label for="PartTime">PartTime</label>
-                                                <input type="radio" id="PartTime" value="PartTime" class="form-check"
-                                                    formControlName="type">
-                                            </div>
-                                            <button class="btn colored-btn mt-2">Submit</button>
-
+                                        <div class="w-50">
+                                            <img src="../../../assets/Images/Container 8.png" alt="Contain"
+                                                class="w-100">
                                         </div>
                                     </div>
-                                </form>
+                                    <div class="col-lg-8 col-12">
+                                        <form (submit)="CreatePost()" [formGroup]="PostJob">
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade show active" id="v-pills-profile"
+                                                    role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
+                                                    <p class="font-manrope font-size-18 fw-bold">Job OverView</p>
+                                                    <label class="form-label">Job Title</label>
+                                                    <input type="text" class="form-control my-2"
+                                                        placeholder="Enter Post Title" formControlName="title">
+                                                    <label class="form-label">Email</label>
+                                                    <input type="text" class="form-control my-2" placeholder="email"
+                                                        formControlName="email">
+                                                    <label class="form-label">Brief Description About Your
+                                                        Company</label>
+                                                    <input type="text" class="form-control my-2"
+                                                        placeholder="description" formControlName="description">
+                                                </div>
+                                                <div class="tab-pane fade" id="Skills" role="tabpanel">
+                                                    <p class="font-manrope font-size-18 fw-bold">Required Skills</p>
+                                                    <label class="form-label">Skill</label>
+                                                    <input type="text" class="form-control my-2"
+                                                        placeholder="requiredSkills" formControlName="requiredSkills">
+                                                    <label class="form-label">Skill 2</label>
+                                                    <input type="text" class="form-control my-2"
+                                                        placeholder="requiredSkills" formControlName="requiredSkills2">
+                                                    <label class="form-label">Skill 3</label>
+                                                    <input type="text" class="form-control my-2"
+                                                        placeholder="requiredSkills" formControlName="requiredSkills3">
+                                                    <label class="form-label">Skill 4</label>
+                                                    <input type="text" class="form-control my-2"
+                                                        placeholder="requiredSkills" formControlName="requiredSkills4">
+                                                </div>
+                                                <div class="tab-pane fade" id="Requirments" role="tabpanel"
+                                                    tabindex="0">
+                                                    <p class="font-manrope font-size-18 fw-bold">Requirments</p>
+                                                    <div class="d-flex gap-2 flex-column" id="RequiredSkills">
+                                                        <label class="form-label">Requirment</label>
+                                                        <input type="text" class="form-control mb-2"
+                                                            placeholder="reqName" formControlName="reqName">
+                                                        <input type="text" class="form-control mb-2"
+                                                            placeholder="reqPriority" formControlName="reqPriority">
+                                                        <p class="font-manrope">Requirement 2</p>
+                                                        <input type="text" class="form-control mb-2"
+                                                            placeholder="reqName" formControlName="reqName2">
+                                                        <input type="text" class="form-control mb-2"
+                                                            placeholder="reqPriority" formControlName="reqPriority2">
+                                                        <p class="font-manrope">Requirement 3</p>
+                                                        <input type="text" class="form-control mb-2"
+                                                            placeholder="reqName" formControlName="reqName3">
+                                                        <input type="text" class="form-control mb-2"
+                                                            placeholder="reqPriority" formControlName="reqPriority3">
+                                                        <p class="font-manrope">Requirement 4</p>
+                                                        <input type="text" class="form-control mb-2"
+                                                            placeholder="reqName" formControlName="reqName4">
+                                                        <input type="text" class="form-control mb-2"
+                                                            placeholder="reqPriority" formControlName="reqPriority4">
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="JobInfo" role="tabpanel" tabindex="0">
+                                                    <p class="font-manrope font-size-18 fw-bold">Job Information</p>
+                                                    <label class="form-label">Location</label>
+                                                    <input type="text" class="form-control my-2" placeholder="location"
+                                                        formControlName="location">
+                                                    <div class="d-flex gap-2">
+                                                        <div>
+                                                            <label class="form-label">Salary Range From :</label>
+                                                            <input type="number" class="form-control"
+                                                                placeholder="salaryRangeFrom"
+                                                                formControlName="salaryRangeFrom">
+                                                        </div>
+                                                        <div>
+                                                            <label class="form-label">Salary Range To :</label>
+                                                            <input type="number" class="form-control"
+                                                                placeholder="salaryRangeTo"
+                                                                formControlName="salaryRangeTo">
+                                                        </div>
+                                                    </div>
+                                                    <textarea placeholder="content" class="form-control my-2"
+                                                        formControlName="content"></textarea>
+                                                    <p class="fw-semibold">Employment Type</p>
+                                                    <div class="d-flex gap-2">
+                                                        <label for="FullTime">FullTime</label>
+                                                        <input type="radio" id="FullTime" value="FullTime"
+                                                            class="form-check" formControlName="type">
+                                                        <label for="PartTime">PartTime</label>
+                                                        <input type="radio" id="PartTime" value="PartTime"
+                                                            class="form-check" formControlName="type">
+                                                    </div>
+                                                    <button class="btn colored-btn mt-2">Submit</button>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
                         </div>
                     </div>
                 </div>
             </div>
-            @for (job of JobPosts; track JobPosts.Id) {
 
-            <div class="card text-center">
+            @if(jobPostDetails.length!=0){
+                <div class="container">
+                <div class="">
+                    <div class="background w-100">
+
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h3 class="font-sarabun">{{jobPostDetails?.title}}</h3>
+                        <div>
+                            <button class="btn btn-outline-dark">Save</button>
+                            @if (decodedToken.sub=="JobSeeker") {
+                                <button class="btn background-btn text-white ms-2" data-bs-toggle="modal" data-bs-target="#JobApp">Apply Now</button>
+
+                            }
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p class="font-size-18 font-lato">{{jobPostDetails.salaryRangeFrom|currency:"EGP"}}-{{jobPostDetails.salaryRangeTo|currency:"EGP"}}</p>
+                        <p>Posted {{currentDate}} Ago</p>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <i class="fas fa-house me-1"></i>
+                        <span class="font-lato fw-light">{{jobPostDetails.location}}</span>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <button class="btn type-btn rounded-0">{{jobPostDetails.type}}</button>
+                </div>
+                <div class="mt-4 border p-2">
+                    <h3 class="font-size-16">Contact Recruiter</h3>
+                    <div class="d-flex justify-content-between">
+                    <div>
+                        <div class="d-flex gap-2 align-items-center">
+                            <p>{{jobPostDetails.jobProvider.companyName}}</p>
+                            <p class="rounded back-orange p-1 font-orange font-sarabun">Job Poster</p>
+                        </div>
+                        <span class="font-lato font-size-16 font-grey">{{jobPostDetails.jobProvider.category}}</span>
+                    </div>
+                    <div>
+                        @if (decodedToken.sub=="JobSeeker") {
+                        <button class="font-green btn" (click)="openMessage(jobPostDetails?.jobProvider?.id)"><i class="fas fa-envelope font-green"></i> Message</button>
+                        }
+                    </div>
+                        
+                    
+                    <!-- Job App Modal -->
+                    <div class="modal fade" id="JobApp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form (submit)="CreateJobApplication(jobPostDetails?.id)" [formGroup]="PostApplication">
+                                    <label class="form-label">Upload CV</label>
+                                    <input type="file" class="form-control" (change)="handleCV($event)">
+                                    <label class="form-label">Status</label>
+                                    <input type="text" class="form-control">
+                                    <label class="form-label">Upload Cover Letter</label>
+                                    <input type="file" class="form-control" (change)="handleCoverLetter($event)">
+                                    <button type="submit" class="btn btn-outline-info mt-2">Upload Application</button>
+                                </form>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                @if (decodedToken.sub=="JobProvider") {
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Show Job Applications
+                      </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">
+                        @for (item of jobPostDetails.jobApplications; track $index) {
+                            @if (JobProviderCheck.id==item.jobProviderId) {
+                            <div class="card">
+                                <div class="card-body d-flex flex-column align-items-center">
+                                    <button class="btn background-btn text-white" data-bs-toggle="offcanvas" href="#offcanvasExample" (click)="showUser(item.jobSeekerId)">Show User Info</button>
+                                    <a [href]="item.cv">OpenCv</a>
+                                </div>
+                            </div>
+                        }
+                    }
+                    
+                </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+                  
+               <!-- OffCanvas To show user info -->
+               <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title" id="offcanvasExampleLabel">User Info</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    @if (ApplicantsInfo?.length!=0) {
+                  {{ApplicantsInfo?.userFName}} {{ApplicantsInfo?.userLName}}
+                  @if (decodedToken.sub=="JobProvider") {
+                    <button class="font-green btn" (click)="openMessageTO()"><i class="fas fa-envelope font-green"></i> Message</button>
+                    }
+                    }
+                </div>
+              </div>
+              
+             <!--  -->
+                </div>
+                <div class="mt-2">
+                    <h2 class="fw-bold font-lato font-size-16">Job Description</h2>
+                    <p class="font-size-16 font-lato font-grey">{{jobPostDetails.description}}</p>
+                  </div>
+                  <div>
+                    <h2 class="fw-bold font-lato font-size-16">Responsibilities</h2>
+                    <ul class="list list-unstyled">
+                        @for (item of jobPostDetails.requirements; track $index) 
+                        {
+                            <li><i class="fa-regular fa-circle-check check"></i> {{item.reqName}}</li>
+                        }
+                    </ul>
+                  </div>
+                  <div class="p-5 background-grey">
+                    <!-- company info -->
+                    <div class="d-flex justify-content-between">
+                        <h3 class="font-size-16 fw-semibold font-lato">About Company</h3>
+                        <a class="font-size-14 font-lato text-decoration-none font-green">View Company Profile</a>
+                    </div>
+                    <div class="d-flex gap-2 align-items-center">
+                        <img [src]="jobPostDetails.jobProvider.logo" onerror="this.src='../../../assets/Images/PlaceHolder.jpg'" [alt]="jobPostDetails.companyName" class="img-cover">
+                        <p class="font-sarabun font-size-18">{{jobPostDetails.jobProvider.companyName}}</p>
+                    </div>
+                    <p class="font-size-16 font-lato fw-normal">{{jobPostDetails.jobProvider.description}}</p>
+                    <div>
+                        <div class="row gy-4 font-grey font-lato font-size-16">
+                            <div class="col-md-6">
+                                <i class="fa-solid fa-building"></i> {{jobPostDetails.jobProvider.category}}
+                            </div>
+                            <div class="col-md-6">
+                                <i class="fa-solid fa-user"></i> {{jobPostDetails.jobProvider.noOfEmployees}} employees
+                            </div>
+                            <div class="col-md-6">
+                                <i class="fa-solid fa-location-dot"></i> {{jobPostDetails.jobProvider.location}}
+                            </div>
+                            <div class="col-md-6">
+                                <i class="fa-solid fa-calendar"></i> Mon - Fri
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+               
+            <!-- <div class="card text-center">
                 <div class="card-header">
-                    {{job.title}}
+                    
+                    {{jobPostDetails.title}}
                 </div>
                 <div class="card-body">
                     <div class="text-start">
-                        <p>Company Name : {{job?.jobProvider?.companyName}}</p>
-                        <p class="fw-light fs-6">Company Category : {{job?.jobProvider?.category}}</p>
-                        <p>Job Location : {{job.location}}</p>
-                        <p>Salary : {{job?.salaryRangeFrom|currency:"EGP"}} to {{job?.salaryRangeTo|currency:"EGP"}}</p>
+                        <p>Company Name : {{jobPostDetails?.jobProvider?.companyName}}</p>
+                        <p class="fw-light fs-6">Company Category : {{jobPostDetails?.jobProvider?.category}}</p>
+                        <p>Job Location : {{jobPostDetails.location}}</p>
+                        <p>Salary : {{jobPostDetails?.salaryRangeFrom|currency:"EGP"}} to
+                            {{jobPostDetails?.salaryRangeTo|currency:"EGP"}}</p>
                     </div>
-                    <h5 class="card-title">{{job.content}}</h5>
+                    <h5 class="card-title">{{jobPostDetails.content}}</h5>
                     <h5 class="text-start">Required Skills</h5>
                     <div class="d-flex gap-2">
-                        @for (skill of job.requiredSkills; track $index)
+                        @for (skill of jobPostDetails.requiredSkills; track $index)
                         {
                         <p class="card-text">
                             {{skill.name}}
@@ -180,10 +348,10 @@
                     <a href="#" class="btn btn-primary">Apply</a>
                 </div>
                 <div class="card-footer text-body-secondary">
-                    {{job.date.split("T")[0]}}
+                    {{jobPostDetails?.date?.split("T")[0]}}
                 </div>
-            </div>
-            }
+            </div> -->
+        }
         </div>
     </div>
 </div>

@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;1,100;1,300;1,400&display=swap');
 label{
     font-family: "Manrope", sans-serif;
 }
@@ -20,6 +22,71 @@ label{
 .font-size-40{
     font-size: 40px;
 }
+.font-size-48{
+    font-size: 48px;
+}
+.font-size-16{
+    font-size: 16px;
+}
+.font-grey{
+    color:#6E7787FF;
+}
+.font-green{
+    color:#0EA89BFF;
+}
+.back-orange{
+    background-color: #FFF6F0FF;
+}
+.font-orange{
+    color: #FF832BFF;
+}
 .font-manrope{
     font-family: "Manrope", sans-serif;
 }
+.background{
+    background-image: url(../../../assets/Images/Image\ 21.png);
+}
+.font-sarabun{
+    font-family: "Sarabun", sans-serif;
+}
+.font-lato{
+    font-family: "Lato", sans-serif;
+}
+.background-btn{
+    transition: background-color .5s;
+    background-color: #0EA89BFF;
+}
+.background-btn:hover{
+    background-color: #0C988DFF;
+}
+.type-btn{
+    background-color: #F3F4F6FF;
+}
+.check{
+    color:#0EA89BFF;
+}
+.img-cover2{
+    width: 45%;
+    height: 45%;
+    border-radius: 50%;
+    clip-path: circle();
+}
+.img-cover{
+    width: 15%;
+    height: 15%;
+    border-radius: 50%;
+    clip-path: circle();
+}
+.background-grey{
+    background-color: #FAFAFBFF;
+}
+.job-list{
+    transition: background-color .5s;
+  }
+  .job-list:hover{
+    background-color: #ECFDFC80;
+    color:#000;
+  }
+  .job-list:visited{
+    background-color: #ECFDFC80;
+  }

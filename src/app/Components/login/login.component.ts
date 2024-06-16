@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { FormGroup,FormControl,ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthServiceService } from '../../Services/auth-service.service';
 import { Router } from '@angular/router';
+import { UsersService } from '../../Services/users.service';
+import { jwtDecode } from 'jwt-decode';
 let {pattern,minLength,maxLength,required}= Validators
 
 @Component({
@@ -13,7 +15,7 @@ let {pattern,minLength,maxLength,required}= Validators
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  constructor(private _authService:AuthServiceService, private _Router:Router){
+  constructor(private _authService:AuthServiceService, private _userService:UsersService,private _Router:Router){
 
   }
   Login:FormGroup = new FormGroup({
@@ -32,6 +34,23 @@ export class LoginComponent {
        let JSONString:any= JSON.stringify(data.token);
        localStorage.setItem('Token',JSONString);
        this._authService.updateToken(data.token);
+       let tok:any=jwtDecode(data.token);
+       if(tok.sub=="JobSeeker"){
+       this._userService.GetJobSeekerByUserName(tok.name).subscribe({
+        next:(data)=>{
+          this._authService.updateJobSeekerId(data.id);
+        }
+       })
+      }else{
+        this._userService.GetJobProviderByIdOrByUserName('',tok.name).subscribe({
+          next:(data)=>{
+            console.log(data);
+            
+            this._authService.updateJobProviderId(data.id);
+            
+          }
+        })
+      }
         this._Router.navigate(['/Home']);
       },
       error:(err)=>{

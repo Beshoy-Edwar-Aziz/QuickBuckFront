@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthServiceService } from '../../Services/auth-service.service';
 import { ReactiveFormsModule} from '@angular/forms';
 import { FormControl, FormGroup, MinLengthValidator, RequiredValidator, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 let {pattern,minLength,maxLength,email,required} = Validators;
 
@@ -14,7 +15,7 @@ let {pattern,minLength,maxLength,email,required} = Validators;
   styleUrl: './register.component.css'
 })
 export class RegisterComponent implements OnInit{
-  constructor(private _authService:AuthServiceService){
+  constructor(private _authService:AuthServiceService,private _router:Router){
 
   }
   ngOnInit(): void {
@@ -94,7 +95,7 @@ export class RegisterComponent implements OnInit{
     reader.onloadend= ()=>{
       const base64String = reader.result;
       console.log(base64String);
-      this.reader=base64String
+      this.reader=base64String;
     }
  }
   handleRegister():any{
@@ -158,7 +159,7 @@ export class RegisterComponent implements OnInit{
         "noOfEmployees": this.Register.value.noOfEmployees==""?0:this.Register.value.noOfEmployees,
         "category": this.Register.value.category,
         "webSite": this.Register.value.webSite,
-        "logo": this.Register.value.logo==null?this.Register.value.photo:this.Register.value.logo,
+        "logo": this.reader,
         "description": this.Register.value.description
       }
       }
@@ -205,6 +206,7 @@ export class RegisterComponent implements OnInit{
     this._authService.Register(this.body).subscribe({
       next:(data)=>{
         console.log(data);
+        this._router.navigate(['/Login']);
       },
       error:(err)=>{
         console.log(err);

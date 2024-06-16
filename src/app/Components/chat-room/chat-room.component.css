@@ -1,0 +1,48 @@
+.background-msg{
+    background-color: #ECFDFCFF;
+}
+.background-btn{
+    background-color: #0EA89BFF;
+    color: #fff;
+}
+
+.img-cover{
+    width: 15%;
+    height: 15%;
+    border-radius: 50%;
+    clip-path: circle();
+}
+.img-cover2{
+    width: 45%;
+    height: 45%;
+    border-radius: 50%;
+    clip-path: circle();
+}
+i{
+    color: #0EA89BFF;
+}
+.left-message {
+    text-align: left;
+    background-color: #ECFDFC; /* Light blue for JobSeeker messages */
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px;
+    display: inline-block;
+    max-width: 70%;
+  }
+  
+  .right-message {
+    text-align: right;
+    background-color: #F2F2F2; /* Light grey for JobProvider messages */
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px;
+    display: inline-block;
+    max-width: 70%;
+  }
+  .list-of-conversations{
+    transition: background-color .5s;
+  }
+  .list-of-conversations:hover{
+    background-color: #ECFDFC80;
+  }

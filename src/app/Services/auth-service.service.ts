@@ -14,6 +14,16 @@ export class AuthServiceService {
  updateToken(newToken:any){
     this.TokenBehavior.next(newToken);
  }
+ JobSeekerId:BehaviorSubject<any>=new BehaviorSubject('');
+  CurrentJobSeeker=this.JobSeekerId.asObservable();
+  updateJobSeekerId(JobSeekerId:number){
+    this.JobSeekerId.next(JobSeekerId);
+  }
+  JobProviderId:BehaviorSubject<any>=new BehaviorSubject('');
+  CurrentJobProvider= this.JobProviderId.asObservable();
+  updateJobProviderId(jobProviderId:number){
+    this.JobProviderId.next(jobProviderId);
+  }
   constructor(private _httpClient:HttpClient) { 
     // let token:any =localStorage.getItem('Token');
     // this.Token = jwtDecode(token);

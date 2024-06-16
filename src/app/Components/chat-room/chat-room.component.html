@@ -1,0 +1,117 @@
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <h3 class="font-lato font-size-14">All Messages</h3>
+            @if(TokenRole=="JobSeeker"){
+                @for (item of TalkedToPreviously; track $index) 
+                {
+                    
+                    <div class="d-flex gap-2 align-items-center list-of-conversations" (click)="openNewChat(item.jobSeekerId,item.jobProviderId)">
+                        <div class="img-cover">
+                            <img [src]="item.jobProvider.logo" onerror="this.src='../../../assets/Images/PlaceHolder.jpg'"  class="w-100 rounded-circle" alt="">
+                        </div>
+                        <div class="d-flex flex-column align-content-between">
+                            <div>
+                                <p class="font-lato font-size-14 fw-bold">{{item.jobProvider.companyName}}</p> 
+                                <p class="font-lato fw-light font-size-14">{{item?.content}}</p>
+                            </div>
+                            <p class="fw-light font-lato font-size-12">{{item?.dateTime.split('T')[1].split('.')[0]}}</p>
+
+                        </div>
+                        
+
+                    </div>
+                    
+                }
+            }@else if (TokenRole=="JobProvider") {
+                @for (item of TalkedToPreviously; track $index) 
+                {
+                    <div class="d-flex gap-2 align-items-center list-of-conversations" (click)="openNewChat(item.jobSeekerId,item.jobProviderId)">
+                        <div class="img-cover">
+                            <img [src]="item.jobSeeker.photo" onerror="this.src='../../../assets/Images/PlaceHolder.jpg'"   class="w-100 rounded-circle" alt="">
+                        </div>
+                        <div class="d-flex flex-column align-content-between">
+                            <div>
+                                <p class="font-lato font-size-14 fw-bold">{{item.jobSeeker.companyName}}</p> 
+                                <p class="font-lato fw-light font-size-14">{{item?.content}}</p>
+                            </div>
+                            <p class="fw-light font-lato font-size-12">{{item?.dateTime.split('T')[1].split('.')[0]}}</p>
+
+                        </div>
+                        
+
+                    </div>
+                }
+            }
+        </div>
+        <div class="col-6">
+        <header class="border px-3">
+            <div class="row">
+                <div class="d-flex align-items-center justify-content-between p-2">
+                    <div class="col-md-6 text-center">
+                        <div class="d-flex align-items-center gap-2">
+                            @if (TokenRole=="JobSeeker") {
+                            <img [src]="JobProviderInfo?.logo" alt="" class="img-cover">
+                            <p class="font-lato font-size-24 fw-bold">{{JobProviderInfo?.companyName}}</p>
+                            }@else if(TokenRole=="JobProvider") {
+                                <img [src]="JobSeekerInfo?.photo" alt="" class="img-cover">
+
+                            <p class="font-lato font-size-24 fw-bold">{{JobSeekerInfo?.userName}}</p>
+                            }
+                        </div>
+                    </div>
+           
+                        <i class="fas fa-phone font-size-24"></i>
+                    
+                </div>
+            </div>
+        </header>
+        <div class="border px-5 position-relative">
+            <ul class="text-decoration-none list-unstyled " id="MessageWindow">
+                @for (item of Messages; track item.date) {
+                
+                <li class="my-2 p-2 rounded-end" (click)="getMessageById(item.id)">
+                    <div class="d-flex align-items-center">
+                        @if(item.userName==item.jobSeeker.userName){
+                        <div class="img-cover">
+                            <img [src]="item.jobSeeker.photo" onerror="this.src='../../../assets/Images/PlaceHolder.jpg'"  class="w-100 rounded-circle" alt="">
+                        </div>
+                    }@else if(item.userName==item.jobProvider.companyName){
+                        <div class=" img-cover">
+                            <img [src]="item.jobProvider.logo" onerror="this.src='../../../assets/Images/PlaceHolder.jpg'"  class="w-100 rounded-circle" alt="">
+                        </div>
+                    }
+                        <div  [ngClass]="{'left-message':item.userName==item.jobSeeker.userName,'right-message':item.userName==item.jobProvider.companyName}">
+                            <div>
+                                <p class="fs-6 fw-medium">{{item?.userName}}</p>
+                            </div>
+                            <div>
+                                {{item?.content}}
+
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                }
+            </ul>
+            
+        </div>
+        <div class="d-flex gap-2">
+            <input type="text" class="form-control bg-body-secondary" id="msg" placeholder="write message">
+            <button (click)="sendMessage(jobSeekerId,jobProviderId)" class="btn font-lato background-btn">Send</button>
+        </div>
+    </div>
+    @if(TokenRole=="JobSeeker"){
+    <div class="col-md-2 justify-content-center">
+        <div class="d-flex flex-column align-items-center justify-content-center border-bottom">
+            <div class="img-cover2">
+                <img [src]="JobProviderInfo?.logo" alt="" class="w-100">
+            </div>
+            <p class="font-lato">{{JobProviderInfo?.companyName}}</p>
+            <p>Hiring Contact</p>
+            <p><a href="" class="text-decoration-none">{{JobProviderInfo?.webSite}}</a></p>
+        </div>
+    </div>
+}
+    </div>
+</div>

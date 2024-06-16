@@ -16,7 +16,10 @@ export class UsersService {
   GetJobSeekerByUserName(UserName:string):Observable<any>{
     return this._httpClient.get(`https://localhost:7156/api/JobSeeker/GetUser/${UserName}`);
   }
-  GetJobProviderByIdOrByUserName(Id:number=0,UserName:string):Observable<any>{
-    return this._httpClient.get(`https://localhost:7156/api/JobProvider?Id=${Id}&UserName=${UserName}`);
+  GetJobProviderByIdOrByUserName(Id:any,UserName:string):Observable<any>{
+    return this._httpClient.get(`https://localhost:7156/api/JobProvider/GetUser?Id=${Id}&UserName=${UserName}`);
+  }
+  GetJobSeekerById(id:number):Observable<any>{
+    return this._httpClient.get(`https://localhost:7156/api/JobSeeker/${id}`);
   }
 }
