@@ -1,10 +1,74 @@
-<div>
-    <div class="background-image  min-vh-100 position-relative">
-        <div class=" position-absolute  logger">
+<div class="container">
+    <div class="background-image log position-relative ">
+        <div class=" position-absolute  logger  start-0 ">
             <img [src]="jobProviderDetails?.logo" class="img-cover" [alt]="jobProviderDetails?.companyName">
         </div>
     </div>
     <div class="container">
-        <h1></h1>
-    </div>
+        <section>
+            <h1 class="font-sarabun font-size-32 fw-bold">{{jobProviderDetails?.companyName}}</h1>
+            <p class="font-size-14 font-lato  font-grey fw-normal">{{jobProviderDetails?.category}}</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <i class="fa-solid fa-globe font-grey"></i> <a class="text-decoration-none" [href]="jobProviderDetails?.webSite"> {{jobProviderDetails?.webSite}} </a>
+                </div>
+                <div class="col-md-6">
+                     <p class="font-grey font-size-16 font-lato"><i class="fa-regular fa-bookmark"></i> <span class="ms-2">Full Time</span> </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="font-grey font-size-16 font-lato"><i class="fa-solid fa-location-dot"></i> <span class="ms-2">{{jobProviderDetails?.location}}</span></p>
+                </div>
+                <div class="col-md-6">
+                    <p class="font-grey font-size-16 font-lato"><i class="fa-solid fa-calendar"></i> <span class="ms-2">Mon-Fri</span></p>
+                </div>
+                <div class="col-md-6">
+                    <p class="font-grey font-size-16 font-lato"><i class="fa-solid fa-user"></i> <span class="ms-2">{{jobProviderDetails?.noOfEmployees}} employees</span></p>
+                </div>
+            </div>
+            <div class="border p-4">
+                <h3 class="font-lato font-size-20 fw-bold">About Us</h3>
+                <p class="font-lato font-size-16 font-grey">{{jobProviderDetails?.description}}</p>
+            </div>
+            <div class="mt-2 border p-4">
+                <div class="d-flex justify-content-between">
+                    <h3 class="font-lato font-size-20 fw-bold">Life At {{jobProviderDetails?.companyName}}</h3>
+                    <div>
+                        <button class="btn btn-outline-secondary rounded-circle"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button class="btn btn-outline-secondary rounded-circle ms-1"><i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="d-flex flex-column flex-lg-row gap-2 my-4">
+                    <img src="../../../assets/Images/Image 35.png" class="w-100" [alt]="jobProviderDetails?.companyName">
+                    <img src="../../../assets/Images/Image 36.png" class="w-100" [alt]="jobProviderDetails?.companyName">
+                    <img src="../../../assets/Images/Image 37.png" class="w-100" [alt]="jobProviderDetails?.companyName">
+                </div>
+            </div>
+
+            <div class="container border mt-4 p-2">
+                <h3 class="font-lato font-size-20 fw-bold">Recent Job Openings</h3>
+
+                <div class="row gy-2">
+                    @for (item of latestJobPosts; track item.id) {
+                    <div class="col-12 col-lg-6 ">  
+                        <div class="d-flex align-items-center gap-4 background-grey p-2">
+                            <div class="img-cover">
+                                <img [src]="item?.jobProvider.logo" class="w-100" [alt]="item?.jobProvider.companyName">
+                            </div>
+                            <div>
+                                <p class="font-lato font-size-18 fw-bold">{{item?.title}}</p>
+                                <p class="font-size-16 font-lato">{{item?.salaryRangeFrom}} - {{item?.salaryRangeTo}}</p>
+                                <p class="font-lato font-size-14 font-semigrey"><i class="fa-solid fa-location-dot"></i> <span class="ms-1">{{item?.location}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                </div>
+                <div class="d-flex justify-content-center">
+                    <a class="font-green text-decoration-none my-2">View All Posts</a>
+                </div>
+            </div>
+        </section>
+        </div>
+    
 </div>

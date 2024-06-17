@@ -9,7 +9,7 @@ import { max, min } from 'rxjs';
 import { UsersService } from '../../Services/users.service';
 import Swal from 'sweetalert2';
 import { LoadingComponent } from '../loading/loading.component';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ChatService } from '../../Services/chat.service';
 import { Token } from '@angular/compiler';
 let {required,pattern,maxLength,minLength} = Validators;
@@ -17,7 +17,7 @@ let {required,pattern,maxLength,minLength} = Validators;
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HttpClientModule,CurrencyPipe,ReactiveFormsModule,LoadingComponent],
+  imports: [HttpClientModule,CurrencyPipe,ReactiveFormsModule,LoadingComponent,RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

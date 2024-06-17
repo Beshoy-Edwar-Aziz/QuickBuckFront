@@ -20,6 +20,9 @@ export class JobPostingService {
   GetJobPostById(JobPostId:number=3):Observable<any>{
     return this._httpClient.get(`https://localhost:7156/api/JobPost/${JobPostId}`);
   }
+  getJobPostByJobProviderId(JobProviderId:number):Observable<any>{
+    return this._httpClient.get(`https://localhost:7156/api/JobPost/GetLatestJobPosts?JobProviderId=${JobProviderId}`);
+  }
   PostJobApplication(Body:object,JobProviderId:number,JobSeekerId:number,JobPostId:number):Observable<any>{
     return this._httpClient.post(`https://localhost:7156/api/JobApplication?JobProviderId=${JobProviderId}&JobPostId=${JobPostId}&JobSeekerId=${JobSeekerId}`,Body);
   }
