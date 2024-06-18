@@ -35,10 +35,16 @@ export class LoginComponent {
        localStorage.setItem('Token',JSONString);
        this._authService.updateToken(data.token);
        let tok:any=jwtDecode(data.token);
+       console.log(tok.sub);
+       
        if(tok.sub=="JobSeeker"){
        this._userService.GetJobSeekerByUserName(tok.name).subscribe({
         next:(data)=>{
+          console.log(data);
+          
           this._authService.updateJobSeekerId(data.id);
+          this._authService.updateUserInfo(data);
+          this._authService.updateId(data.id);
         }
        })
       }else{
@@ -47,7 +53,8 @@ export class LoginComponent {
             console.log(data);
             
             this._authService.updateJobProviderId(data.id);
-            
+            this._authService.updateUserInfo(data);
+            this._authService.updateId(data.id);
           }
         })
       }

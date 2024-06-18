@@ -19,10 +19,20 @@ export class AuthServiceService {
   updateJobSeekerId(JobSeekerId:number){
     this.JobSeekerId.next(JobSeekerId);
   }
+  UserInfo:BehaviorSubject<any>=new BehaviorSubject('');
+  CurrentUserInfo = this.UserInfo.asObservable();
+  updateUserInfo(newUserInfo:any){
+    this.UserInfo.next(newUserInfo);
+  }
   JobProviderId:BehaviorSubject<any>=new BehaviorSubject('');
   CurrentJobProvider= this.JobProviderId.asObservable();
   updateJobProviderId(jobProviderId:number){
     this.JobProviderId.next(jobProviderId);
+  }
+  Id:BehaviorSubject<number>=new BehaviorSubject(0);
+  CurrentId=this.Id.asObservable();
+  updateId(id:number):void{
+    this.Id.next(id);
   }
   constructor(private _httpClient:HttpClient) { 
     // let token:any =localStorage.getItem('Token');

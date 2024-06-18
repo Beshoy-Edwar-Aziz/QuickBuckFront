@@ -1,33 +1,53 @@
 <div class="container">
     <h1 class="font-sarabun font-size-48">Search <span class="font-green">Jobs</span></h1>
-    @if(JobPosts.length==0){
+    @if(JobPosts?.length==0){
  <app-loading></app-loading>
     }
  <div class="row font-manrope">
         <div class="col-md-4">
-            <div class="d-flex justify-content-center">
-                @if (decodedToken?.sub=="JobProvider") {
+            @if (decodedToken?.sub=="JobProvider") {
+                <div class="d-flex justify-content-center">
                 <button class="btn btn-outline-dark my-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Create
                     Post</button>
-                }
-            </div>
-            @for (item of JobPosts; track $index) {
-            <div class="row border rounded p-1 mb-2 job-list" (click)="ShowPost(item?.id)">
-                <div class="col-md-2">
-                    <img [src]="item?.jobProvider.logo" [alt]="item?.title" class="w-100">
                 </div>
-                <div class="col-md-10">
-                    <h3>{{item.title}}</h3>
-                    <p><i class="fa-solid fa-building"></i> {{item.jobProvider.companyName}}</p>
-                    <p><i class="fa-solid fa-location-dot"></i> {{item.location}}</p>
+                }
+            <div class="d-flex justify-content-center">
+              
+                <div class="d-flex align-items-center me-2" (click)="SearchJobPosts()">
+                    <i class="fas fa-magnifying-glass"></i> 
+                </div>
+                    <input type="search" id="SearchBar" class="form-control" placeholder="Search JobPost By Name">
+            </div>
+            
+            @for (item of JobPosts; track $index) {
+            <div class="p-2 job-list" (click)="ShowPost(item?.id)">
+                <div class="d-flex gap-2 p-2">
+                    <img [src]="item?.jobProvider?.logo" [alt]="item?.title" class="img-cover">
+                    <div class="d-flex flex-column ms-2">
+                        <h3 class="font-size-18 font-lato">{{item?.title}}</h3>
+                        <p>{{item?.salaryRangeFrom}} - {{item?.salaryRangeTo}}</p>
+                    </div>
+                </div>
+                <div class="ms-3">
+                    <p><i class="fa-solid fa-building me-3 font-grey"></i> {{item?.jobProvider?.companyName}}</p>
+                    <p><i class="fa-solid fa-location-dot me-3 font-grey"></i> {{item?.location}}</p>
                 </div>
             </div>
             }
+        
         </div>
 
         <div class="col-md-8">
 
-
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Filter
+                </button>
+                <ul class="dropdown-menu">
+                  <li (click)="OrderByDesc()"><a class="dropdown-item" value="OrderByDesc">Newest First</a></li>
+                  <li (click)="OrderByAsc()"><a class="dropdown-item" value="OrderByAsc">Oldest First</a></li>
+                </ul>
+              </div>
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-fullscreen ">
@@ -164,7 +184,7 @@
                     </div>
                 </div>
             </div>
-
+            <!-- JobPost Details -->
             @if(jobPostDetails.length!=0){
                 <div class="container">
                 <div class="">
@@ -174,12 +194,30 @@
                     <div class="d-flex justify-content-between">
                         <h3 class="font-sarabun">{{jobPostDetails?.title}}</h3>
                         <div>
-                            <button class="btn btn-outline-dark">Save</button>
+                            @if(decodedToken.sub=="JobSeeker"){
+                            <button class="btn btn-outline-dark"  data-bs-toggle="modal" data-bs-target="#Bookmark">Save</button>
+                            }
                             @if (decodedToken.sub=="JobSeeker") {
                                 <button class="btn background-btn text-white ms-2" data-bs-toggle="modal" data-bs-target="#JobApp">Apply Now</button>
 
                             }
                         </div>
+                        <!-- Modal To Enter bookmark's title  -->
+                        <div class="modal fade" id="Bookmark" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  <form (submit)="bookMark(jobPostDetails.id)" [formGroup]="PostJobPostTitle">
+                                    <label class="form-label">Enter Bookmark Name</label>
+                                    <input type="text" class="form-control" formControlName="Title">
+                                    <button class="btn colored-btn my-2" type="submit">Save</button>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div> 
+                        <!--  -->
                     </div>
                     <div class="d-flex justify-content-between">
                         <p class="font-size-18 font-lato">{{jobPostDetails.salaryRangeFrom|currency:"EGP"}}-{{jobPostDetails.salaryRangeTo|currency:"EGP"}}</p>
@@ -268,15 +306,35 @@
                   <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                    @if (ApplicantsInfo?.length!=0) {
-                  {{ApplicantsInfo?.userFName}} {{ApplicantsInfo?.userLName}}
-                  @if (decodedToken.sub=="JobProvider") {
-                    <button class="font-green btn" (click)="openMessageTO()"><i class="fas fa-envelope font-green"></i> Message</button>
-                    }
-                    }
+                    <div class="position-relative z-3 overflow-hidden">
+                        <img src="../../../assets/Images/Rectangle 7.png" class="position-absolute shape z-n1" alt="">
+                    <div class="rounded p-2 border">
+                    <div class="d-flex justify-content-center">
+                        <img [src]="ApplicantsInfo?.photo" class="img-cover rounded-circle" [alt]="ApplicantsInfo?.userName">
+                    </div>
+                    <div class=" d-flex align-items-center flex-column my-3 border-bottom py-3">
+                        <h1 class="font-lato font-size-20 fw-semibold font-green">{{ApplicantsInfo?.userFName}} {{ApplicantsInfo?.userLName}}</h1>
+                        <p class="font-lato font-size-14 font-faint fw-normal">{{ApplicantsInfo?.status}}</p>
+                        <div class="d-flex">
+                            @for (item of ApplicantsInfo?.skills; track $index) {
+                            <button class="btn btn-background-grey font-lato">{{item?.name}}</button>
+                            }
+                        </div>
+                        
+                    </div>
+                    <div class="d-flex align-items-center flex-column">
+                        <p>Profile Link</p>
+                        @if (ApplicantsInfo?.length!=0) {
+                            @if (decodedToken.sub=="JobProvider") {
+                              <button class="font-green btn" (click)="openMessageTO()"><i class="fas fa-envelope font-green"></i> Message</button>
+                              }
+                              }                    </div>
+                </div>    
+                    
+                    
                 </div>
               </div>
-              
+               </div>
              <!--  -->
                 </div>
                 <div class="mt-2">
@@ -298,7 +356,7 @@
                         <h3 class="font-size-16 fw-semibold font-lato">About Company</h3>
                         <a class="font-size-14 font-lato text-decoration-none font-green" [routerLink]="'/CompanyProfile/'+jobPostDetails.jobProvider.id" >View Company Profile</a>
                     </div>
-                    <div class="d-flex gap-2 align-items-center">
+                    <div class="d-flex gap-2 align-items-center my-3">
                         <img [src]="jobPostDetails.jobProvider.logo" onerror="this.src='../../../assets/Images/PlaceHolder.jpg'" [alt]="jobPostDetails.companyName" class="img-cover">
                         <p class="font-sarabun font-size-18">{{jobPostDetails.jobProvider.companyName}}</p>
                     </div>

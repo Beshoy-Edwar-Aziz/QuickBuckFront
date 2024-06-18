@@ -1,15 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JobPostingService {
-
+  JobPost:BehaviorSubject<any>=new BehaviorSubject('');
+  CurrentJobPost = this.JobPost.asObservable();
+  updateJobPost(JobPost:any){
+    this.JobPost.next(JobPost);
+  }
   constructor(private _httpClient:HttpClient) { }
   GetAllJobPosts():Observable<any>{
     return this._httpClient.get(`https://localhost:7156/api/JobPost?PageIndex=1&PageSize=10`);
+  }
+  SearchJobPosts(JobName:string):Observable<any>{
+    return this._httpClient.get(`https://localhost:7156/api/JobPost?JobName=${JobName}`);
+  }
+  FilterJobPosts(Sort:string):Observable<any>{
+    return this._httpClient.get(`https://localhost:7156/api/JobPost?Sort=${Sort}`);
   }
   PostJob(body:object,JobProviderId:any):Observable<any>{
     return this._httpClient.post(`https://localhost:7156/api/JobPost/${JobProviderId}`,body);
@@ -28,5 +38,11 @@ export class JobPostingService {
   }
   UpdateJobPostWithJobApplications(JobPostId:number):Observable<any>{
     return this._httpClient.put(`https://localhost:7156/api/JobApplication?JobPostId=${JobPostId}`,null);
+  }
+  bookMarkPost(Body:object,jobPostId:number,jobSeekerId:number):Observable<any>{
+    return this._httpClient.post(`https://localhost:7156/api/Bookmark?JobSeekerId=${jobSeekerId}&JobPostId=${jobPostId}`,Body);
+  }
+  getBookmarksByJobSeekerId(JobSeekerId:number):Observable<any>{
+    return this._httpClient.get(`https://localhost:7156/api/Bookmark?JobSeekerId=${JobSeekerId}`);
   }
 }

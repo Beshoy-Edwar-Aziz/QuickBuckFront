@@ -1,0 +1,51 @@
+section{
+    padding: 40px 0;
+}
+.img-cover{
+    width: 50px;
+    height: 50px;
+}
+.background-color{
+    background-color: #171A1FFF;
+}
+.font-green{
+    color: #0EA89BFF;
+}
+.background-green{
+    background-color: #0EA89BFF;
+}
+.background-input{
+    background-color: #1D1D1DFF;
+}
+input{
+    color: #fff !important;
+    border: none;
+    outline: none;
+}
+input:focus{
+    box-shadow: none;
+}
+.facebook{
+    color:#2E6FE8FF;
+}
+.insta{
+    color: #5880DEFF;
+}
+.youtube{
+    color: #E82E2EFF;
+}
+.background-select{
+    background-color: #1D1D1DFF;
+}
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #FFF;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #FFF;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #FFF;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #FFF;
+}

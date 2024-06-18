@@ -58,6 +58,12 @@ export class ChatService {
   getMessages(JobProviderId:any,JobSeekerId:any):Observable<any>{
     return this._httpClient.get(`https://localhost:7156/api/Message?JobProviderId=${JobProviderId}&JobSeekerId=${JobSeekerId}`);
   }
+  getAllMessagesByJobSeeker(JobSeekerId:number):Observable<any>{
+    return this._httpClient.get(`https://localhost:7156/api/Message?JobSeekerId=${JobSeekerId}`);
+  }
+  getAllMessagesByJobProvider(JobProviderId:number):Observable<any>{
+    return this._httpClient.get(`https://localhost:7156/api/Message?JobProviderId=${JobProviderId}`);
+  }
   getMessagesByJobSeekerId(JobSeekerId:any,JobProviderId:any):Observable<any>{
     return this._httpClient.get(`https://localhost:7156/api/Message/GetPrevious?JobSeekerId=${JobSeekerId}&JobProviderId=${JobProviderId}`);
   }

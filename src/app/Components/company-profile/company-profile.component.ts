@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../Services/users.service';
 import { JobPostingService } from '../../Services/job-posting.service';
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-company-profile',
   standalone: true,
-  imports: [],
+  imports: [LoadingComponent],
   templateUrl: './company-profile.component.html',
   styleUrl: './company-profile.component.css'
 })

@@ -1,12 +1,15 @@
 <div class="container">
+    @if(jobProviderDetails==null){
+   <app-loading></app-loading>
+    }
     <div class="background-image log position-relative ">
-        <div class=" position-absolute  logger  start-0 ">
-            <img [src]="jobProviderDetails?.logo" class="img-cover" [alt]="jobProviderDetails?.companyName">
+        <div class=" position-absolute  logger">
+            <img [src]="jobProviderDetails?.logo" class="img-cover2" [alt]="jobProviderDetails?.companyName">
         </div>
     </div>
     <div class="container">
         <section>
-            <h1 class="font-sarabun font-size-32 fw-bold">{{jobProviderDetails?.companyName}}</h1>
+            <h1 class="font-sarabun font-size-32 fw-bold my-3">{{jobProviderDetails?.companyName}}</h1>
             <p class="font-size-14 font-lato  font-grey fw-normal">{{jobProviderDetails?.category}}</p>
             
             <div class="row">
@@ -46,14 +49,14 @@
             </div>
 
             <div class="container border mt-4 p-2">
-                <h3 class="font-lato font-size-20 fw-bold">Recent Job Openings</h3>
+                <h3 class="font-lato font-size-20 fw-bold my-3">Recent Job Openings</h3>
 
                 <div class="row gy-2">
                     @for (item of latestJobPosts; track item.id) {
                     <div class="col-12 col-lg-6 ">  
                         <div class="d-flex align-items-center gap-4 background-grey p-2">
-                            <div class="img-cover">
-                                <img [src]="item?.jobProvider.logo" class="w-100" [alt]="item?.jobProvider.companyName">
+                            <div class="align-self-start">
+                                <img [src]="item?.jobProvider.logo" class="img-cover" [alt]="item?.jobProvider.companyName">
                             </div>
                             <div>
                                 <p class="font-lato font-size-18 fw-bold">{{item?.title}}</p>

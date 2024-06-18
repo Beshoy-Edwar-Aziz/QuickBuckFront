@@ -1,0 +1,70 @@
+section{
+    padding: 0px 0 !important;
+}
+.background-image{
+    background-image: url(../../../assets/Images/Container\ 87.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    width: 100%;
+    min-height: 100vh;
+}
+.font-green{
+    color:#0EA89BFF;
+}
+.bg-input{
+    background-color: #F3F4F6FF;
+    color: #fff 
+}
+.bg-input:focus{
+    box-shadow: none;
+    border: none;
+    outline: none;
+}
+.bg-btn{
+    background-color: #0EA89BFF;
+    color: #fff;
+}
+.img-cover{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+.img-cover2{
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+}
+.bg-green{
+    background-color: #ECFDFCFF;
+}
+.bg-orange{
+    background-color: #FFF6F0FF;
+}
+.bg-purple{
+    background-color: #F6F1FDFF;
+}
+.bg-pink{
+    background-color: #FDF1FDFF;
+}
+.font-grey{
+    color:#9095A0FF;
+}
+.job-list{
+    transition: background-color .5s;
+  }
+  .job-list:hover{
+    background-color: #ECFDFCFF;
+    color:#000;
+  }
+  .job-list:visited{
+    background-color: #ECFDFCFF;
+  }
+  .bg-card{
+    background-color: #FAFAFBFF;
+  }
+  .img-cover3{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }

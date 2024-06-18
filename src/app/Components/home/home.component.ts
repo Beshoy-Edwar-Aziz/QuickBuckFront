@@ -59,6 +59,9 @@ export class HomeComponent implements OnInit {
     Status:new FormControl('',[required]),
     CoverLetter: new FormControl('',[required])
   })
+  PostJobPostTitle:FormGroup=new FormGroup({
+    Title:new FormControl('')
+  })
   role:any = `http://schemas.microsoft.com/ws/2008/06/identity/claims/role`;
   jobPostDetails:any=[];
   JobProviderCheck:any;
@@ -78,6 +81,7 @@ export class HomeComponent implements OnInit {
       let token:any=localStorage.getItem('Token');
       this.decodedToken=jwtDecode(token);
       this._authService.Token=this.decodedToken;
+      if(this.decodedToken.sub=="JobProvider"){
       this._userService.GetJobProviderByIdOrByUserName('',this.decodedToken.name).subscribe({
         next:(data)=>{
           this.JobProviderCheck=data;
@@ -85,6 +89,14 @@ export class HomeComponent implements OnInit {
           
         }
       })
+    }else{
+      this._userService.GetJobSeekerByUserName(this.decodedToken.name).subscribe({
+        next:(data)=>{
+          console.log(data);
+          
+        }
+      })
+    }
     }
    
   }
@@ -208,6 +220,11 @@ jobSeeker:any;
                     console.log(JobPostId);
                     
                     console.log(ConfirmUpdate);
+                    Swal.fire({
+                      title:"Successfully Added Application",
+                      text:"Your JobApplication was created successfully",
+                      icon:"success"
+                    })
                   },
                   error:(err)=>{
                     console.log(err);
@@ -248,16 +265,21 @@ jobSeeker:any;
         let month = data.date.split('-')[1]
         let day = data.date.split('-')[2].split('T')[0]
         let y = new Date(`${year}/${month}/${day}`);
+        console.log(y);
+        console.log(x);
+        
         console.log(Math.abs(y.getDate()-x.getDate()));
         console.log(Math.abs(y.getHours()-x.getHours()));
         
         this.currentDate = Math.abs(y.getDate()-x.getDate())+'d';
-        if(this.currentDate>30){
+        if(this.currentDate==0){
           this.currentDate = Math.abs(y.getMonth()-x.getMonth())+'M';
-          if(this.currentDate>12){
+          if(this.currentDate==11){
             this.currentDate = Math.abs(y.getFullYear()-x.getFullYear())+'Y';
           }
         }
+        console.log(this.currentDate);
+        
         this._authService.updateJobProviderId(data.jobProvider.id);
         this._authService.CurrentJobProvider.subscribe({
           next:(data)=>{
@@ -356,5 +378,94 @@ jobSeeker:any;
       }
     })
   }
-
+  bookMark(jobPostId:number):void{
+    let JobSeekerId:number=0;
+    console.log(this.decodedToken.name);
+    
+    this._userService.GetJobSeekerByUserName(this.decodedToken.name).subscribe({
+      next:(data)=>{
+        console.log(data);
+        JobSeekerId=data?.id;
+        let Body:any={
+          "title": this.PostJobPostTitle.value.Title==null||''?this.jobPostDetails.title:this.PostJobPostTitle.value.Title
+        };
+        this._jobPostingService.bookMarkPost(Body,jobPostId,JobSeekerId).subscribe({
+          next:(ConfirmBookMarkPostedSuccessfully)=>{
+            console.log(ConfirmBookMarkPostedSuccessfully);
+            Swal.fire({
+              title:"Success",
+              text:`BookMark Successfully Created`,
+              icon:"success"
+            });
+            
+          },
+          error:(err)=>{
+            console.log(err);
+            Swal.fire({
+              title:`Error`,
+              text:`${err.error.message}`,
+              icon:"error"
+            })
+          }
+        })
+      }
+    })
+    
+    // this._jobPostingService.bookMarkPost()
+  }
+  JobPost:any;
+  SearchJobPosts():void{
+    let SearchBar:any = document.getElementById('SearchBar');
+    console.log(SearchBar.value);
+    
+    this._jobPostingService.SearchJobPosts(SearchBar.value).subscribe({
+      next:(data)=>{
+        console.log(data.data);
+        this.JobPosts=data.data;
+        
+      },
+      error:(err)=>{
+        console.log(err);
+        
+      }
+    })
+  }
+  OrderByAsc():void{
+    this._jobPostingService.FilterJobPosts("OrderByAsc").subscribe({
+      next:(data)=>{
+        console.log(data);
+        this.JobPosts=data.data;
+        this._jobPostingService.updateJobPost(data.data);
+        this._jobPostingService.CurrentJobPost.subscribe({
+          next:(data)=>{
+            console.log(data);
+            this.JobPosts=data;
+          }
+        })
+      },
+      error:(err)=>{
+        console.log(err);
+        
+      }
+    })
+  }
+  OrderByDesc():void{
+    this._jobPostingService.FilterJobPosts("OrderByDesc").subscribe({
+      next:(data)=>{
+        console.log(data);
+        this.JobPosts=data.data;
+        this._jobPostingService.updateJobPost(data.data);
+        this._jobPostingService.CurrentJobPost.subscribe({
+          next:(data)=>{
+            console.log(data);
+            this.JobPosts=data;
+          }
+        })
+      },
+      error:(err)=>{
+        console.log(err);
+        
+      }
+    })
+  }
 }

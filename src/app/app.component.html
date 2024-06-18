@@ -1,11 +1,25 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-white">
   <div class="container">
-    <a class="navbar-brand" href="#">QuickBuck</a>
+    <a class="navbar-brand" href="#"><img src="../assets/Images/quick.png" class="img-cover" alt=""> QuickBuck</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link" routerLink="LandingPage" routerLinkActive="green">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link pointer" routerLink="Home"  routerLinkActive="green">All Jobs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link pointer"  routerLinkActive="green">Companies</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link pointer"  routerLinkActive="green">People</a>
+  </li>
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center gap-2">
         @if(Token==null){
         <li class="nav-item">
           <a class="nav-link" routerLink="Register">Register</a>
@@ -14,10 +28,78 @@
           <a class="nav-link" routerLink="Login">Login</a>
         </li>
       }@else(){
+        <li class="nav-item">
+          <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-regular fa-message"></i>
+            </button>
+            <ul class="dropdown-menu p-3">
+              @for (item of Messages; track $index) {
+                @if(TokenService?.sub=="JobSeeker"){
+              <li class="dropdown-item">
+                  <div class="d-flex gap-2">
+                    <div>
+                      <img [src]="item?.jobProvider?.logo" class="img-cover" alt="">
+                    </div>
+                    <div class="d-flex flex-column font-lato justify-content-center">
+                      <p class="font-size-16 fw-bold">{{item?.jobProvider?.companyName}}</p>
+                      <p class="fw-normal font-size-14">{{item?.content}}</p>
+                      <p class="fw-light font-size-12">{{item?.dateTime?.split('T')[1]?.split('.')[0]}}</p>
+                    </div>
+                  </div>
+                </li>
+              }@else if(TokenService?.sub=="JobProvider"){
+                <li class="dropdown-item">
+                  <div class="d-flex gap-2">
+                    <div>
+                      <img [src]="item?.jobSeeker?.photo" class="img-cover" alt="">
+                    </div>
+                    <div class="d-flex flex-column font-lato justify-content-center">
+                      <p class="font-size-16 fw-bold">{{item?.jobSeeker?.userName}}</p>
+                      <p class="fw-normal font-size-14">{{item?.content}}</p>
+                      <p class="fw-light font-size-12">{{item?.dateTime?.split('T')[1]?.split('.')[0]}}</p>
+                    </div>
+                  </div>
+                </li>
+              }
+                }
+            </ul>
+          </div>
+        </li>
+        @if(TokenService?.sub=="JobSeeker"){
+          <li class="nav-item" (click)="openBookmarks(Id)" data-bs-toggle="dropdown" data-bs-target="#Koi">
+            <div class="dropdown">
+              <i class="btn  fa-regular fa-bookmark dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                
+              </i>
+              <ul class="dropdown-menu">
+                @for (item of BookMarks; track $index) {
+                <li class="dropdown-item" (click)="openBookmarkPage(item?.jobPost?.id)">
+                  <p class="font-lato font-size-16">{{item?.jobPost?.title}}</p>
+                  <div class="d-flex gap-2">
+
+                  </div>
+                </li>
+              }
+              </ul>
+            </div>
+          </li>
+        <a class="" [routerLink]="'UserProfile/'+Id">
+          <img [src]="UserInfo?.photo" class="img-cover" onerror="this.src='../assets/Images/PlaceHolder.jpg'" [alt]="UserInfo?.userName">
+        </a>
+      }
+      @else if(TokenService?.sub=="JobProvider") {
+        <a class="" [routerLink]="'CompanyProfile/'+Id">
+          <img [src]="UserInfo?.logo"  class="img-cover" onerror="this.src='../assets/Images/PlaceHolder.jpg'" [alt]="UserInfo?.companyName">
+          
+        </a>
+        <button class="btn btn-outline-dark mx-2">Upgrade To Premium</button>
+      }
         <li class="nav-item" (click)="signOut()">
-          <p class="nav-link">Sign Out</p>
+          <p class="nav-link pointer">SignOut</p>
         </li>
       }
+     
       </ul>
     </div>
   </div>
@@ -25,3 +107,4 @@
 <section>
  <router-outlet></router-outlet>
 </section>
+<app-footer></app-footer>

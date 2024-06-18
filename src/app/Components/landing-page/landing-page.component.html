@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="background-image">
+
+    </div>
+    <div class="d-flex flex-column align-items-center">
+        <h1 class="font-sarabun fw-bold font-size-48 my-3" data-aos="fade-up" data-aos-duration="1000">Explore More <span class="font-green">Jobs</span> </h1>
+        <div class="d-flex align-items-center">
+            <div class="d-flex gap-2 align-items-center" data-aos="fade-up" data-aos-duration="1000">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search for Jobs..." class="bg-input fw-normal font-size-18 font-lato form-control my-3">
+            </div>
+            <button class="btn  bg-btn font-lato font-size-18 fw-normal rounded-end rounded-start-0">Search</button>
+        </div>
+        <div class="d-flex justify-content-around mt-4 gap-3" data-aos="flip-left" data-aos-duration="1000">
+            <div class="bg-green rounded d-flex flex-column p-3 align-items-center">
+                <img src="../../../assets/Images/Container 93.png" class="img-cover" alt="">
+                <p class="fw-bold font-size-20 font-sarabun">Finance</p>
+            </div>
+            <div class="bg-orange rounded d-flex flex-column p-3 align-items-center" data-aos="flip-right" data-aos-duration="1000">
+                <img src="../../../assets/Images/Container 95.png" class="img-cover" alt="">
+                <p class="fw-bold font-size-20 font-sarabun">Education</p>
+            </div>
+            <div class="bg-purple rounded d-flex flex-column p-3 align-items-center" data-aos="flip-left" data-aos-duration="1000">
+                <img src="../../../assets/Images/Container 97.png" class="img-cover" alt="">
+                <p class="fw-bold font-size-20 font-sarabun">IT</p>
+            </div>
+            <div class="bg-pink rounded d-flex flex-column p-3 align-items-center" data-aos="flip-right" data-aos-duration="1000">
+                <img src="../../../assets/Images/Container 99.png" class="img-cover" alt="">
+                <p class="fw-bold font-size-20 font-sarabun">Marketing</p>
+            </div>
+        </div>
+        <div class="my-3 d-flex flex-column align-items-center">
+            <h2 class="font-sarabun font-size-48 font-green fw-bold" data-aos="fade-down" data-aos-duration="1000">Latest Jobs</h2>
+            <p class="font-lato font-size-18 font-grey" data-aos="flip-right" data-aos-duration="1000">Latest Availabe Jobs To Comprehend</p>
+            <div class="container p-5">
+            <div class="row">
+            @for (item of JobPosts; track $index) {
+                <div class="col-12 col-lg-4" data-aos="zoom-in-down" data-aos-duration="1000">
+                <div class="p-2 job-list">
+                    <div class="d-flex gap-2 p-2">
+                        <img [src]="item?.jobProvider?.logo" [alt]="item?.title" class="img-cover2">
+                        <div class="d-flex flex-column ms-2">
+                            <h3 class="font-size-18 font-lato">{{item?.title}}</h3>
+                            <p>{{item?.salaryRangeFrom}} - {{item?.salaryRangeTo}}</p>
+                        </div>
+                    </div>
+                    <div class="ms-3 font-grey">
+                        <p><i class="fa-solid fa-building me-3 font-grey"></i> {{item?.jobProvider?.companyName}}</p>
+                        <p><i class="fa-solid fa-location-dot me-3 font-grey"></i> {{item?.location}}</p>
+                    </div>
+                </div>
+            </div>
+                }
+            </div>
+            <div class="d-flex justify-content-center">
+                <button class="bg-btn btn rounded-0" (click)="navigateToJobPosts()" data-aos="zoom-in-up" data-aos-duration="1000">See More</button>
+            </div>
+            </div>
+        </div>
+        <div class="d-flex flex-column align-items-center">
+            <h2 class="font-sarabun font-size-48 fw-bold" data-aos="zoom-out" data-aos-duration="1000">Top <span class="font-green" data-aos="zoom-in" data-aos-duration="1000">Companies</span></h2>
+            <p class="font-lato font-size-18 font-grey" data-aos="zoom-in-down" data-aos-duration="1000">Exercitation dolore reprehenderit fugi</p>
+            <div class="d-flex justify-content-around gap-3">
+                @for (item of JobProviders; track item.id) 
+                {
+                    <div class="d-flex flex-column align-items-center bg-card p-5" data-aos="fade-up" data-aos-duration="1000">
+                        <img [src]="item?.logo" [alt]="item?.companyName" class="img-cover3">
+                        <p class="font-lato font-size-18 fw-normal my-3">{{item?.companyName}}</p>
+                        <p class="font-sarabun font-size-14 fw-normal"><span class="font-green">{{item?.noOfEmployees}} Emps</span> | {{item?.location}}</p>
+                    </div>
+                }
+               
+            </div>
+            <div class="d-flex justify-content-center my-3" data-aos="fade-up" data-aos-duration="1000">
+                <button class="bg-btn btn rounded-0" (click)="navigateToJobPosts()">See More</button>
+            </div>
+        </div>
+        
+    </div>
+</div>

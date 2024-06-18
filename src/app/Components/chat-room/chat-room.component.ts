@@ -80,6 +80,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
             console.log(this.chatService.user);
             this.user= this.chatService.user;
             let list = document.createElement('li');
+            
             list?.classList?.add('list-unstyled');
             this.Messages.forEach((x:any) => {
               if(this.user==x.jobSeeker.userName){
@@ -197,6 +198,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
           console.log(data);
           data.reverse();
           this.Messages=data;
+          
         }
       })
     }

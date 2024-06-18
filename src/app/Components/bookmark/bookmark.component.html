@@ -1,0 +1,85 @@
+<div class="container">
+<div class="d-flex justify-content-between">
+    <h3 class="font-sarabun">{{jobPostDetails?.title}}</h3>
+    <div>
+            <button class="btn background-btn text-white ms-2" data-bs-toggle="modal" data-bs-target="#JobApp">Apply Now</button>        
+    </div>
+    
+</div>
+<div class="d-flex justify-content-between">
+    <p class="font-size-18 font-lato">{{jobPostDetails?.salaryRangeFrom|currency:"EGP"}}-{{jobPostDetails?.salaryRangeTo|currency:"EGP"}}</p>
+    
+</div>
+
+<div>
+<div>
+    <i class="fas fa-house me-1"></i>
+    <span class="font-lato fw-light">{{jobPostDetails?.location}}</span>
+</div>
+</div>
+<div class="mt-1">
+<button class="btn type-btn rounded-0">{{jobPostDetails?.type}}</button>
+</div>
+<div class="mt-4">
+<h3 class="font-size-16">Contact Recruiter</h3>
+<div class=" justify-content-between">
+<div class="border p-3">
+    <div class="d-flex justify-content-between gap-2 align-items-center">
+        <div>
+            <p>{{jobPostDetails?.jobProvider?.companyName}}</p>
+            <p class="rounded back-orange p-1 font-orange font-sarabun">Job Poster</p>
+        </div>
+        <button class="font-green btn" (click)="openMessage(jobPostDetails?.jobProvider?.id)"><i class="fas fa-envelope font-green"></i> Message</button>
+
+    </div>
+    <span class="font-lato font-size-16 font-grey">{{jobPostDetails?.jobProvider?.category}}</span>
+</div>
+<div>
+    
+    
+</div>
+<div class="d-flex flex-column">
+<div class="mt-2">
+    <h2 class="fw-bold font-lato font-size-16">Job Description</h2>
+    <p class="font-size-16 font-lato font-grey">{{jobPostDetails?.description}}</p>
+  </div>
+  <div>
+    <h2 class="fw-bold font-lato font-size-16">Responsibilities</h2>
+    <ul class="list list-unstyled">
+        @for (item of jobPostDetails?.requirements; track $index) 
+        {
+            <li><i class="fa-regular fa-circle-check check"></i> {{item?.reqName}}</li>
+        }
+    </ul>
+  </div>
+  <div class="p-5 background-grey">
+    <!-- company info -->
+    <div class="d-flex justify-content-between">
+        <h3 class="font-size-16 fw-semibold font-lato">About Company</h3>
+        <a class="font-size-14 font-lato text-decoration-none font-green" [routerLink]="'/CompanyProfile/'+jobPostDetails?.jobProvider.id" >View Company Profile</a>
+    </div>
+    <div class="d-flex gap-2 align-items-center my-3">
+        <img [src]="jobPostDetails?.jobProvider?.logo" onerror="this.src='../../../assets/Images/PlaceHolder.jpg'" [alt]="jobPostDetails?.companyName" class="img-cover">
+        <p class="font-sarabun font-size-18">{{jobPostDetails?.jobProvider?.companyName}}</p>
+    </div>
+    <p class="font-size-16 font-lato fw-normal">{{jobPostDetails?.jobProvider?.description}}</p>
+    <div>
+        <div class="row gy-4 font-grey font-lato font-size-16">
+            <div class="col-md-6">
+                <i class="fa-solid fa-building"></i> {{jobPostDetails?.jobProvider?.category}}
+            </div>
+            <div class="col-md-6">
+                <i class="fa-solid fa-user"></i> {{jobPostDetails?.jobProvider?.noOfEmployees}} employees
+            </div>
+            <div class="col-md-6">
+                <i class="fa-solid fa-location-dot"></i> {{jobPostDetails?.jobProvider?.location}}
+            </div>
+            <div class="col-md-6">
+                <i class="fa-solid fa-calendar"></i> Mon - Fri
+            </div>
+        </div>
+    </div>
+</div>
+  </div>
+</div>
+</div>
