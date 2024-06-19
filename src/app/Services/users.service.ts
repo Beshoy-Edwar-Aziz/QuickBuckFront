@@ -25,4 +25,7 @@ export class UsersService {
   GetJobSeekerById(id:number):Observable<any>{
     return this._httpClient.get(`https://localhost:7156/api/JobSeeker/${id}`);
   }
+  updateJobSeeker(Body:object):Observable<any>{
+    return this._httpClient.put('https://localhost:7156/api/JobSeeker',Body)
+  }
 }

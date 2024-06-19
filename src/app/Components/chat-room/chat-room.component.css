@@ -44,3 +44,6 @@ i{
   .list-of-conversations:hover{
     background-color: #ECFDFC80;
   }
+  html{
+    overflow: auto;
+  }

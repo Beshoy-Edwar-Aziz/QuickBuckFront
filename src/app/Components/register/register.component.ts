@@ -73,7 +73,11 @@ export class RegisterComponent implements OnInit{
     photo:new FormControl(''),
     currentYear:new FormControl(''),
     status:new FormControl(''),
-    skillName:new FormControl('')
+    skillName:new FormControl(''),
+    skillName2:new FormControl(''),
+    skillName3:new FormControl(''),
+    skillName4:new FormControl(''),
+    skillName5:new FormControl('')
 
   })
   body:any
@@ -131,6 +135,18 @@ export class RegisterComponent implements OnInit{
         "skills": [
           {
             "name": this.Register.value.skillName
+          },
+          {
+            "name":this.Register.value.skillName2
+          },
+          {
+            "name":this.Register.value.skillName3
+          },
+          {
+            "name":this.Register.value.skillName4
+          },
+          {
+            "name":this.Register.value.skillName5
           }
         ]
       }

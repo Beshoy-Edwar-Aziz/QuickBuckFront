@@ -43,6 +43,11 @@ label{
 }
 .background{
     background-image: url(../../../assets/Images/Image\ 21.png);
+    width: 100%;
+    min-height: 40vh;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 .font-sarabun{
     font-family: "Sarabun", sans-serif;

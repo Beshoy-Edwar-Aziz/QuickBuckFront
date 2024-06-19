@@ -21,7 +21,7 @@
                 <div class="d-flex align-items-center flex-column">
                     <p>Profile Link</p>
                     <input type="text" class="form-control rounded-0 w-50 bg-body-secondary" disabled [value]="'http://localhost:4200/UserProfile/'+Id">
-                    <button class="btn background-green fw-normal font-lato font-size-16 my-3"><i class="fa-solid fa-pen"></i> Edit Profile</button>
+                    <button class="btn background-green fw-normal font-lato font-size-16 my-3" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-pen"></i> Edit Profile</button>
                 </div>
                 
                 
@@ -33,8 +33,8 @@
         </div>
             <div class="col-md-8 ">
                 <div class="d-flex flex-column align-items-center">
-                    <h2> <i class="fas fa-wallet"></i> {{UserData?.walletBalance}}</h2>
-                    <button class="btn btn-outline-dark">Charge Your Wallet</button>
+                    <h2> <i class="fas fa-wallet"></i> {{UserData?.wallet.balance|currency}}</h2>
+                    <button class="btn btn-outline-dark" (click)="PayForCharge(90)">Charge Your Wallet</button>
                 </div>
                 <div class="">
                     <div>
@@ -66,6 +66,43 @@
                 </div>
                 
             </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <form (submit)="handleEdit()" [formGroup]="EditProfile" class="font-lato">
+                            <label class="form-label">id</label>
+                            <input type="text" class="form-control" formControlName="id" [value]="UserData?.id">
+                            <label class="form-label">University</label>
+                            <input type="text" class="form-control" formControlName="university" [value]="UserData?.university">
+                            <label class="form-label">College</label>
+                            <input type="text" class="form-control" formControlName="college" [value]="UserData?.college">
+                            <label class="form-label">Photo</label>
+                            <input type="file" class="form-control" formControlName="photo" (change)="handlePhotos($event)">
+                            <label class="form-label">Current Year</label>
+                            <input type="text" class="form-control" formControlName="currentYear" [value]="UserData?.currentYear">
+                            <label class="form-label">Status</label>
+                            <input type="text" class="form-control" formControlName="status" [value]="UserData?.status">
+                            <label class="form-label">Skill</label>
+                            <input type="text" class="form-control" formControlName="skills" [value]="UserData?.skills[0]?.name">
+                            <label class="form-label">Skill2</label>
+                            <input type="text" class="form-control" formControlName="skills2" [value]="UserData?.skills[1]?.name">
+                            <label class="form-label">Skill3</label>
+                            <input type="text" class="form-control" formControlName="skills3" [value]="UserData?.skills[2]?.name">
+                            <label class="form-label">Skill4</label>
+                            <input type="text" class="form-control" formControlName="skills4" [value]="UserData?.skills[3]?.name">
+                            <label class="form-label">Skill5</label>
+                            <input type="text" class="form-control" formControlName="skills5" [value]="UserData?.skills[4]?.name">
+                            <button class="btn btn-outline-dark my-4" type="submit">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+
+                </div>
+                </div>
+            </div>
+  
         </div>
-    </div>
 </section>

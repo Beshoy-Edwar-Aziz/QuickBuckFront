@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { RouterOutlet,RouterModule, Router } from '@angular/router';
 import { HttpClientModule,HttpClient } from '@angular/common/http';
 import { UsersService } from './Services/users.service';
@@ -17,10 +17,19 @@ import { JobPostingService } from './Services/job-posting.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, AfterViewInit{
   title = 'QuickBuck';
   constructor(private _userService:UsersService, private _authService:AuthServiceService, private _chatService:ChatService, private _jobPostingService:JobPostingService, private _router:Router){
     
+  }
+  ngAfterViewInit(): void {
+    if(localStorage.getItem('Token')!=null){
+      this.Token==this._authService.Token;
+    }else if(localStorage.getItem('Token')==null||localStorage.getItem('Token')==''){
+      this.Token =null;
+    }
+console.log(this.Token);
+
   }
   User:any;
   Token:any;
@@ -30,9 +39,12 @@ export class AppComponent implements OnInit{
   Messages:any;
   Count:number=0;
   BookMarks:any;
-  ngOnInit(): void {
-   console.log(this.UserInfo);
+  ngOnInit(): void {    
    
+   console.log(this.UserInfo);
+    console.log(this.TokenService);
+    console.log(this.Token);
+    
     this._userService.GetAllJobSeekers().subscribe({
       next:(data)=>{
         console.log(data);
@@ -65,6 +77,7 @@ export class AppComponent implements OnInit{
     this.Token = (localStorage.getItem('Token'));
     console.log(jwtDecode(this.Token));
     this.TokenService=this._authService.Token;
+    console.log(this.TokenService.sub);
     
     if(this.TokenService.sub=="JobSeeker"){
       this._userService.GetJobSeekerByUserName(this.TokenService.name).subscribe({
@@ -74,6 +87,8 @@ export class AppComponent implements OnInit{
           console.log(this.UserInfo);
           this.Id=data.id;
           this._authService.updateId(data.id);
+          console.log(this.Id);
+          
           this._chatService.getMessagesByJobSeekerId(this.Id,0).subscribe({
             next:(data)=>{
               console.log(data);
@@ -97,7 +112,7 @@ export class AppComponent implements OnInit{
          
           this.Id=data.id;
           this._authService.updateId(data.id);
-          this._chatService.getMessagesByJobSeekerId(this.Id,0).subscribe({
+          this._chatService.getMessagesByJobSeekerId(0,this.Id).subscribe({
             next:(data)=>{
               console.log(data);
               this.Messages=data;
@@ -148,5 +163,32 @@ export class AppComponent implements OnInit{
   }
   openBookmarkPage(JobPostId:number):void{
     this._router.navigate([`/Bookmark/${JobPostId}`])
+  }
+  OpenLatestMessages():void{
+    console.log(this.Id);
+    
+    if(this.TokenService.sub=="JobSeeker"){
+      this._chatService.getMessagesByJobSeekerId(this.Id,0).subscribe({
+        next:(data)=>{
+          console.log(data);
+          this.Messages=data;
+        },
+        error:(err)=>{
+          console.log(err);
+          
+        }
+      })
+    }else if(this.TokenService.sub=="JobProvider"){
+      this._chatService.getMessagesByJobSeekerId(this.Id,0).subscribe({
+        next:(data)=>{
+          console.log(data);
+          this.Messages=data;
+        },
+        error:(err)=>{
+          console.log(err);
+          
+        }
+      })
+    }
   }
 }
