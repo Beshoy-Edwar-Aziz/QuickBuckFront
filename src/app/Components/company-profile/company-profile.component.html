@@ -2,9 +2,9 @@
     @if(jobProviderDetails==null){
    <app-loading></app-loading>
     }
-    <div class="background-image log position-relative ">
+    <div class="background-image log position-relative " data-aos="zoom-out" data-aos-duration="1000">
         <div class=" position-absolute  logger">
-            <img [src]="jobProviderDetails?.logo" class="img-cover2" [alt]="jobProviderDetails?.companyName">
+            <img [src]="jobProviderDetails?.logo" class="img-cover2" [alt]="jobProviderDetails?.companyName" data-aos="zoom-in" data-aos-duration="1000">
         </div>
     </div>
     <div class="container">
@@ -19,7 +19,7 @@
                     <div class="d-flex gap-2 align-items-center">
                         <h2 class="font-size-20"><i class="fas fa-wallet "></i> {{jobProviderDetails?.wallet?.balance|currency}}</h2>
                     </div>
-                    <button class="btn btn-outline-dark" (click)="PayForCharge(90)">Charge Your Wallet</button>
+                    <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Charge Your Wallet</button>
                 </div>
             }
             </div>
@@ -46,25 +46,25 @@
             </div>
             <div class="mt-2 border p-4">
                 <div class="d-flex justify-content-between">
-                    <h3 class="font-lato font-size-20 fw-bold">Life At {{jobProviderDetails?.companyName}}</h3>
+                    <h3 class="font-lato font-size-20 fw-bold" data-aos="zoom-out" data-aos-duration="1000">Life At {{jobProviderDetails?.companyName}}</h3>
                     <div>
                         <button class="btn btn-outline-secondary rounded-circle"><i class="fa-solid fa-arrow-left"></i></button>
                         <button class="btn btn-outline-secondary rounded-circle ms-1"><i class="fa-solid fa-arrow-right"></i></button>
                     </div>
                 </div>
                 <div class="d-flex flex-column flex-lg-row gap-2 my-4">
-                    <img src="../../../assets/Images/Image 35.png" class="w-100" [alt]="jobProviderDetails?.companyName">
-                    <img src="../../../assets/Images/Image 36.png" class="w-100" [alt]="jobProviderDetails?.companyName">
-                    <img src="../../../assets/Images/Image 37.png" class="w-100" [alt]="jobProviderDetails?.companyName">
+                    <img src="../../../assets/Images/Image 35.png" data-aos="zoom-out" data-aos-duration="1000" class="w-100" [alt]="jobProviderDetails?.companyName">
+                    <img src="../../../assets/Images/Image 36.png" data-aos="zoom-out" data-aos-duration="1000" class="w-100" [alt]="jobProviderDetails?.companyName">
+                    <img src="../../../assets/Images/Image 37.png" data-aos="zoom-out" data-aos-duration="1000" class="w-100" [alt]="jobProviderDetails?.companyName">
                 </div>
             </div>
 
             <div class="container border mt-4 p-2">
-                <h3 class="font-lato font-size-20 fw-bold my-3">Recent Job Openings</h3>
+                <h3 class="font-lato font-size-20 fw-bold my-3" data-aos="zoom-out" data-aos-duration="1000">Recent Job Openings</h3>
 
                 <div class="row gy-2">
                     @for (item of latestJobPosts; track item.id) {
-                    <div class="col-12 col-lg-6 ">  
+                    <div class="col-12 col-lg-6 " data-aos="zoom-out" data-aos-duration="1000">  
                         <div class="d-flex align-items-center gap-4 background-grey p-2">
                             <div class="align-self-start">
                                 <img [src]="item?.jobProvider.logo" class="img-cover" [alt]="item?.jobProvider.companyName">
@@ -85,4 +85,21 @@
         </section>
         </div>
     
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Balance You Need To Charge</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="form-control" id="balance"  placeholder="Enter The Balance You Want To Charge">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="PayForCharge()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

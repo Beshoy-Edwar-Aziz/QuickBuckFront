@@ -105,7 +105,12 @@ export class UserProfileComponent implements OnInit {
         }
       })
    }
-   PayForCharge(Balance:number){
+   PayForCharge(){
+    let input:any = document.getElementById('balance');
+    let Balance = input.value;
+    localStorage.setItem('PaymentType','Charge');
+    let PaymentType = localStorage.getItem('PaymentType');
+    console.log(PaymentType);
     this._paymentService.createOrUpdatePaymentIntent(this.UserData.wallet.id,Balance).subscribe({
       next:(data)=>{
         console.log(data);

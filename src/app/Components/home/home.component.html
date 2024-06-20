@@ -2,12 +2,12 @@
     <h1 class="font-sarabun font-size-48 my-4">Search <span class="font-green">Jobs</span></h1>
     @if(JobPosts?.length==0){
  <app-loading></app-loading>
+    }@else{
+        <ng-template #name>
+            <h1>No Posts To Display</h1>
+        </ng-template>
     }
-   @if (JobPosts==null) {
-    <ng-template #name>
-        <h1>No Posts To Display</h1>
-    </ng-template>
-}
+   
  <div class="row font-manrope">
         <div class="col-md-4">
             <p class="font-lato fw-bold font-size-16">Search</p>
@@ -196,7 +196,7 @@
             @if(jobPostDetails.length!=0){
                 <div class="container">
                 <div class="">
-                    <div class="background w-100">
+                    <div class="background w-100" data-aos="fade-up" data-aos-duration="1000">
 
                     </div>
                     <div class="d-flex justify-content-between">
@@ -241,7 +241,7 @@
                 <div class="mt-1">
                     <button class="btn type-btn rounded-0">{{jobPostDetails.type}}</button>
                 </div>
-                <div class="mt-4 border p-2">
+                <div class="mt-4 border p-2" data-aos="zoom-in" data-aos-duration="1000">
                     <h3 class="font-size-16">Contact Recruiter</h3>
                     <div class="d-flex justify-content-between">
                     <div>
@@ -346,19 +346,19 @@
              <!--  -->
                 </div>
                 <div class="mt-2">
-                    <h2 class="fw-bold font-lato font-size-16">Job Description</h2>
-                    <p class="font-size-16 font-lato font-grey">{{jobPostDetails.description}}</p>
+                    <h2 class="fw-bold font-lato font-size-16" >Job Description</h2>
+                    <p class="font-size-16 font-lato font-grey" data-aos="fade-up" data-aos-duration="1000">{{jobPostDetails.description}}</p>
                   </div>
                   <div>
                     <h2 class="fw-bold font-lato font-size-16">Responsibilities</h2>
                     <ul class="list list-unstyled">
                         @for (item of jobPostDetails.requirements; track $index) 
                         {
-                            <li><i class="fa-regular fa-circle-check check"></i> {{item.reqName}}</li>
+                            <li data-aos="fade-up" data-aos-duration="1000"><i class="fa-regular fa-circle-check check"></i> {{item.reqName}}</li>
                         }
                     </ul>
                   </div>
-                  <div class="p-5 background-grey">
+                  <div class="p-5 background-grey" data-aos="zoom-out" data-aos-duration="1000">
                     <!-- company info -->
                     <div class="d-flex justify-content-between">
                         <h3 class="font-size-16 fw-semibold font-lato">About Company</h3>

@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-
+  User:BehaviorSubject<any>=new BehaviorSubject('');
+  CurrentUser=this.User.asObservable();
+  updateUser(User:any){
+    this.User.next(User);
+  }
   constructor(private _httpClient:HttpClient) 
   { 
       
@@ -27,5 +31,11 @@ export class UsersService {
   }
   updateJobSeeker(Body:object):Observable<any>{
     return this._httpClient.put('https://localhost:7156/api/JobSeeker',Body)
+  }
+  updateJobSeekerPremiumStatus(JobSeekerId:number,Status:boolean){
+    return this._httpClient.put(`https://localhost:7156/api/JobSeeker/UpdatePremium?JobSeekerId=${JobSeekerId}&status=${Status}`,null);
+  }
+  updateJobProviderPremiumStatus(JobProviderId:number,Status:boolean){
+    return this._httpClient.put(`https://localhost:7156/api/JobProvider/UpdatePremium?JobProviderId=${JobProviderId}&status=${Status}`,null);
   }
 }

@@ -2,14 +2,66 @@
 <section class="container shadow-lg border row">
     <h3 class="ms-2">Register</h3>
 <div class="col-md-8">
-<form (submit)="handleRegister()" [formGroup]="Register" class="container " enctype="multipart/form-data">
+<form (submit)="handleRegister()" [formGroup]="Register" class="container d-flex flex-column" enctype="multipart/form-data">
 <h3>UserInfo</h3>
-<input type="text" formControlName="FirstName" class="form-control my-2" placeholder="FirstName">
-<input type="text" formControlName="LastName" class="form-control my-2" placeholder="LastName">
-<input type="text" formControlName="email" class="form-control my-2" placeholder="Email">
-<input type="password" formControlName="password" class="form-control my-2" placeholder="Password">
-<input type="password" formControlName="repassword" class="form-control my-2" placeholder="reEnter Your Password">
-<input type="text" formControlName="Phone" class="form-control my-2" placeholder="Phone">
+<mat-form-field appearance="fill">
+<mat-label>First Name</mat-label>
+<input matInput type="text" formControlName="FirstName" class="">
+@if(Register.get('FirstName')?.touched&&Register.get('FirstName')?.errors){
+    <mat-hint  class="text-danger">This Field is Required</mat-hint>
+}
+</mat-form-field>
+<mat-form-field>
+<mat-label>Last Name</mat-label>
+<input matInput type="text" formControlName="LastName" class="" placeholder="LastName">
+@if(Register.get('LastName')?.touched&&Register.get('LastName')?.errors){
+    <mat-hint class="text-danger">This Field is Required</mat-hint>
+}
+</mat-form-field>
+<mat-form-field>
+    <mat-label>Email</mat-label>
+<input matInput type="text" formControlName="email"  placeholder="Email">
+@if (Register.get('email')?.touched&&Register.get('email')?.errors&&Register.get('email')?.getError('required')) 
+{
+    <mat-hint>Email is required</mat-hint>
+}
+@else if (Register.get('email')?.touched&&Register.get('email')?.errors&&Register.get('email')?.getError('email')) 
+{        
+    <mat-hint>Email is invalid</mat-hint>
+}
+</mat-form-field>
+<mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput type="password" formControlName="password"  placeholder="Password">
+    @if (Register.get('password')?.touched&&Register.get('password')?.errors&&Register.get('password')?.getError('required')) 
+    {
+        <mat-hint>Password is required</mat-hint>
+    }
+    @else if (Register.get('password')?.touched&&Register.get('password')?.errors&&Register.get('password')?.getError('pattern')) 
+    {        
+        <mat-hint>Password must have a number, an uppercase, a lowercase and a symbol</mat-hint>
+    }
+</mat-form-field>
+<mat-form-field>
+    <mat-label>RePassword</mat-label>
+    <input matInput type="password" formControlName="repassword"  placeholder="reEnter Your Password">
+    @if (Register.get('repassword')?.touched&&Register.get('repassword')?.errors&&Register.get('repassword')?.getError('required')) 
+    {
+        <mat-hint>Password is required</mat-hint>
+    }
+    @else if (Register.get('repassword')?.touched&&Register.get('repassword')?.errors&&Register.get('repassword')?.getError('pattern')) 
+    {        
+        <mat-hint>Password is required</mat-hint>
+    }
+</mat-form-field>
+<mat-form-field>
+    <mat-label>Phone</mat-label>
+    <input matInput type="text" formControlName="Phone"  placeholder="Phone">
+    @if (Register.get('Phone')?.touched&&Register.get('Phone')?.errors&&Register.get('Phone')?.getError('required')) 
+    {
+        <mat-hint>Phone is required</mat-hint>
+    }
+</mat-form-field>
 <div class="d-flex gap-2" >
     <label for="JobSeeker" class="form-label ">JobSeeker</label>
     <input type="radio" formControlName="role" id="JobSeeker" class="form-check"  value="JobSeeker" (click)="check()">
@@ -17,14 +69,54 @@
     <input type="radio" formControlName="role" id="JobProvider" class="form-check" value="JobProvider" (click)="check()">
 </div>
 <h3>Address</h3>
-<input type="text" formControlName="country" class="form-control my-2" placeholder="Country">
-<input type="text" formControlName="city" class="form-control my-2" placeholder="City">
-<input type="text" formControlName="streetName" class="form-control my-2" placeholder="StreetName">
-<input type="text" formControlName="streetNumber" class="form-control my-2" placeholder="StreetNo">
+<mat-form-field>
+    <mat-label>Country</mat-label>
+    <input matInput type="text" formControlName="country"  placeholder="Country">
+    @if (Register.get('country')?.touched&&Register.get('country')?.errors&&Register.get('country')?.getError('required')) 
+    {
+        <mat-hint>Country is required</mat-hint>
+    }
+</mat-form-field>
+<mat-form-field>
+    <mat-label>City</mat-label>
+    <input type="text" matInput formControlName="city"  placeholder="City">
+    @if(Register.get('city')?.touched&&Register.get('city')?.errors&&Register.get('city')?.getError('required'))
+    {
+        <mat-hint>City is required</mat-hint>
+    }
+</mat-form-field>
+<mat-form-field>
+    <mat-label>Street Name</mat-label>
+    <input matInput type="text" formControlName="streetName"  placeholder="StreetName">
+    @if(Register.get('streetName')?.touched&&Register.get('streetName')?.errors&&Register.get('streetName')?.getError('required'))
+    {
+        <mat-hint>Street Name is required</mat-hint>
+    }
+</mat-form-field>
+<mat-form-field>
+    <mat-label>Street Number</mat-label>
+    <input matInput type="text" formControlName="streetNumber"  placeholder="StreetNo">
+    @if(Register.get('streetNumber')?.touched&&Register.get('streetNumber')?.errors&&Register.get('streetNumber')?.getError('required'))
+    {
+        Street Number is required
+    }
+</mat-form-field>
 @if(Register.value.role=="JobProvider"){
     <h3>Your Company:</h3>
-    <input type="text" formControlName="companyName" class="form-control my-2" placeholder="Your Company Name" required>
-    <input type="text" formControlName="location" class="form-control my-2" placeholder="Location" required>
+    <mat-form-field>
+        <mat-label>Company Name</mat-label>
+        <input matInput type="text" formControlName="companyName"  placeholder="Your Company Name" required>
+        @if(Register.get('companyName')?.touched&&Register.get('companyName')?.errors&&Register.get('companyName')?.getError('required')){
+            <mat-hint>Company Name is required</mat-hint>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Location</mat-label>
+        <input matInput type="text" formControlName="location"  placeholder="Location" required>
+        @if(Register.get('location')?.touched&&Register.get('location')?.errors&&Register.get('location')?.getError('required')){
+            <mat-hint>Location is required</mat-hint>
+        }
+    </mat-form-field>
     <div class="d-flex gap-2">
         <label for="Large">Large</label>
         <input type="radio" id="Large" formControlName="companySize" class="form-check" value="Large">
@@ -33,32 +125,107 @@
         <label for="Small">Small</label>
         <input type="radio" id="Small" formControlName="companySize" class="form-check" value="Small">
     </div>
-    <input type="number" formControlName="noOfEmployees" class="form-control my-2" placeholder="Number of Employees Currently Working" >
-    <input type="text" formControlName="category" class="form-control my-2" placeholder="Which Field Does Your Company belong to?" >
-    <input type="text" formControlName="webSite" class="form-control my-2" placeholder="Company's Website">
+    <mat-form-field>
+        <mat-label>Number of Employees</mat-label>
+        <input matInput type="number" formControlName="noOfEmployees"  placeholder="Number of Employees Currently Working" >
+        @if(Register.get('noOfEmployees')?.touched&&Register.get('noOfEmployees')?.errors&&Register.get('noOfEmployees')?.getError('required')){
+            <mat-hint>Number of Employees is required</mat-hint>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Category</mat-label>
+        <input matInput type="text" formControlName="category"  placeholder="Which Field Does Your Company belong to?" >
+        @if(Register.get('category')?.touched&&Register.get('category')?.errors&&Register.get('category')?.getError('required')){
+            <mat-hint>Category is required</mat-hint>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>WebSite</mat-label>
+        <input matInput type="text" formControlName="webSite"  placeholder="Company's Website">
+        @if(Register.get('webSite')?.touched&&Register.get('webSite')?.errors&&Register.get('webSite')?.getError('required')){
+            <mat-hint>WebSite is Required</mat-hint>
+        }
+    </mat-form-field>
     <input type="file" formControlName="logo" class="form-control my-2" (change)="handlePhotos($event)">
-    <input type="text" formControlName="description" class="form-control my-2" placeholder="Brief Description About Your Company">
-   
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <input matInput type="text" formControlName="description"  placeholder="Brief Description About Your Company">
+        @if(Register.get('description')?.touched&&Register.get('description')?.errors&&Register.get('description')?.getError('required')){
+            <mat-hint>Description is Required</mat-hint>
+        }
+    </mat-form-field>
 }
 @else if(Register.value.role=="JobSeeker"){
     <h3>Personal Info</h3>
-    <input type="text" formControlName="university" class="form-control my-2" placeholder="University">
-    <input type="text" formControlName="college" class="form-control my-2" placeholder="College">
-    <input type="datetime-local" formControlName="birthDate" class="my-2">
+    <mat-form-field>
+        <mat-label>University</mat-label>
+        <input matInput type="text" formControlName="university"  placeholder="University">
+        @if(Register.get('university')?.touched&&Register.get('university')?.errors&&Register.get('university')?.getError('required')){
+            <mat-hint>University is required</mat-hint>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>College</mat-label>
+        <input matInput type="text" formControlName="college"  placeholder="College">
+        @if(Register.get('college')?.touched&&Register.get('college')?.errors&&Register.get('college')?.getError('required')){
+            <mat-hint>College is required</mat-hint>
+        }
+    </mat-form-field>
+    
+        
+        <input  type="datetime-local" formControlName="birthDate" class="form-control my-2">
+      
+    
     <label class="form-label d-block">Upload Your Photo (Optional)</label>
     <input type="file" formControlName="photo" class="form-control my-2" (change)="handlePhotos($event)">
-    <input type="number" formControlName="currentYear" class="form-control my-2" placeholder="Current Year">
+    <mat-form-field>
+        <mat-label>Current Year</mat-label>
+        <input matInput type="number" formControlName="currentYear"  placeholder="Current Year">
+        @if(Register.get('currentYear')?.touched&&Register.get('currentYear')?.errors&&Register.get('currentYear')?.getError('required')){
+            <mat-hint>Current Year is required</mat-hint>
+        }
+    </mat-form-field>
     <div class="d-flex gap-2">
         <label for="under">UnderGraduate</label>
         <input type="radio" id="under" formControlName="status" class="form-check" value="UnderGraduate">
         <label for="grad">Graduate</label>
         <input type="radio" id="grad" formControlName="status" class="form-check" value="Graduate">
     </div>
-    <input type="text" formControlName="skillName" class="form-control my-2" placeholder="Skill">
-    <input type="text" formControlName="skillName2" class="form-control my-2" placeholder="Skill">
-    <input type="text" formControlName="skillName3" class="form-control my-2" placeholder="Skill">
-    <input type="text" formControlName="skillName4" class="form-control my-2" placeholder="Skill">
-    <input type="text" formControlName="skillName5" class="form-control my-2" placeholder="Skill">
+    <mat-form-field>
+        <mat-label>Skill</mat-label>
+        <input matInput type="text" formControlName="skillName"  placeholder="Skill">
+        @if(Register.get('skillName')?.touched&&Register.get('skillName')?.errors&&Register.get('skillName')?.getError('required')){
+            <mat-hint>Skill is required</mat-hint>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Skill</mat-label>
+        <input matInput type="text" formControlName="skillName2"  placeholder="Skill">
+        @if(Register.get('skillName2')?.touched&&Register.get('skillName2')?.errors&&Register.get('skillName2')?.getError('required')){
+            <mat-hint>Skill is required</mat-hint>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Skill</mat-label>
+        <input matInput type="text" formControlName="skillName3"  placeholder="Skill">
+        @if(Register.get('skillName3')?.touched&&Register.get('skillName3')?.errors&&Register.get('skillName3')?.getError('required')){
+            <mat-hint>Skill is required</mat-hint>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Skill</mat-label>
+        <input matInput type="text" formControlName="skillName4"  placeholder="Skill">
+        @if(Register.get('skillName4')?.touched&&Register.get('skillName4')?.errors&&Register.get('skillName4')?.getError('required')){
+            <mat-hint>Skill is required</mat-hint>
+        }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Skill</mat-label>
+        <input matInput type="text" formControlName="skillName5"  placeholder="Skill">
+        @if(Register.get('skillName5')?.touched&&Register.get('skillName5')?.errors&&Register.get('skillName5')?.getError('required')){
+            <mat-hint>Skill is required</mat-hint>
+        }
+    </mat-form-field>
 }
 <button [disabled]="Register.invalid" class="btn btn-outline-dark ">Submit</button>
 </form>

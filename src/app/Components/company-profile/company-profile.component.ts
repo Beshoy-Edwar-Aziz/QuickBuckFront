@@ -8,7 +8,7 @@ import { PaymentService } from '../../Services/payment.service';
 import Swal from 'sweetalert2';
 import { AuthServiceService } from '../../Services/auth-service.service';
 import { Token } from '@angular/compiler';
-
+import AOS from 'aos'
 @Component({
   selector: 'app-company-profile',
   standalone: true,
@@ -25,7 +25,7 @@ export class CompanyProfileComponent implements OnInit {
   latestJobPosts:any;
   Token = this._authService.Token;
   ngOnInit(): void {
-
+    AOS.init();
       this.jobProviderId=this._activatedRoute.snapshot.params;
       this._userService.GetJobProviderByIdOrByUserName(this.jobProviderId.id,'').subscribe({
         next:(data)=>{
@@ -41,7 +41,14 @@ export class CompanyProfileComponent implements OnInit {
       })
       
     }
-    PayForCharge(Balance:number){
+    PayForCharge(){
+      let input:any = document.getElementById('balance');
+      let Balance:number = input.value;
+      localStorage.setItem('PaymentType','Charge');
+      let PaymentType = localStorage.getItem('PaymentType');
+      console.log(PaymentType);
+      console.log(Balance);
+      
         this._paymentService.createOrUpdatePaymentIntent(this.jobProviderDetails.wallet.id,Balance).subscribe({
           next:(data)=>{
             console.log(data);

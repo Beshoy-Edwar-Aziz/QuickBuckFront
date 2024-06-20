@@ -1,9 +1,25 @@
 <section class="container shadow-lg">
     <div class="row">
-    <form (submit)="handleLogin()" [formGroup]="Login" class="col-md-8">
-        <input type="text" class="form-control my-2 w-75 ms-5" formControlName="email" placeholder="Email">
-        <input type="password" class="form-control my-2 ms-5 w-75" formControlName="password" placeholder="Password">
-    <button class="btn btn-success ms-5">Login</button>
+    <form (submit)="handleLogin()" [formGroup]="Login" class="col-md-8 d-flex flex-column w-50 m-auto">
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput type="text" class="" formControlName="email" placeholder="Email">
+            @if(Login.get('email')?.touched&&Login.get('email')?.errors&&Login.get('email')?.getError('required')){
+                <mat-hint>Email is required</mat-hint>
+            }@else if(Login.get('email')?.touched&&Login.get('email')?.errors&&Login.get('email')?.getError('pattern')){
+                <mat-hint>Email is invalid</mat-hint>
+            }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput type="password"  formControlName="password" placeholder="Password">
+            @if(Login.get('password')?.touched&&Login.get('password')?.errors&&Login.get('password')?.getError('required')){
+                <mat-hint>Password is required</mat-hint>
+            }@else if(Login.get('password')?.touched&&Login.get('password')?.errors&&Login.get('password')?.getError('pattern')){
+                <mat-hint>Password is invalid</mat-hint>
+            }
+        </mat-form-field>
+        <button [disabled]="Login.invalid" mat-raised-button class="btn btn-success">Login</button>
     </form>
     <div class="col-md-4">
         <img src="../../../assets/Images/signin-image.jpg" alt="SignIn">

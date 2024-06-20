@@ -4,37 +4,42 @@
             <div class="col-md-4">
                 <div class="position-relative z-3 overflow-hidden">
                     <img src="../../../assets/Images/Rectangle 7.png" class="position-absolute shape z-n1" alt="">
-                <div class="rounded p-2 border">
-                <div class="d-flex justify-content-center">
-                    <img [src]="UserData?.photo" onerror="this.src='../../../assets/Images/PlaceHolder.jpg'" class="img-cover rounded-circle" [alt]="UserData?.userName">
-                </div>
-                <div class=" d-flex align-items-center flex-column my-3 border-bottom py-3">
-                    <h1 class="font-lato font-size-20 fw-semibold font-green">{{UserData?.userFName}} {{UserData?.userLName}}</h1>
-                    <p class="font-lato font-size-14 font-faint fw-normal">{{UserData?.status}}</p>
-                    <div class="d-flex">
-                        @for (item of UserData?.skills; track $index) {
-                        <button class="btn btn-background-grey font-lato">{{item?.name}}</button>
-                        }
+                    <div class="rounded p-2 border">
+                        <div class="d-flex justify-content-center">
+                            <img [src]="UserData?.photo" onerror="this.src='../../../assets/Images/PlaceHolder.jpg'"
+                                class="img-cover rounded-circle" [alt]="UserData?.userName">
+                        </div>
+                        <div class=" d-flex align-items-center flex-column my-3 border-bottom py-3">
+                            <h1 class="font-lato font-size-20 fw-semibold font-green">{{UserData?.userFName}}
+                                {{UserData?.userLName}}</h1>
+                            <p class="font-lato font-size-14 font-faint fw-normal">{{UserData?.status}}</p>
+                            <div class="d-flex">
+                                @for (item of UserData?.skills; track $index) {
+                                <button class="btn btn-background-grey font-lato">{{item?.name}}</button>
+                                }
+                            </div>
+
+                        </div>
+                        <div class="d-flex align-items-center flex-column">
+                            <p>Profile Link</p>
+                            <input type="text" class="form-control rounded-0 w-50 bg-body-secondary" disabled
+                                [value]="'http://localhost:4200/UserProfile/'+Id">
+                            <button class="btn background-green fw-normal font-lato font-size-16 my-3"
+                                data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-pen"></i>
+                                Edit Profile</button>
+                        </div>
+
+
                     </div>
-                    
+                    <div class="border p-3 my-3">
+                        <img src="../../../assets/Images/Container 82.png" class="w-100" alt="Jobs">
+                    </div>
                 </div>
-                <div class="d-flex align-items-center flex-column">
-                    <p>Profile Link</p>
-                    <input type="text" class="form-control rounded-0 w-50 bg-body-secondary" disabled [value]="'http://localhost:4200/UserProfile/'+Id">
-                    <button class="btn background-green fw-normal font-lato font-size-16 my-3" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-pen"></i> Edit Profile</button>
-                </div>
-                
-                
             </div>
-            <div class="border p-3 my-3">
-                <img src="../../../assets/Images/Container 82.png" class="w-100" alt="Jobs">
-            </div>
-            </div>
-        </div>
             <div class="col-md-8 ">
                 <div class="d-flex flex-column align-items-center">
                     <h2> <i class="fas fa-wallet"></i> {{UserData?.wallet.balance|currency}}</h2>
-                    <button class="btn btn-outline-dark" (click)="PayForCharge(90)">Charge Your Wallet</button>
+                    <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#Payment">Charge Your Wallet</button>
                 </div>
                 <div class="">
                     <div>
@@ -44,65 +49,103 @@
                         <div class="border rounded p-3 my-3">
                             <h2 class="font-lato font-size-20 fw-bold">Skills</h2>
                             @for (item of UserData?.skills; track $index) {
-                                <ul class="list-unstyled">
-                                <li class="font-lato font-size-16 fw-normal"><i class="fa-regular font-green fa-circle-check check"></i> {{item?.name}}</li>
-                                </ul>
+                            <ul class="list-unstyled">
+                                <li class="font-lato font-size-16 fw-normal"><i
+                                        class="fa-regular font-green fa-circle-check check"></i> {{item?.name}}</li>
+                            </ul>
                             }
                         </div>
                         <div class="border rounded p-3">
                             <h2 class="font-lato font-size-20 fw-bold">Education</h2>
                             <div class="d-flex gap-2">
                                 <div>
-                                    <img src="../../../assets/Images/Image 44.png" class="img-cover2" [alt]="UserData?.university">
+                                    <img src="../../../assets/Images/Image 44.png" class="img-cover2"
+                                        [alt]="UserData?.university">
                                 </div>
                                 <div>
                                     <p class="fw-bold font-lato font-size-16">{{UserData?.university}}</p>
-                                    <p class="font-grey font-lato font-size-14"><i class="fa-solid fa-sitemap"></i> <span class="ms-2">{{UserData?.college}}</span></p>
+                                    <p class="font-grey font-lato font-size-14"><i class="fa-solid fa-sitemap"></i>
+                                        <span class="ms-2">{{UserData?.college}}</span></p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                </div>
-                
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <form (submit)="handleEdit()" [formGroup]="EditProfile" class="font-lato">
-                            <label class="form-label">id</label>
-                            <input type="text" class="form-control" formControlName="id" [value]="UserData?.id">
-                            <label class="form-label">University</label>
-                            <input type="text" class="form-control" formControlName="university" [value]="UserData?.university">
-                            <label class="form-label">College</label>
-                            <input type="text" class="form-control" formControlName="college" [value]="UserData?.college">
-                            <label class="form-label">Photo</label>
-                            <input type="file" class="form-control" formControlName="photo" (change)="handlePhotos($event)">
-                            <label class="form-label">Current Year</label>
-                            <input type="text" class="form-control" formControlName="currentYear" [value]="UserData?.currentYear">
-                            <label class="form-label">Status</label>
-                            <input type="text" class="form-control" formControlName="status" [value]="UserData?.status">
-                            <label class="form-label">Skill</label>
-                            <input type="text" class="form-control" formControlName="skills" [value]="UserData?.skills[0]?.name">
-                            <label class="form-label">Skill2</label>
-                            <input type="text" class="form-control" formControlName="skills2" [value]="UserData?.skills[1]?.name">
-                            <label class="form-label">Skill3</label>
-                            <input type="text" class="form-control" formControlName="skills3" [value]="UserData?.skills[2]?.name">
-                            <label class="form-label">Skill4</label>
-                            <input type="text" class="form-control" formControlName="skills4" [value]="UserData?.skills[3]?.name">
-                            <label class="form-label">Skill5</label>
-                            <input type="text" class="form-control" formControlName="skills5" [value]="UserData?.skills[4]?.name">
-                            <button class="btn btn-outline-dark my-4" type="submit">Save Changes</button>
-                        </form>
-                    </div>
-                </div>
 
                 </div>
+
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="font-sarabun font-size-20">Edit User's Info</h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                        </div>
+                        <div class="modal-body">
+                            <form (submit)="handleEdit()" [formGroup]="EditProfile" class="font-lato">
+                                <label class="form-label">id</label>
+                                <input type="text" class="form-control" formControlName="id" [value]="UserData?.id">
+                                <label class="form-label">University</label>
+                                <input type="text" class="form-control" formControlName="university"
+                                    [value]="UserData?.university">
+                                <label class="form-label">College</label>
+                                <input type="text" class="form-control" formControlName="college"
+                                    [value]="UserData?.college">
+                                <label class="form-label">Photo</label>
+                                <input type="file" class="form-control" formControlName="photo"
+                                    (change)="handlePhotos($event)">
+                                <label class="form-label">Current Year</label>
+                                <input type="text" class="form-control" formControlName="currentYear"
+                                    [value]="UserData?.currentYear">
+                                <label class="form-label">Status</label>
+                                <input type="text" class="form-control" formControlName="status"
+                                    [value]="UserData?.status">
+                                <label class="form-label">Skill</label>
+                                <input type="text" class="form-control" formControlName="skills"
+                                    [value]="UserData?.skills[0]?.name">
+                                <label class="form-label">Skill2</label>
+                                <input type="text" class="form-control" formControlName="skills2"
+                                    [value]="UserData?.skills[1]?.name">
+                                <label class="form-label">Skill3</label>
+                                <input type="text" class="form-control" formControlName="skills3"
+                                    [value]="UserData?.skills[2]?.name">
+                                <label class="form-label">Skill4</label>
+                                <input type="text" class="form-control" formControlName="skills4"
+                                    [value]="UserData?.skills[3]?.name">
+                                <label class="form-label">Skill5</label>
+                                <input type="text" class="form-control" formControlName="skills5"
+                                    [value]="UserData?.skills[4]?.name">
+                                <button class="btn btn-outline-dark my-4" type="submit">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-  
+            <!-- Payment Modal -->
+             <!-- Modal -->
+            <div class="modal fade" id="Payment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Balance You Need To Charge</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" class="form-control" id="balance" placeholder="Enter The Balance You Want To Charge">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="PayForCharge()">Save
+                                changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+    </div>
+    
 </section>

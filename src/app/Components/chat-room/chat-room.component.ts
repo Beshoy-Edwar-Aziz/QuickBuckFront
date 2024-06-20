@@ -86,13 +86,16 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
               if(this.user==x.jobSeeker.userName){
                 list.style.backgroundColor=" #ECFDFC";
                 list.style.textAlign="left";
+                list.classList.add('rounded');
                 list.classList.add('my-2');
+                list.classList.add('p-3');
               }
               else{
                 list.style.backgroundColor="#F2F2F2";
                 list.style.textAlign="right";
+                list.classList.add('rounded')
                 list.classList.add('my-2');
-  
+                list.classList.add('p-3');
               }
               list.innerHTML = `${this.RecievedMsg}`
               let unorderedList = document.getElementById('MessageWindow');

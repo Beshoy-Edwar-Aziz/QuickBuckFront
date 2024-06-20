@@ -12,6 +12,8 @@ import { LoadingComponent } from '../loading/loading.component';
 import { Router, RouterModule } from '@angular/router';
 import { ChatService } from '../../Services/chat.service';
 import { Token } from '@angular/compiler';
+import { PaymentService } from '../../Services/payment.service';
+import AOS from "aos";
 let {required,pattern,maxLength,minLength} = Validators;
 
 @Component({
@@ -23,7 +25,7 @@ let {required,pattern,maxLength,minLength} = Validators;
 })
 
 export class HomeComponent implements OnInit {
-  constructor(private _chatService:ChatService,private _jobPostingService:JobPostingService, private _authService:AuthServiceService,private _userService:UsersService, private _router:Router){
+  constructor(private _chatService:ChatService,private _jobPostingService:JobPostingService, private _authService:AuthServiceService,private _userService:UsersService, private _router:Router,private _paymentService:PaymentService){
 
   }
   JobPosts:any=[];
@@ -66,7 +68,7 @@ export class HomeComponent implements OnInit {
   jobPostDetails:any=[];
   JobProviderCheck:any;
   ngOnInit(): void {
-   
+   AOS.init();
     this._jobPostingService.GetAllJobPosts().subscribe({
       next:(JobPosts)=>{
         console.log(JobPosts);
@@ -468,4 +470,5 @@ jobSeeker:any;
       }
     })
   }
+  
 }

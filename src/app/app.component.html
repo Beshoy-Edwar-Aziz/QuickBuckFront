@@ -87,13 +87,22 @@
         <a class="" [routerLink]="'UserProfile/'+Id">
           <img [src]="UserInfo?.photo" class="img-cover" onerror="this.src='../assets/Images/PlaceHolder.jpg'" [alt]="UserInfo?.userName">
         </a>
+        @if(UserInfo?.premium==false){
+        <button class="btn btn-outline-dark mx-2" data-bs-toggle="modal" data-bs-target="#SubSeeker">Upgrade To Premium</button>
+        }@else {
+          <h3 class="mx-2 font-lato font-size-20 fw-normal">Premium User</h3>
+        }
       }
       @else if(TokenService?.sub=="JobProvider") {
         <a class="" [routerLink]="'CompanyProfile/'+Id">
           <img [src]="UserInfo?.logo"  class="img-cover" onerror="this.src='../assets/Images/PlaceHolder.jpg'" [alt]="UserInfo?.companyName">
           
         </a>
-        <button class="btn btn-outline-dark mx-2">Upgrade To Premium</button>
+        @if(UserInfo?.premium==false){
+        <button class="btn btn-outline-dark mx-2" data-bs-toggle="modal" data-bs-target="#SubProvider">Upgrade To Premium</button>
+        }@else {
+          <h3 class="mx-2 font-lato font-size-20 fw-normal">Premium User</h3>
+        }
       }
         <li class="nav-item mt-3" (click)="signOut()">
           <p class="nav-link pointer">SignOut</p>
@@ -103,6 +112,87 @@
       </ul>
     </div>
   </div>
+  <!--Subscription Modal -->
+  <div class="modal fade" id="SubProvider" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Subscription Models</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex justify-content-center">
+            <!-- Card1 -->
+            <div class="card w-50">
+              <div class="card-body">
+                <h5 class="card-title font-sarabun font-size-40 text-center fw-light">Premium Recruitment</h5>
+                <ul class="list-unstyled font-lato font-size-14">
+                  <li><i class="fa-regular fa-circle-check check font-green"></i> Dedicated Human Account Managers For Personalized Recruitment Assistance</li>
+                  <li><i class="fa-regular fa-circle-check check font-green my-2"></i> Mangement of Internship Programs and Recruitment Campaigns</li>
+                </ul>
+                <div class="d-flex flex-column align-items-center">
+                  <p class="font-lato fw-light font-size-20">$2000</p>
+                  <p class="font-lato font-size-12">Per Month</p>
+                  <button mat-raised-button class="bg-primary text-white" (click)="PayForCharge(2000)" data-bs-dismiss="modal">Select</button>
+                </div>
+              </div>
+            </div>
+            </div>
+             <!--  -->
+        </div>
+       
+      </div>
+    </div>
+  </div>
+  <!--  -->
+  <!-- Sub Modal For Seeker -->
+  <div class="modal fade" id="SubSeeker" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Subscription Models</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex justify-content-around gap-3">
+            <!-- Card1 -->
+            <div class="card w-50">
+              <div class="card-body">
+                <h5 class="card-title font-sarabun font-size-40 text-center fw-light">Personalized Support</h5>
+                <ul class="list-unstyled font-lato font-size-14">
+                  <li><i class="fa-regular fa-circle-check check font-green"></i> Dedicated Career Advisors or Account Managers Offering Personalized Guidance and Support Throught The Job Search Process</li>
+                  <li><i class="fa-regular fa-circle-check check font-green my-2"></i> Monthly Zoom Meetings Covering Resume Building, Interview Prepartion and Career Advancement Strategies</li>
+                </ul>
+                <div class="d-flex flex-column align-items-center">
+                  <p class="font-lato fw-light font-size-20">$80</p>
+                  <p class="font-lato font-size-12">Per Month</p>
+                  <button mat-raised-button class="bg-primary text-white" (click)="PayForCharge(80)" data-bs-dismiss="modal">Select</button>
+                </div>
+              </div>
+            </div>
+            <!-- Card2 -->
+            <div class="card w-50">
+              <div class="card-body">
+                <h5 class="card-title font-sarabun font-size-40 text-center fw-light">Internship Program Recommendations</h5>
+                <ul class="list-unstyled font-lato font-size-14">
+                  <li><i class="fa-regular fa-circle-check check font-green"></i> Exclusive Access To Premium Internship Opportunities That Align With Career Goals</li>
+                  <li><i class="fa-regular fa-circle-check check font-green my-2"></i> Guidance For Applying and Securing Internships in Competitive Fields</li>
+                </ul>
+                <div class="d-flex flex-column align-items-center">
+                  <p class="font-lato fw-light font-size-20">$100</p>
+                  <p class="font-lato font-size-12">Per Month</p>
+                  <button mat-raised-button class="bg-primary text-white" (click)="PayForCharge(100)" data-bs-dismiss="modal">Select</button>
+                </div>
+              </div>
+            </div>
+            </div>
+             <!--  -->
+        </div>
+       
+      </div>
+    </div>
+  </div>
+  <!--  -->
 </nav>
 <section>
  <router-outlet></router-outlet>

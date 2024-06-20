@@ -4,13 +4,17 @@ import { AuthServiceService } from '../../Services/auth-service.service';
 import { ReactiveFormsModule} from '@angular/forms';
 import { FormControl, FormGroup, MinLengthValidator, RequiredValidator, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatButtonModule } from '@angular/material/button';
 
 let {pattern,minLength,maxLength,email,required} = Validators;
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [HttpClientModule,ReactiveFormsModule],
+  imports: [HttpClientModule,ReactiveFormsModule,MatFormFieldModule,MatInputModule,MatDatepickerModule,MatButtonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -79,7 +83,17 @@ export class RegisterComponent implements OnInit{
     skillName4:new FormControl(''),
     skillName5:new FormControl('')
 
-  })
+  },{validators:this.rePasswordCheck})
+  rePasswordCheck(form:any){
+    let Password= form.get('password');
+    let repassword = form.get('repassword');
+    if(Password?.value==repassword?.value){
+      return null;
+    }else{
+      repassword?.setErrors({repassword:"It Doesn't Match The Password"})
+      return {repassword:"It Doesn't Match The Password"}
+    }
+  }
   body:any
   checkcontrols(){
     let invalid =[];

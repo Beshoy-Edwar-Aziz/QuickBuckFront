@@ -1,5 +1,31 @@
 <div class="container">
+    <!-- Job App Modal -->
+    <div class="modal fade" id="JobApp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form (submit)="CreateJobApplication(jobPostDetails?.id)" [formGroup]="PostApplication">
+                    <label class="form-label">Upload CV</label>
+                    <input type="file" class="form-control" (change)="handleCV($event)">
+                    <label class="form-label">Status</label>
+                    <input type="text" class="form-control">
+                    <label class="form-label">Upload Cover Letter</label>
+                    <input type="file" class="form-control" (change)="handleCoverLetter($event)">
+                    <button type="submit" class="btn btn-outline-info mt-2">Upload Application</button>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div> 
+    <!--  -->
+    <div class="background w-100">
+
+    </div>
 <div class="d-flex justify-content-between">
+    
     <h3 class="font-sarabun">{{jobPostDetails?.title}}</h3>
     <div>
             <button class="btn background-btn text-white ms-2" data-bs-toggle="modal" data-bs-target="#JobApp">Apply Now</button>        

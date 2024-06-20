@@ -45,6 +45,7 @@ export class CheckoutComponent {
   JobProviderId:any=localStorage.getItem('JobProviderId');
   JobProviderIdSet:any=JSON.parse(this.JobProviderId);
   Flag:boolean=false;
+  PaymentType:any=localStorage.getItem('PaymentType');
   // --------------------------------------------------------
   private readonly fb = inject(UntypedFormBuilder);
   paymentElementForm = this.fb.group({
@@ -131,14 +132,21 @@ export class CheckoutComponent {
             this._userService.GetJobProviderByIdOrByUserName(this.JobProviderIdSet,'').subscribe({
               next:(data)=>{
                 console.log(data);
-                this._paymentService.updateBalance(data.wallet.id,this.ResultingBalance).subscribe({
+                this._paymentService.updateBalance(data.wallet.id,this.ResultingBalance,this.PaymentType).subscribe({
                   next:(data)=>{
                     console.log(data);
                     Swal.fire({
                       title:"Your Wallet Balance Updated",
-                      text:`${this.ResultingBalance} is Added To Your Wallet`,
                       icon:'success'
                     })
+                    if(this.PaymentType=="Sub"){
+                      this._userService.updateJobProviderPremiumStatus(this.JobProviderIdSet,true).subscribe({
+                        next:(data)=>{
+                          console.log(data);
+                          this._userService.updateUser(data);
+                        }
+                      })
+                    }
                     this._router.navigate([`/CompanyProfile/${this.JobProviderIdSet}`])
                   }
                 })
@@ -149,14 +157,21 @@ export class CheckoutComponent {
             let res= JSON.parse(id);
             this._userService.GetJobSeekerById(res).subscribe({
               next:(data)=>{
-                this._paymentService.updateBalance(data.wallet.id,this.ResultingBalance).subscribe({
+                this._paymentService.updateBalance(data.wallet.id,this.ResultingBalance,this.PaymentType).subscribe({
                   next:(data)=>{
                     console.log(data);
                     Swal.fire({
                       title:"Your Wallet Balance Updated",
-                      text:`${this.ResultingBalance} is Added To Your Wallet`,
                       icon:'success'
                     })
+                    if(this.PaymentType=="Sub"){
+                      this._userService.updateJobSeekerPremiumStatus(res,true).subscribe({
+                        next:(data:any)=>{
+                          console.log(data);
+                          this._userService.updateUser(data);
+                        }
+                      })
+                    }
                    this._router.navigate([`/UserProfile/${res}`]) 
                   },
                   error:(err)=>{

@@ -5,12 +5,16 @@ import { AuthServiceService } from '../../Services/auth-service.service';
 import { Router } from '@angular/router';
 import { UsersService } from '../../Services/users.service';
 import { jwtDecode } from 'jwt-decode';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+
 let {pattern,minLength,maxLength,required}= Validators
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule,HttpClientModule],
+  imports: [ReactiveFormsModule,HttpClientModule,MatFormFieldModule,MatInputModule,MatButtonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -45,6 +49,7 @@ export class LoginComponent {
           this._authService.updateJobSeekerId(data.id);
           this._authService.updateUserInfo(data);
           this._authService.updateId(data.id);
+          localStorage.setItem('JobSeekerId',JSON.stringify(data.id));
         }
        })
       }else{
@@ -55,6 +60,7 @@ export class LoginComponent {
             this._authService.updateJobProviderId(data.id);
             this._authService.updateUserInfo(data);
             this._authService.updateId(data.id);
+            localStorage.setItem('JobProviderId',JSON.stringify(data.id));
           }
         })
       }

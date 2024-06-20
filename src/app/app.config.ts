@@ -5,8 +5,9 @@ import { provideNgxStripe } from 'ngx-stripe';
 
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
 
-  providers: [provideRouter(routes),provideHttpClient(),provideNgxStripe(), provideAnimationsAsync()],
+  providers: [provideRouter(routes),provideHttpClient(),provideNgxStripe(), provideAnimationsAsync(),provideNativeDateAdapter()],
 };

@@ -10,7 +10,7 @@ export class PaymentService {
   createOrUpdatePaymentIntent(WalletId:number,Balance:number):Observable<any>{
     return this._httpClient.post(`https://localhost:7156/api/Payment?WalletId=${WalletId}&Balance=${Balance}`,null);
   }
-  updateBalance(WalletId:number,Balance:number){
-    return this._httpClient.put(`https://localhost:7156/api/Wallet?WalletId=${WalletId}&Balance=${Balance}`,null);
+  updateBalance(WalletId:number,Balance:number,PaymentType:string){
+    return this._httpClient.put(`https://localhost:7156/api/Wallet?WalletId=${WalletId}&Balance=${Balance}&PaymentType=${PaymentType}`,null);
   }
 }

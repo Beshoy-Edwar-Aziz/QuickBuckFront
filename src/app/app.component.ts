@@ -8,18 +8,21 @@ import { NgOptimizedImage, NgStyle } from '@angular/common';
 import { FooterComponent } from './Components/footer/footer.component';
 import { ChatService } from './Services/chat.service';
 import { JobPostingService } from './Services/job-posting.service';
+import { MatButtonModule } from '@angular/material/button';
+import { PaymentService } from './Services/payment.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,HttpClientModule,RouterModule,NgStyle,NgOptimizedImage,FooterComponent],
+  imports: [RouterOutlet,HttpClientModule,RouterModule,NgStyle,NgOptimizedImage,FooterComponent,MatButtonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit, AfterViewInit{
   title = 'QuickBuck';
-  constructor(private _userService:UsersService, private _authService:AuthServiceService, private _chatService:ChatService, private _jobPostingService:JobPostingService, private _router:Router){
+  constructor(private _userService:UsersService, private _authService:AuthServiceService, private _chatService:ChatService, private _jobPostingService:JobPostingService, private _router:Router, private _paymentService:PaymentService){
     
   }
   ngAfterViewInit(): void {
@@ -40,7 +43,11 @@ console.log(this.Token);
   Count:number=0;
   BookMarks:any;
   ngOnInit(): void {    
-   
+   this._userService.CurrentUser.subscribe({
+    next:(data)=>{
+      this.UserInfo=data;
+    }
+   })
    console.log(this.UserInfo);
     console.log(this.TokenService);
     console.log(this.Token);
@@ -191,4 +198,67 @@ console.log(this.Token);
       })
     }
   }
+  PayForCharge(Balance:number){
+    localStorage.setItem('PaymentType','Sub');
+    let PaymentType = localStorage.getItem('PaymentType');
+    console.log(PaymentType);
+    let User:any;
+    if(this._authService.Token.sub=="JobSeeker"){
+      this._userService.GetJobSeekerByUserName(this._authService.Token.name).subscribe({
+        next:(data)=>{
+          console.log(data);
+          User=data;
+          this._paymentService.createOrUpdatePaymentIntent(User.wallet.id,Balance).subscribe({
+            next:(data)=>{
+              console.log(data);
+              localStorage.setItem('PaymentIntentId',data.paymentIntentId);
+              localStorage.setItem('ClientSecret',data.clientSecret);
+              localStorage.setItem("Balance",JSON.stringify(Balance));
+              if(User.wallet.balance>=Balance){
+              this._router.navigate(['/Checkout']);
+              }else{
+                Swal.fire({
+                  title:"Not Enough Balance",
+                  icon:'warning'
+                })
+              }
+            },
+            error:(err)=>{
+              console.log(err);
+            }
+          });
+        }
+      })
+    }
+    else if(this._authService.Token.sub=="JobProvider"){
+      this._userService.GetJobProviderByIdOrByUserName('',this._authService.Token.name).subscribe({
+        next:(data)=>{
+          console.log(data);
+          User=data;
+          this._paymentService.createOrUpdatePaymentIntent(User.wallet.id,Balance).subscribe({
+            next:(data)=>{
+              console.log(data);
+              localStorage.setItem('PaymentIntentId',data.paymentIntentId);
+              localStorage.setItem('ClientSecret',data.clientSecret);
+              localStorage.setItem("Balance",JSON.stringify(Balance));
+              if(User.wallet.balance>=Balance){
+              this._router.navigate(['/Checkout']);
+              }else{
+                Swal.fire({
+                  title:"Not Enough Balance",
+                  icon:"warning"
+                })
+              }
+            },
+            error:(err)=>{
+              console.log(err);
+            }
+          });
+        }
+      })
+    }
+    console.log(User);
+    
+          
+}
 }
