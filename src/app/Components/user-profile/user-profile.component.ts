@@ -18,9 +18,11 @@ export class UserProfileComponent implements OnInit {
   UserData:any;
   Id:any;
   reader:any;
+  
   constructor(private _userService:UsersService, private _authService:AuthServiceService,private _activatedRoute:ActivatedRoute, private _paymentService:PaymentService, private _router:Router){
 
   }
+  Token:any = this._authService.Token;
   EditProfile:FormGroup=new FormGroup({
     id:new FormControl('',Validators.required),
     university:new FormControl('',Validators.required),
