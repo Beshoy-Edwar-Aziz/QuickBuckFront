@@ -206,6 +206,12 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
           data.reverse();
           this.Messages=data;
           this.jobProviderId=jobProviderId;
+          this._userService.GetJobProviderByIdOrByUserName(jobProviderId,'').subscribe({
+            next:(data)=>{
+              this.JobProviderInfo=data;
+            }
+          })
+          console.log(this.JobProviderInfo);
          
           this.chatService.getMessages(this.jobProviderId,this.jobSeekerId).subscribe({
             next:(data)=>{
@@ -225,6 +231,12 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
           data.reverse();
           this.Messages=data;
           this.jobSeekerId=jobSeekerId;
+          this._userService.GetJobSeekerById(jobSeekerId).subscribe({
+            next:(data)=>{
+              this.JobSeekerInfo=data;
+            }
+          })
+          
           this.chatService.getMessages(this.jobProviderId,this.jobSeekerId).subscribe({
             next:(data)=>{
               console.log(data);
