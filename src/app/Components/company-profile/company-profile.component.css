@@ -30,3 +30,18 @@ section{
 .font-semigrey{
     color:#323842FF;
 }
+.job-list{
+    transition: background-color .5s;
+  }
+  .job-list:hover{
+    background-color: #ECFDFCFF;
+    color:#000;
+  }
+  .job-list:visited{
+    background-color: #ECFDFCFF;
+  }
+  .colored-btn{
+    background:  #6D31EDFF;
+    color: #fff;
+    font-family: "Manrope", sans-serif;
+}

@@ -15,6 +15,9 @@ export class JobPostingService {
   GetAllJobPosts():Observable<any>{
     return this._httpClient.get(`https://localhost:7156/api/JobPost?PageIndex=1&PageSize=10`);
   }
+  getAllJobPostsByJobProviderId(JobProviderId:number):Observable<any>{
+    return this._httpClient.get(`https://localhost:7156/api/JobPost?JobProviderId=${JobProviderId}`);
+  }
   SearchJobPosts(JobName:string):Observable<any>{
     return this._httpClient.get(`https://localhost:7156/api/JobPost?JobName=${JobName}`);
   }
@@ -39,10 +42,16 @@ export class JobPostingService {
   UpdateJobPostWithJobApplications(JobPostId:number):Observable<any>{
     return this._httpClient.put(`https://localhost:7156/api/JobApplication?JobPostId=${JobPostId}`,null);
   }
+  UpdateJobPost(Body:object,JobPostId:number){
+    return this._httpClient.put(`https://localhost:7156/api/JobPost?JobPostId=${JobPostId}`,Body);
+  }
   bookMarkPost(Body:object,jobPostId:number,jobSeekerId:number):Observable<any>{
     return this._httpClient.post(`https://localhost:7156/api/Bookmark?JobSeekerId=${jobSeekerId}&JobPostId=${jobPostId}`,Body);
   }
   getBookmarksByJobSeekerId(JobSeekerId:number):Observable<any>{
     return this._httpClient.get(`https://localhost:7156/api/Bookmark?JobSeekerId=${JobSeekerId}`);
+  }
+  deleteJobPost(JobPostId:number):Observable<any>{
+    return this._httpClient.delete(`https://localhost:7156/api/JobPost?JobPostId=${JobPostId}`);
   }
 }

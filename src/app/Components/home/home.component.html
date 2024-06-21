@@ -363,7 +363,9 @@
                     <!-- company info -->
                     <div class="d-flex justify-content-between">
                         <h3 class="font-size-16 fw-semibold font-lato">About Company</h3>
+                        @if(decodedToken.sub=="JobSeeker"){
                         <a class="font-size-14 font-lato text-decoration-none font-green" [routerLink]="'/CompanyProfile/'+jobPostDetails.jobProvider.id" >View Company Profile</a>
+                        }
                     </div>
                     <div class="d-flex gap-2 align-items-center my-3">
                         <img [src]="jobPostDetails.jobProvider.logo" onerror="this.src='../../../assets/Images/PlaceHolder.jpg'" [alt]="jobPostDetails.companyName" class="img-cover">

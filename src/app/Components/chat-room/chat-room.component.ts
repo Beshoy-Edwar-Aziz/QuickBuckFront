@@ -89,6 +89,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
                 list.classList.add('rounded');
                 list.classList.add('my-2');
                 list.classList.add('p-3');
+                list.classList.add('Generated');
               }
               else{
                 list.style.backgroundColor="#F2F2F2";
@@ -96,9 +97,11 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
                 list.classList.add('rounded')
                 list.classList.add('my-2');
                 list.classList.add('p-3');
+                list.classList.add('Generated');
               }
               list.innerHTML = `${this.RecievedMsg}`
               let unorderedList = document.getElementById('MessageWindow');
+
               unorderedList?.appendChild(list);
             });
             
@@ -196,23 +199,49 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
   }
   openNewChat(jobSeekerId:number,jobProviderId:number):void{
     if(this.TokenRole=="JobSeeker"){
+      this.removesMessages();
       this.chatService.getMessages(jobProviderId,this.jobSeekerId).subscribe({
         next:(data)=>{
           console.log(data);
           data.reverse();
           this.Messages=data;
-          
+          this.jobProviderId=jobProviderId;
+         
+          this.chatService.getMessages(this.jobProviderId,this.jobSeekerId).subscribe({
+            next:(data)=>{
+              console.log(data);
+              data.reverse();
+              this.Messages=data;
+            }
+          })
         }
       })
     }
     else{
+      this.removesMessages();
       this.chatService.getMessages(this.jobProviderId,jobSeekerId).subscribe({
         next:(data)=>{
           console.log(data);
           data.reverse();
           this.Messages=data;
+          this.jobSeekerId=jobSeekerId;
+          this.chatService.getMessages(this.jobProviderId,this.jobSeekerId).subscribe({
+            next:(data)=>{
+              console.log(data);
+              data.reverse();
+              this.Messages=data;
+            }
+          })
         }
       })
     }
+  }
+  removesMessages():void{
+    let msg:any = document.querySelectorAll('#MessageWindow .Generated');
+    msg.forEach((element:any) => {
+      element.remove();
+    });
+    console.log(msg);
+    
   }
 }

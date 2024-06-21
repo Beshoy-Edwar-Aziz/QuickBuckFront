@@ -44,6 +44,7 @@ i{
   .list-of-conversations:hover{
     background-color: #ECFDFC80;
   }
-  html{
+  #MessageWindow{
+    height: 50vh;
     overflow: auto;
   }

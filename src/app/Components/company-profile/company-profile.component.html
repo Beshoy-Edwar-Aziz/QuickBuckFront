@@ -20,7 +20,10 @@
                         <h2 class="font-size-20"><i class="fas fa-wallet "></i> {{jobProviderDetails?.wallet?.balance|currency}}</h2>
                     </div>
                     <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Charge Your Wallet</button>
+                    <button class="btn btn-outline-dark" (click)="ShowProvidersJobPosts(jobProviderDetails?.id)" data-bs-toggle="modal" data-bs-target="#DashBoard">DashBoard</button>
+
                 </div>
+                
             }
             </div>
             <div class="row">
@@ -102,4 +105,213 @@
       </div>
     </div>
   </div>
+  <!-- Dasboard Modal -->
+  <div class="modal fade" id="DashBoard" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Provider DashBoard</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="d-flex flex-column border align-items-center gap-2 rounded p-2">
+                        <img [src]="jobProviderDetails?.logo" class="img-cover" [alt]="jobProviderDetails?.companyName">
+                        <h3 class="font-sarabun font-size-40">{{jobProviderDetails?.companyName}}</h3>
+                        <div class="w-75 text-center font-grey">
+                            <p class="font-lato font-size-16">{{jobProviderDetails?.description}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    @for (item of AllJobPosts?.data; track item?.id) 
+                    {
+                        <div class="p-2 job-list" >
+                            <div class="d-flex justify-content-between gap-2 p-2">
+                                <div class="d-flex gap-2 p-2">
+                                    <img [src]="item?.jobProvider?.logo" [alt]="item?.title" class="img-cover">
+                                    <div class="d-flex flex-column ms-2">
+                                        <h3 class="font-size-18 font-lato">{{item?.title}}</h3>
+                                        <p>{{item?.salaryRangeFrom}} - {{item?.salaryRangeTo}}</p>
+                                    </div>
+                                </div>
+                                <!-- Control Btns -->
+                                <div>
+                                    <button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#UpdateModal" (click)="OpenUpdate(item?.id)"><i class="fas fa-pen"></i></button>
+                                    <button class="btn btn-outline-danger mx-2" (click)="ConfirmDelete(item?.id)" data-bs-toggle="modal" data-bs-target="#DeleteModal"><i class="fas fa-trash"></i></button>
+                                </div>
+                                <!--  -->
+                            </div>
+                            <div class="ms-3">
+                                <p><i class="fa-solid fa-building me-3 font-grey"></i> {{item?.jobProvider?.companyName}}</p>
+                                <p><i class="fa-solid fa-location-dot me-3 font-grey"></i> {{item?.location}}</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+       
+      </div>
+    </div>
+  </div> 
+  <!--  -->
+  <!-- Updation Modal -->
+  <div class="modal fade" id="UpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Update Post</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-12">
+                        <h2 class="font-manrope fw-bold font-size-40">Post A New Job</h2>
+                        <div class="nav d-flex flex-column font-manrope">
+                            <button class="text-decoration-none btn btn-outline-dark w-50 active"
+                                id="v-pills-profile-tab" data-bs-toggle="pill"
+                                data-bs-target="#v-pills-profile">
+                                Job OverView
+                            </button>
+                            <button class="btn btn-outline-dark w-50 mt-2" role="tab" id="Req-tab"
+                                data-bs-toggle="pill" data-bs-target="#Requirments">
+                                Requirements
+                            </button>
+                            <button class="btn btn-outline-dark w-50 my-2" role="tab" id="Skill-tab"
+                                data-bs-toggle="pill" data-bs-target="#Skills">
+                                Required Skills
+                            </button>
+                            <button class="btn btn-outline-dark w-50 mb-2" role="tab" id="Info-tab"
+                                data-bs-toggle="pill" data-bs-target="#JobInfo">
+                                Job Information
+                            </button>
+                        </div>
+                        <div class="w-50">
+                            <img src="../../../assets/Images/Container 8.png" alt="Contain"
+                                class="w-100">
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-12">
+                        <form (submit)="UpdateJobPost()" [formGroup]="UpdateJob">
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="v-pills-profile"
+                                    role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
+                                    <p class="font-manrope font-size-18 fw-bold">Job OverView</p>
+                                    <label class="form-label">Job Title</label>
+                                    <input type="text" class="form-control my-2"
+                                        placeholder="Enter Post Title" formControlName="title" [value]="JobPost?.title">
+                                    <label class="form-label">Email</label>
+                                    <input type="text" class="form-control my-2" placeholder="email"
+                                        formControlName="email" [value]="JobPost?.email">
+                                    <label class="form-label">Brief Description About Your
+                                        Company</label>
+                                    <input type="text" class="form-control my-2"
+                                        placeholder="description" formControlName="description" [value]="JobPost?.description">
+                                </div>
+                                <div class="tab-pane fade" id="Skills" role="tabpanel">
+                                    <p class="font-manrope font-size-18 fw-bold">Required Skills</p>
+                                    <label class="form-label">Skill</label>
+                                    <input type="text" class="form-control my-2"
+                                        placeholder="requiredSkills" formControlName="requiredSkills" [value]="JobPost?.requiredSkills[0]?.name">
+                                    <label class="form-label">Skill 2</label>
+                                    <input type="text" class="form-control my-2"
+                                        placeholder="requiredSkills" formControlName="requiredSkills2" [value]="JobPost?.requiredSkills[1]?.name">
+                                    <label class="form-label">Skill 3</label>
+                                    <input type="text" class="form-control my-2"
+                                        placeholder="requiredSkills" formControlName="requiredSkills3" [value]="JobPost?.requiredSkills[2]?.name">
+                                    <label class="form-label">Skill 4</label>
+                                    <input type="text" class="form-control my-2"
+                                        placeholder="requiredSkills" formControlName="requiredSkills4" [value]="JobPost?.requiredSkills[3]?.name">
+                                </div>
+                                <div class="tab-pane fade" id="Requirments" role="tabpanel"
+                                    tabindex="0">
+                                    <p class="font-manrope font-size-18 fw-bold">Requirments</p>
+                                    <div class="d-flex gap-2 flex-column" id="RequiredSkills">
+                                        <label class="form-label">Requirment</label>
+                                        <input type="text" class="form-control mb-2"
+                                            placeholder="reqName" formControlName="reqName" [value]="JobPost?.requirements[0]?.reqName">
+                                        <input type="text" class="form-control mb-2"
+                                            placeholder="reqPriority" formControlName="reqPriority" [value]="JobPost?.requirements[0]?.reqPriority">
+                                        <p class="font-manrope">Requirement 2</p>
+                                        <input type="text" class="form-control mb-2"
+                                            placeholder="reqName" formControlName="reqName2" [value]="JobPost?.requirements[1]?.reqName">
+                                        <input type="text" class="form-control mb-2"
+                                            placeholder="reqPriority" formControlName="reqPriority2" [value]="JobPost?.requirements[1]?.reqPriority">
+                                        <p class="font-manrope">Requirement 3</p>
+                                        <input type="text" class="form-control mb-2"
+                                            placeholder="reqName" formControlName="reqName3" [value]="JobPost?.requirements[2]?.reqName">
+                                        <input type="text" class="form-control mb-2"
+                                            placeholder="reqPriority" formControlName="reqPriority3" [value]="JobPost?.requirements[2]?.reqPriority">
+                                        <p class="font-manrope">Requirement 4</p>
+                                        <input type="text" class="form-control mb-2"
+                                            placeholder="reqName" formControlName="reqName4" [value]="JobPost?.requirements[3]?.reqName">
+                                        <input type="text" class="form-control mb-2"
+                                            placeholder="reqPriority" formControlName="reqPriority4" [value]="JobPost?.requirements[3]?.reqPriority">
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="JobInfo" role="tabpanel" tabindex="0">
+                                    <p class="font-manrope font-size-18 fw-bold">Job Information</p>
+                                    <label class="form-label">Location</label>
+                                    <input type="text" class="form-control my-2" placeholder="location"
+                                        formControlName="location" [value]="JobPost?.location">
+                                    <div class="d-flex gap-2">
+                                        <div>
+                                            <label class="form-label">Salary Range From :</label>
+                                            <input type="number" class="form-control"
+                                                placeholder="salaryRangeFrom"
+                                                formControlName="salaryRangeFrom" [value]="JobPost?.salaryRangeFrom">
+                                        </div>
+                                        <div>
+                                            <label class="form-label">Salary Range To :</label>
+                                            <input type="number" class="form-control"
+                                                placeholder="salaryRangeTo"
+                                                formControlName="salaryRangeTo" [value]="JobPost?.salaryRangeTo">
+                                        </div>
+                                    </div>
+                                    <textarea placeholder="content" class="form-control my-2"
+                                        formControlName="content" [value]="JobPost?.content"></textarea>
+                                    <p class="fw-semibold">Employment Type</p>
+                                    <div class="d-flex gap-2">
+                                        <label for="FullTime">FullTime</label>
+                                        <input type="radio" id="FullTime" value="FullTime"
+                                            class="form-check" formControlName="type">
+                                        <label for="PartTime">PartTime</label>
+                                        <input type="radio" id="PartTime" value="PartTime"
+                                            class="form-check" formControlName="type">
+                                    </div>
+                                    <button class="btn colored-btn mt-2">Submit</button>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <!--  -->
+  <!-- Confirmation Modal -->
+  <div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+            <div class="d-flex flex-column align-items-center">
+            <i class="fas fa-warning fs-1 text-danger"></i>
+            <h2 class="font-sarabun font-size-40 fw-normal">Are You Sure You Want To Delete This Post?</h2>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-outline-danger" data-bs-dismiss="modal" (click)="DeleteJobPost()">Confirm</button>
+                <button class="btn btn-outline-dark mx-3" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!--  -->
 </div>
