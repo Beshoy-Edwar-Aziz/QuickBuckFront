@@ -3,7 +3,7 @@
     <h3 class="ms-2">Register</h3>
 <div class="col-md-8">
 <form (submit)="handleRegister()" [formGroup]="Register" class="container d-flex flex-column" enctype="multipart/form-data">
-<h3>UserInfo</h3>
+<h3>User Info</h3>
 <mat-form-field appearance="fill">
 <mat-label>First Name</mat-label>
 <input matInput type="text" formControlName="FirstName" class="">
@@ -43,8 +43,8 @@
     }
 </mat-form-field>
 <mat-form-field>
-    <mat-label>RePassword</mat-label>
-    <input matInput type="password" formControlName="repassword"  placeholder="reEnter Your Password">
+    <mat-label>ReEnter Password</mat-label>
+    <input matInput type="password" formControlName="repassword"  placeholder="ReEnter Your Password">
     @if (Register.get('repassword')?.touched&&Register.get('repassword')?.errors&&Register.get('repassword')?.getError('required')) 
     {
         <mat-hint>Password is required</mat-hint>
@@ -63,9 +63,9 @@
     }
 </mat-form-field>
 <div class="d-flex gap-2" >
-    <label for="JobSeeker" class="form-label ">JobSeeker</label>
+    <label for="JobSeeker" class="form-label ">Job Seeker</label>
     <input type="radio" formControlName="role" id="JobSeeker" class="form-check"  value="JobSeeker" (click)="check()">
-    <label for="JobProvider" class="form-label ">JobProvider</label>
+    <label for="JobProvider" class="form-label ">Job Provider</label>
     <input type="radio" formControlName="role" id="JobProvider" class="form-check" value="JobProvider" (click)="check()">
 </div>
 <h3>Address</h3>

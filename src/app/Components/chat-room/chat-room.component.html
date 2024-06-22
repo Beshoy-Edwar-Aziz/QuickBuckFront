@@ -32,7 +32,7 @@
                         </div>
                         <div class="d-flex flex-column align-content-between">
                             <div>
-                                <p class="font-lato font-size-14 fw-bold">{{item.jobSeeker.companyName}}</p> 
+                                <p class="font-lato font-size-14 fw-bold">{{item.jobSeeker.userName}}</p> 
                                 <p class="font-lato fw-light font-size-14">{{item?.content}}</p>
                             </div>
                             <p class="fw-light font-lato font-size-12">{{item?.dateTime.split('T')[1].split('.')[0]}}</p>
@@ -90,6 +90,7 @@
 
                             </div>
                         </div>
+                        <p class="font-lato font-size-14 fw-normal">{{item?.dateTime.split('T')[1].split('.')[0]}}</p>
                     </div>
                 </li>
                 }
