@@ -8,6 +8,7 @@ import { jwtDecode } from 'jwt-decode';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import Swal from 'sweetalert2';
 
 let {pattern,minLength,maxLength,required}= Validators
 
@@ -68,6 +69,11 @@ export class LoginComponent {
       },
       error:(err)=>{
         console.log(err);
+        Swal.fire({
+          title:"UnAuthorized",
+          text:'ReEnter Your Password Or Your Email',
+          icon:'error'
+        });
       }
     });
   }

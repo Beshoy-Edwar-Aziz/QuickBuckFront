@@ -1,0 +1,15 @@
+.font-green{
+    color:#0EA89BFF;
+}
+.img-cover{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.background-btn{
+    transition: background-color .5s;
+    background-color: #0EA89BFF;
+}
+.background-btn:hover{
+    background-color: #0C988DFF;
+}

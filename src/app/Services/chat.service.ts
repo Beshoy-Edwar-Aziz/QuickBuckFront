@@ -70,4 +70,7 @@ export class ChatService {
   getMessageById(MessageId:number):Observable<any>{
     return this._httpClient.get(`https://localhost:7156/api/Message/GetMsg?id=${MessageId}`);
   }
+  getMessagesByJobSeekerId2(JobSeekerId:any):Observable<any>{
+    return this._httpClient.get(`https://localhost:7156/api/Message/GetPrevious?JobSeekerId=${JobSeekerId}`);
+  }
 }

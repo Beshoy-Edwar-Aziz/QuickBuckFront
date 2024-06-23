@@ -1,0 +1,24 @@
+<div class="container">
+    <h1 class="font-green">Companies</h1>
+    <!-- <div>
+        <input type="search" id="SearchInput" class="form-control">
+    </div> -->
+    <div class="row">
+        <div class="col-md-8">
+            @for (item of Companies; track $index) {
+            <div class="d-flex my-4 p-3 border">
+                <div class="d-flex gap-2">
+                    <img [src]="item?.logo" class="img-cover" [alt]="item?.companyName">
+                    <div class="d-flex flex-column">
+                        <h2 class="font-sarabun font-size-18">{{item?.companyName}}</h2>
+                        <p class="font-lato font-size-12">{{item?.description}}</p>
+                    </div>
+                </div>
+            </div>
+        }
+        </div>
+        <div class="col-md-4">
+            <img src="../../../assets/Images/Container 61.png" class="w-100" alt="QuickBuck">
+        </div>
+    </div>
+</div>

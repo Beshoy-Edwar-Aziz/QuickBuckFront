@@ -52,15 +52,7 @@ console.log(this.Token);
     console.log(this.TokenService);
     console.log(this.Token);
     
-    this._userService.GetAllJobSeekers().subscribe({
-      next:(data)=>{
-        console.log(data);
-        this.User = data;
-      },
-      error:(err)=>{
-        console.log(err);
-      }
-    })
+    
     this._authService.CurrentUserInfo.subscribe({
       next:(data)=>{
         console.log(data);
@@ -186,7 +178,7 @@ console.log(this.Token);
         }
       })
     }else if(this.TokenService.sub=="JobProvider"){
-      this._chatService.getMessagesByJobSeekerId(this.Id,0).subscribe({
+      this._chatService.getMessagesByJobSeekerId(0,this.Id).subscribe({
         next:(data)=>{
           console.log(data);
           this.Messages=data;
@@ -261,4 +253,67 @@ console.log(this.Token);
     
           
 }
+// OpenMessages
+// ------------------------------------------------------------
+openMessage(id:number):void{
+  console.log(id);
+  if(this.TokenService.sub=="JobSeeker"){
+  this._userService.GetJobProviderByIdOrByUserName(id,'').subscribe({
+    next:(data)=>{
+      console.log(data);
+      localStorage.setItem('JobProviderId',JSON.stringify(id))
+    }
+  });
+  console.log(this._authService.Token.name);
+  this._userService.GetJobSeekerByUserName(this._authService.Token.name).subscribe({
+    next:(data)=>{
+      console.log(data);
+      
+       this._userService.GetJobSeekerById(data.id).subscribe({
+        next:()=>{
+          this._chatService.jobSeekerId=data.id;
+          console.log(this._chatService.jobSeekerId);
+          localStorage.setItem('JobSeekerId',JSON.stringify(data.id));
+          let x:any =localStorage.getItem('JobSeekerId');
+          let result=JSON.parse(x);
+          console.log(result);
+          this._authService.updateJobSeekerId(result);
+        }
+       })
+    }
+  });}
+  this._router.navigate(['/chat'])
+}
+// --------------------------------------------------
+// OpenMessageForJobProvider
+// ---------------------------------------
+openMessageTO(id:number):void{
+  if(this.TokenService.sub=="JobProvider"){
+    this._userService.GetJobSeekerById(id).subscribe({
+      next:(data)=>{
+        console.log(data);
+        this._chatService.jobSeekerId=data.id;
+      }
+    });
+    localStorage.setItem("JobSeekerId",JSON.stringify(id));
+    this._userService.GetJobProviderByIdOrByUserName('',this.TokenService.name).subscribe(
+      {
+        next:(data)=>{
+          console.log(data);
+          this._authService.updateJobProviderId(data.id);
+          this._authService.CurrentJobProvider.subscribe({
+            next:(data)=>{
+              localStorage.setItem('JobProviderId',JSON.stringify(data))
+              console.log(data);
+              
+            }
+          })
+        }
+      }
+    )
+   
+  }
+  this._router.navigate(['/chat'])
+}
+// ----------------------------------------------------------------------
 }

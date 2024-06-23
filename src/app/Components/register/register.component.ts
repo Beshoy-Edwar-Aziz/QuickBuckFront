@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
+import Swal from 'sweetalert2';
 
 let {pattern,minLength,maxLength,email,required} = Validators;
 
@@ -240,6 +241,11 @@ export class RegisterComponent implements OnInit{
       },
       error:(err)=>{
         console.log(err);
+        Swal.fire({
+          title:'Error',
+          text:`${err.error.message}`,
+          icon:'error'
+        });
       }
     });
     console.log(this.body);

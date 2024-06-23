@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-white">
   <div class="container">
-    <a class="navbar-brand" href="#"><img src="../assets/Images/last.png" class="img-cover" alt=""> QuickBuck</a>
+    <a class="navbar-brand" href="#"><img src="../assets/Images/last.svg" class="img-cover2" alt=""></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -13,11 +13,13 @@
           <a class="nav-link pointer" routerLink="Home"  routerLinkActive="green">All Jobs</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link pointer"  routerLinkActive="green">Companies</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link pointer"  routerLinkActive="green">People</a>
-  </li>
+        <a class="nav-link pointer"  routerLinkActive="green" routerLink="Companies">Companies</a>
+      </li>
+    @if(TokenService?.sub=="JobProvider"){
+      <li class="nav-item">
+        <a class="nav-link pointer"  routerLinkActive="green" routerLink="Candidates">People</a>
+      </li>
+      }
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center gap-2">
         @if(Token==null){
@@ -36,7 +38,7 @@
             <ul class="dropdown-menu p-3">
               @for (item of Messages; track $index) {
                 @if(TokenService?.sub=="JobSeeker"){
-              <li class="dropdown-item">
+              <li class="dropdown-item" (click)="openMessage(item?.jobProvider?.id)">
                   <div class="d-flex gap-2">
                     <div>
                       <img [src]="item?.jobProvider?.logo" class="img-cover" alt="">
@@ -49,7 +51,7 @@
                   </div>
                 </li>
               }@else if(TokenService?.sub=="JobProvider"){
-                <li class="dropdown-item">
+                <li class="dropdown-item" (click)="openMessageTO(item?.jobSeeker?.id)">
                   <div class="d-flex gap-2">
                     <div>
                       <img [src]="item?.jobSeeker?.photo" class="img-cover" alt="">
@@ -90,7 +92,7 @@
         @if(UserInfo?.premium==false){
         <button class="btn btn-outline-dark mx-2" data-bs-toggle="modal" data-bs-target="#SubSeeker">Upgrade To Premium</button>
         }@else {
-          <h3 class="mx-2 font-lato font-size-20 fw-normal">Premium User</h3>
+          <h3 class="mx-2 font-lato font-size-20 fw-normal text-warning"><i class="fa-solid fa-id-badge"></i></h3>
         }
       }
       @else if(TokenService?.sub=="JobProvider") {
@@ -101,7 +103,7 @@
         @if(UserInfo?.premium==false){
         <button class="btn btn-outline-dark mx-2" data-bs-toggle="modal" data-bs-target="#SubProvider">Upgrade To Premium</button>
         }@else {
-          <h3 class="mx-2 font-lato font-size-20 fw-normal">Premium User</h3>
+          <h3 class="mx-2 font-lato font-size-20 fw-normal text-warning"><i class="fa-solid fa-id-badge"></i></h3>
         }
       }
         <li class="nav-item mt-3" (click)="signOut()">
@@ -131,9 +133,9 @@
                   <li><i class="fa-regular fa-circle-check check font-green my-2"></i> Mangement of Internship Programs and Recruitment Campaigns</li>
                 </ul>
                 <div class="d-flex flex-column align-items-center">
-                  <p class="font-lato fw-light font-size-20">$2000</p>
+                  <p class="font-lato fw-light font-size-20">EGP2000</p>
                   <p class="font-lato font-size-12">Per Month</p>
-                  <button mat-raised-button class="bg-primary text-white" (click)="PayForCharge(2000)" data-bs-dismiss="modal">Select</button>
+                  <button mat-raised-button class="bg-primary text-white" (click)="PayForCharge(2000)" data-bs-dismiss="modal">Subscribe</button>
                 </div>
               </div>
             </div>
@@ -166,9 +168,9 @@
                   <li><i class="fa-regular fa-circle-check check font-green my-2"></i> Guidance For Applying and Securing Internships in Competitive Fields</li>
                 </ul>
                 <div class="d-flex flex-column align-items-center">
-                  <p class="font-lato fw-light font-size-20">$80</p>
+                  <p class="font-lato fw-light font-size-20">EGP80</p>
                   <p class="font-lato font-size-12">Per Month</p>
-                  <button mat-raised-button class="bg-primary text-white" (click)="PayForCharge(80)" data-bs-dismiss="modal">Select</button>
+                  <button mat-raised-button class="bg-primary text-white" (click)="PayForCharge(80)" data-bs-dismiss="modal">Subscribe</button>
                 </div>
               </div>
             </div>

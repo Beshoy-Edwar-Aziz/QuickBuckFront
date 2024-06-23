@@ -80,7 +80,6 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
             console.log(this.chatService.user);
             this.user= this.chatService.user;
             let list = document.createElement('li');
-            
             list?.classList?.add('list-unstyled');
             this.Messages.forEach((x:any) => {
               if(this.user==x.jobSeeker.userName){
@@ -89,6 +88,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
                 list.classList.add('rounded');
                 list.classList.add('my-2');
                 list.classList.add('p-3');
+                list.classList.add('w-50');
                 list.classList.add('Generated');
               }
               else{
@@ -97,11 +97,11 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
                 list.classList.add('rounded')
                 list.classList.add('my-2');
                 list.classList.add('p-3');
+                list.classList.add('w-50');
                 list.classList.add('Generated');
               }
               list.innerHTML = `${this.RecievedMsg}`
               let unorderedList = document.getElementById('MessageWindow');
-
               unorderedList?.appendChild(list);
             });
             
@@ -139,7 +139,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
         
       }
     })
-    this.chatService.getMessagesByJobSeekerId(this.jobSeekerId,0).subscribe({
+    this.chatService.getMessagesByJobSeekerId(this.jobSeekerId,'').subscribe({
       next:(data)=>{
         console.log(data);
         this.TalkedToPreviously=data;

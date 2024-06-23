@@ -14,8 +14,8 @@ export class UsersService {
   { 
       
   }
-  GetAllJobSeekers():Observable<any>{
-    return this._httpClient.get("https://localhost:7156/api/JobSeeker");
+  SearchJobSeekersByUserName(UserName:string):Observable<any>{
+    return this._httpClient.get(`https://localhost:7156/api/JobSeeker/SearchCandidates?UserName=${UserName}`);
   }
   GetAllJobProviders():Observable<any>{
     return this._httpClient.get(`https://localhost:7156/api/JobProvider`);

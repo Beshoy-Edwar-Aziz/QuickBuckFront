@@ -339,7 +339,6 @@ jobSeeker:any;
     this._router.navigate(['/chat'])
   }
   openMessageTO():void{
-
     if(this.decodedToken.sub=="JobProvider"){
       this._userService.GetJobSeekerById(this.ApplicantsInfo.id).subscribe({
         next:(data)=>{

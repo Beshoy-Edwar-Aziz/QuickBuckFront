@@ -11,5 +11,8 @@ export const routes: Routes = [
     {path:"CompanyProfile/:id",title:"Company Profile",pathMatch:'full',canActivate:[authGuard],loadComponent:()=>import('./Components/company-profile/company-profile.component').then(mod=>mod.CompanyProfileComponent)},
     {path:"Bookmark/:id",title:'Bookmarks',pathMatch:'full',canActivate:[authGuard],loadComponent:()=>import('./Components/bookmark/bookmark.component').then(mod=>mod.BookmarkComponent)},
     {path:"LandingPage",title:'Home',pathMatch:'full',loadComponent:()=>import('./Components/landing-page/landing-page.component').then(mod=>mod.LandingPageComponent)},
-    {path:"Checkout",title:"CheckOut",pathMatch:'full',loadComponent:()=>import('./Components/checkout/checkout.component').then(mod=>mod.CheckoutComponent)}
+    {path:"Checkout",title:"CheckOut",pathMatch:'full',loadComponent:()=>import('./Components/checkout/checkout.component').then(mod=>mod.CheckoutComponent)},
+    {path:"AboutUs",title:"About Us",pathMatch:'full',loadComponent:()=>import('./Components/about-us/about-us.component').then(mod=>mod.AboutUsComponent)},
+    {path:'Candidates',canActivate:[authGuard],title:'Candidates',pathMatch:'full',loadComponent:()=>import('./Components/candidates/candidates.component').then(mod=>mod.CandidatesComponent)},
+    {path:'Companies',canActivate:[authGuard],title:'Companies',pathMatch:'full',loadComponent:()=>import('./Components/companies/companies.component').then(mod=>mod.CompaniesComponent)}
 ];
