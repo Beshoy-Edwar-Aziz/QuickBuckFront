@@ -9,5 +9,5 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
 
-  providers: [provideRouter(routes),provideHttpClient(),provideNgxStripe(), provideAnimationsAsync(),provideNativeDateAdapter()],
+  providers: [provideRouter(routes,withHashLocation()),provideHttpClient(),provideNgxStripe(), provideAnimationsAsync(),provideNativeDateAdapter()],
 };
