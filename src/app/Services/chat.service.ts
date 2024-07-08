@@ -2,17 +2,23 @@ import { Injectable } from '@angular/core';
 import * as signalr from '@microsoft/signalr'
 import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import { AuthServiceService } from './auth-service.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-  
+  headers:HttpHeaders = new HttpHeaders({
+    'Access-Control-Allow-Origin':'http://localhost:4200'
+  });
+  options={
+    'headers':this.headers
+  }
   private hubConnection:signalr.HubConnection;
   jobSeekerId:number=0;
   jobProviderId:number=0;
+  BaseURL:string= "https://mlv0108p-7156.uks1.devtunnels.ms";
   user:string='';
   message:string='';
   messages:BehaviorSubject<any>=new BehaviorSubject('');
@@ -21,7 +27,7 @@ export class ChatService {
     this.messages.next(messages);
   }
   constructor(private _authService:AuthServiceService,private _httpClient:HttpClient) { 
-    this.hubConnection= new signalr.HubConnectionBuilder().withUrl('https://localhost:7156/chat',{
+    this.hubConnection= new signalr.HubConnectionBuilder().withUrl(`${this.BaseURL}/chat`,{
       skipNegotiation:true,
       transport:signalr.HttpTransportType.WebSockets
     }).build();
@@ -56,21 +62,21 @@ export class ChatService {
     this.hubConnection.invoke("Send",JobSeekerId,JobProviderId,message,Role,name);
   }
   getMessages(JobProviderId:any,JobSeekerId:any):Observable<any>{
-    return this._httpClient.get(`https://localhost:7156/api/Message?JobProviderId=${JobProviderId}&JobSeekerId=${JobSeekerId}`);
+    return this._httpClient.get(`${this.BaseURL}/api/Message?JobProviderId=${JobProviderId}&JobSeekerId=${JobSeekerId}`);
   }
   getAllMessagesByJobSeeker(JobSeekerId:number):Observable<any>{
-    return this._httpClient.get(`https://localhost:7156/api/Message?JobSeekerId=${JobSeekerId}`);
+    return this._httpClient.get(`${this.BaseURL}/api/Message?JobSeekerId=${JobSeekerId}`);
   }
   getAllMessagesByJobProvider(JobProviderId:number):Observable<any>{
-    return this._httpClient.get(`https://localhost:7156/api/Message?JobProviderId=${JobProviderId}`);
+    return this._httpClient.get(`${this.BaseURL}/api/Message?JobProviderId=${JobProviderId}`);
   }
   getMessagesByJobSeekerId(JobSeekerId:any,JobProviderId:any):Observable<any>{
-    return this._httpClient.get(`https://localhost:7156/api/Message/GetPrevious?JobSeekerId=${JobSeekerId}&JobProviderId=${JobProviderId}`);
+    return this._httpClient.get(`${this.BaseURL}/api/Message/GetPrevious?JobSeekerId=${JobSeekerId}&JobProviderId=${JobProviderId}`);
   }
   getMessageById(MessageId:number):Observable<any>{
-    return this._httpClient.get(`https://localhost:7156/api/Message/GetMsg?id=${MessageId}`);
+    return this._httpClient.get(`${this.BaseURL}/api/Message/GetMsg?id=${MessageId}`);
   }
   getMessagesByJobSeekerId2(JobSeekerId:any):Observable<any>{
-    return this._httpClient.get(`https://localhost:7156/api/Message/GetPrevious?JobSeekerId=${JobSeekerId}`);
+    return this._httpClient.get(`${this.BaseURL}/api/Message/GetPrevious?JobSeekerId=${JobSeekerId}`);
   }
 }

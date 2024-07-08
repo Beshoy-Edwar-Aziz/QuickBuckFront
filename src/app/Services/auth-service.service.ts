@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
@@ -42,10 +42,12 @@ export class AuthServiceService {
       this.Token = jwtDecode(token);      
     }
   }
+  BaseURL:string= "https://mlv0108p-7156.uks1.devtunnels.ms";
+  
   Register(userData:any):Observable<any>{
-    return this._httpClient.post("https://localhost:7156/api/Account/Register",userData);
+    return this._httpClient.post(`${this.BaseURL}/api/Account/Register`,userData);
   }
   Login(userData:any):Observable<any>{
-    return this._httpClient.post("https://localhost:7156/api/Account/Login",userData);
+    return this._httpClient.post(`${this.BaseURL}/api/Account/Login`,userData);
   }
 }

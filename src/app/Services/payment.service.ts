@@ -5,12 +5,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PaymentService {
+  BaseURL:string= "https://mlv0108p-7156.uks1.devtunnels.ms";
 
   constructor(private _httpClient:HttpClient) { }
   createOrUpdatePaymentIntent(WalletId:number,Balance:number):Observable<any>{
-    return this._httpClient.post(`https://localhost:7156/api/Payment?WalletId=${WalletId}&Balance=${Balance}`,null);
+    return this._httpClient.post(`${this.BaseURL}/api/Payment?WalletId=${WalletId}&Balance=${Balance}`,null);
   }
   updateBalance(WalletId:number,Balance:number,PaymentType:string){
-    return this._httpClient.put(`https://localhost:7156/api/Wallet?WalletId=${WalletId}&Balance=${Balance}&PaymentType=${PaymentType}`,null);
+    return this._httpClient.put(`${this.BaseURL}/api/Wallet?WalletId=${WalletId}&Balance=${Balance}&PaymentType=${PaymentType}`,null);
   }
 }
