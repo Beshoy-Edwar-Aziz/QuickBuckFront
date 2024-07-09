@@ -42,7 +42,7 @@ export class AuthServiceService {
       this.Token = jwtDecode(token);      
     }
   }
-  BaseURL:string= "https://mlv0108p-7156.uks1.devtunnels.ms";
+  BaseURL:string= "https://svgcxfl1-7156.uks1.devtunnels.ms";
   
   Register(userData:any):Observable<any>{
     return this._httpClient.post(`${this.BaseURL}/api/Account/Register`,userData);

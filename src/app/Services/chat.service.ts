@@ -9,16 +9,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ChatService {
-  headers:HttpHeaders = new HttpHeaders({
-    'Access-Control-Allow-Origin':'http://localhost:4200'
-  });
-  options={
-    'headers':this.headers
-  }
+  
   private hubConnection:signalr.HubConnection;
   jobSeekerId:number=0;
   jobProviderId:number=0;
-  BaseURL:string= "https://mlv0108p-7156.uks1.devtunnels.ms";
+  BaseURL:string= "https://svgcxfl1-7156.uks1.devtunnels.ms";
   user:string='';
   message:string='';
   messages:BehaviorSubject<any>=new BehaviorSubject('');

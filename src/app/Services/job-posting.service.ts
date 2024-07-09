@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class JobPostingService {
   JobPost:BehaviorSubject<any>=new BehaviorSubject('');
   CurrentJobPost = this.JobPost.asObservable();
-  BaseURL:string= "https://mlv0108p-7156.uks1.devtunnels.ms";
+  BaseURL:string= "https://svgcxfl1-7156.uks1.devtunnels.ms";
   updateJobPost(JobPost:any){
     this.JobPost.next(JobPost);
   }
