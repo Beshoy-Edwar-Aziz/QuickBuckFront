@@ -45,3 +45,11 @@ section{
     color: #fff;
     font-family: "Manrope", sans-serif;
 }
+@media screen and (max-width:1000px) {
+    .background-image{
+        background-image: url('../../../assets/Images/Container\ 45.png');
+        background-repeat: no-repeat; 
+        background-position: center center;
+        background-size: cover;
+    }
+}

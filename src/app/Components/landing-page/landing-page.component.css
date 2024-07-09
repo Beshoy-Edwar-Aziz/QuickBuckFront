@@ -7,7 +7,7 @@ section{
     background-size: contain;
     background-position: center center;
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
 }
 .font-green{
     color:#0EA89BFF;
@@ -68,3 +68,13 @@ section{
     height: 60px;
     border-radius: 50%;
   }
+@media screen and (max-width:1000px) {
+    .background-image{
+        background-image: url(../../../assets/Images/Container\ 87.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        height: 100vh;
+    }
+}
