@@ -184,6 +184,8 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     console.log(this.TokenRole);
     
     this.chatService.sendMessage(msgInpu.value,jobProviderId,jobSeekerId,this.TokenRole,this.Token.name);
+    let window:any = document.getElementById('MessageWindow');
+    window.scrollTo(0,window.scrollHeight)
   }
   getMessageById(MessageId:number){
     this.chatService.getMessageById(MessageId).subscribe({

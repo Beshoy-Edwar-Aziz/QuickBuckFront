@@ -167,7 +167,7 @@ console.log(this.Token);
     console.log(this.Id);
     
     if(this.TokenService.sub=="JobSeeker"){
-      this._chatService.getMessagesByJobSeekerId(this.Id,0).subscribe({
+      this._chatService.getMessagesByJobSeekerId(this.Id,'').subscribe({
         next:(data)=>{
           console.log(data);
           this.Messages=data;
@@ -178,7 +178,7 @@ console.log(this.Token);
         }
       })
     }else if(this.TokenService.sub=="JobProvider"){
-      this._chatService.getMessagesByJobSeekerId(0,this.Id).subscribe({
+      this._chatService.getMessagesByJobSeekerId('',this.Id).subscribe({
         next:(data)=>{
           console.log(data);
           this.Messages=data;
