@@ -48,3 +48,6 @@ i{
     height: 50vh;
     overflow: auto;
   }
+  div a.x{
+    font-size: 20px;
+  }

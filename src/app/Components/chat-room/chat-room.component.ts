@@ -22,7 +22,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     console.log(JSON.parse(x));
     
   }
-  RecievedMsg:string='';
+  RecievedMsg:any='';
   json:any=localStorage.getItem('JobProviderId');
   json2:any=localStorage.getItem('JobSeekerId');
  jobProviderId:number=JSON.parse(this.json);
@@ -35,6 +35,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
  TalkedToPreviously:any;
  user:any;
  ngOnInit(): void {
+    
   this._authService.CurrentJobSeeker.subscribe(
     (data)=>{if(data!=''){
       console.log("behavior",data);
@@ -72,17 +73,26 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
   })
     this.chatService.startConnection().subscribe({
       next:()=>{
+        console.log("working");
+        
         this.chatService.recieveMessage().subscribe({
-          next:(Message)=>{
-            console.log(Message);
+          next:(Message:any)=>{
+            console.log("something");
             
-            this.RecievedMsg=Message;
-            console.log(this.chatService.user);
-            this.user= this.chatService.user;
+            // let x:any =localStorage.getItem('Token');
+            // let y= JSON.parse(x);
+            // let currentToken:any=jwtDecode(y)
+            // console.log(currentToken);
+           
+            this.RecievedMsg=Message.Message;
+          
             let list = document.createElement('li');
             list?.classList?.add('list-unstyled');
+            let img = document.createElement('img');
+            img.style.width ="50px"
+            img.style.height="50px"
+            img.style.borderRadius="50%"
             this.Messages.forEach((x:any) => {
-              if(this.user==x.jobSeeker.userName){
                 list.style.backgroundColor=" #ECFDFC";
                 list.style.textAlign="left";
                 list.classList.add('rounded');
@@ -90,22 +100,23 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
                 list.classList.add('p-3');
                 list.classList.add('w-50');
                 list.classList.add('Generated');
-              }
-              else{
-                list.style.backgroundColor="#F2F2F2";
-                list.style.textAlign="right";
-                list.classList.add('rounded')
-                list.classList.add('my-2');
-                list.classList.add('p-3');
-                list.classList.add('w-50');
-                list.classList.add('Generated');
-              }
-              list.innerHTML = `${this.RecievedMsg}`
-              let unorderedList = document.getElementById('MessageWindow');
-              unorderedList?.appendChild(list);
+                img.classList.add('Generated');
+                  img.src=Message.Image;
+                  list.innerHTML = `${this.RecievedMsg}`
+                  let unorderedList:any = document.getElementById('MessageWindow');
+                  let div = document.createElement('div');
+                  div.appendChild(img);
+                  div.appendChild(list);
+                  div!.style.display="flex"
+                  div!.style.gap="2"
+                  div!.style.alignItems="center"
+                  unorderedList?.appendChild(div);
+                  unorderedList!.style.display="flex"
+                  unorderedList!.style.gap="2"
+                  unorderedList!.style.flexDirection="column"
+                  unorderedList.scrollTop= unorderedList?.scrollHeight
+              
             });
-            
-          
           },
           error:(err)=>{
             console.log(err);
@@ -182,10 +193,34 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     let msgInpu:any = document.getElementById('msg');
     console.log(msgInpu.value);
     console.log(this.TokenRole);
-    
-    this.chatService.sendMessage(msgInpu.value,jobProviderId,jobSeekerId,this.TokenRole,this.Token.name);
-    let window:any = document.getElementById('MessageWindow');
-    window.scrollTo(0,window.scrollHeight)
+    if(this.TokenRole=="JobSeeker"){
+      this._userService.GetJobProviderByIdOrByUserName(jobProviderId,'').subscribe({
+        next:(data)=>{
+          console.log(data);
+          try{
+          this.chatService.sendMessage(msgInpu.value,jobProviderId,jobSeekerId,this.TokenRole,this.Token.name);
+          }
+          catch(ex){
+            console.log(ex);
+            
+          }
+        }
+
+      })
+    }
+    else if(this.TokenRole=="JobProvider"){
+      this._userService.GetJobSeekerById(jobSeekerId).subscribe({
+        next:(data)=>{
+          console.log(data);
+          this.chatService.sendMessage(msgInpu.value,jobProviderId,jobSeekerId,this.TokenRole,this.Token.name);
+        }
+        
+      })
+    }
+
+    let element = document.getElementById('MessageWindow');
+    element?.scrollTo(100,400) 
+     
   }
   getMessageById(MessageId:number){
     this.chatService.getMessageById(MessageId).subscribe({
@@ -252,9 +287,12 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
   }
   removesMessages():void{
     let msg:any = document.querySelectorAll('#MessageWindow .Generated');
+    let img:any = document.querySelectorAll('#MessageWindow img');
     msg.forEach((element:any) => {
       element.remove();
+      
     });
+    
     console.log(msg);
     
   }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
@@ -7,15 +7,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class UsersService {
   User:BehaviorSubject<any>=new BehaviorSubject('');
   CurrentUser=this.User.asObservable();
-  BaseURL:string= "https://svgcxfl1-7156.uks1.devtunnels.ms";
+  BaseURL:string= "https://quickbuckproject-production.up.railway.app";
   updateUser(User:any){
     this.User.next(User);
   }
-  constructor(private _httpClient:HttpClient) 
-  { 
-      
+  constructor(private _httpClient:HttpClient)
+  {
+
   }
-  
+
   SearchJobSeekersByUserName(UserName:string):Observable<any>{
     return this._httpClient.get(`${this.BaseURL}/api/JobSeeker/SearchCandidates?UserName=${UserName}`);
   }
@@ -39,5 +39,8 @@ export class UsersService {
   }
   updateJobProviderPremiumStatus(JobProviderId:number,Status:boolean){
     return this._httpClient.put(`${this.BaseURL}/api/JobProvider/UpdatePremium?JobProviderId=${JobProviderId}&status=${Status}`,null);
+  }
+  getCurrentUser():Observable<any>{
+    return this._httpClient.get(`${this.BaseURL}/api/Account/GetCurrentUser`,{responseType:'text'});
   }
 }

@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PaymentService {
-  BaseURL:string= "https://svgcxfl1-7156.uks1.devtunnels.ms";
+  BaseURL:string= "https://quickbuckproject-production.up.railway.app";
 
   constructor(private _httpClient:HttpClient) { }
   createOrUpdatePaymentIntent(WalletId:number,Balance:number):Observable<any>{

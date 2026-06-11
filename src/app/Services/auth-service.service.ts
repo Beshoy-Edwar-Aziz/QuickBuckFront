@@ -34,16 +34,16 @@ export class AuthServiceService {
   updateId(id:number):void{
     this.Id.next(id);
   }
-  constructor(private _httpClient:HttpClient) { 
+  constructor(private _httpClient:HttpClient) {
     // let token:any =localStorage.getItem('Token');
     // this.Token = jwtDecode(token);
     if(localStorage.getItem('Token')!=null){
       let token:any = localStorage.getItem('Token');
-      this.Token = jwtDecode(token);      
+      this.Token = jwtDecode(token);
     }
   }
-  BaseURL:string= "https://svgcxfl1-7156.uks1.devtunnels.ms";
-  
+  BaseURL:string= "https://quickbuckproject-production.up.railway.app";
+
   Register(userData:any):Observable<any>{
     return this._httpClient.post(`${this.BaseURL}/api/Account/Register`,userData);
   }
