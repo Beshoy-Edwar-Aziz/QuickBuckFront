@@ -13,7 +13,7 @@ import {
   StripePaymentElementComponent
 } from 'ngx-stripe';
 import {
-  StripeElementsOptions, 
+  StripeElementsOptions,
   StripePaymentElementOptions
 } from '@stripe/stripe-js';
 import Swal from 'sweetalert2';
@@ -22,6 +22,7 @@ import { UsersService } from '../../Services/users.service';
 import { AuthServiceService } from '../../Services/auth-service.service';
 import { Router } from '@angular/router';
 import { LoadingComponent } from '../loading/loading.component';
+import { jwtDecode } from 'jwt-decode';
 _MatInternalFormField
 
 @Component({
@@ -63,7 +64,7 @@ export class CheckoutComponent {
     appearance: {
       theme: 'flat'
     },
-    
+
   };
 
   paymentElementOptions: StripePaymentElementOptions = {
@@ -153,9 +154,10 @@ export class CheckoutComponent {
               }
             })
           }else if(token.sub=="JobSeeker"){
-            let id:any = localStorage.getItem('JobSeekerId');
+            let id:any = localStorage.getItem('Token');
             let res= JSON.parse(id);
-            this._userService.GetJobSeekerById(res).subscribe({
+            res = jwtDecode(res);
+            this._userService.GetJobSeekerByUserName(res.name).subscribe({
               next:(data)=>{
                 this._paymentService.updateBalance(data.wallet.id,this.ResultingBalance,this.PaymentType).subscribe({
                   next:(data)=>{
@@ -172,7 +174,7 @@ export class CheckoutComponent {
                         }
                       })
                     }
-                   this._router.navigate([`/UserProfile/${res}`]) 
+                   this._router.navigate([`/UserProfile/${res}`])
                   },
                   error:(err)=>{
                     console.log(err);
@@ -181,11 +183,11 @@ export class CheckoutComponent {
               },
               error:(err)=>{
                 console.log(err);
-                
+
             }
             })
           }
-            
+
           }
         }
       });
