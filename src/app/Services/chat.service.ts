@@ -59,6 +59,21 @@ export class ChatService {
       })
     })
   }
+  joinConversation(jobSeekerId: number, jobProviderId: number): Observable<void> {
+  return new Observable<void>((obs) => {
+    this.hubConnection.invoke('JoinConversation', jobSeekerId, jobProviderId)
+      .then(() => { obs.next(); obs.complete(); })
+      .catch((err) => obs.error(err));
+  });
+}
+
+leaveConversation(jobSeekerId: number, jobProviderId: number): Observable<void> {
+  return new Observable<void>((obs) => {
+    this.hubConnection.invoke('LeaveConversation', jobSeekerId, jobProviderId)
+      .then(() => { obs.next(); obs.complete(); })
+      .catch((err) => obs.error(err));
+  });
+}
   // getConnectionId():void{
   //   this.hubConnection.invoke('getconnectionid').then((data)=>{
   //     console.log(data);
