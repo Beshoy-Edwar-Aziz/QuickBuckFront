@@ -14,7 +14,7 @@
                     <h1 class="font-sarabun font-size-32 fw-bold my-3">{{jobProviderDetails?.companyName}}</h1>
                     <p class="font-size-14 font-lato  font-grey fw-normal">{{jobProviderDetails?.category}}</p>
                 </div>
-                @if(Token.sub=="JobProvider"){
+                @if(Token().sub=="JobProvider"){
                 <div class="d-flex flex-column align-items-center gap-3">
                     <div class="d-flex gap-2 align-items-center">
                         <h2 class="font-size-20"><i class="fas fa-wallet "></i> {{jobProviderDetails?.wallet?.balance|currency}}</h2>
@@ -23,7 +23,7 @@
                     <button class="btn btn-outline-dark" (click)="ShowProvidersJobPosts(jobProviderDetails?.id)" data-bs-toggle="modal" data-bs-target="#DashBoard">DashBoard</button>
 
                 </div>
-                
+
             }
             </div>
             <div class="row">
@@ -67,7 +67,7 @@
 
                 <div class="row gy-2">
                     @for (item of latestJobPosts; track item.id) {
-                    <div class="col-12 col-lg-6 " data-aos="zoom-out" data-aos-duration="1000">  
+                    <div class="col-12 col-lg-6 " data-aos="zoom-out" data-aos-duration="1000">
                         <div class="d-flex align-items-center gap-4 background-grey p-2">
                             <div class="align-self-start">
                                 <img [src]="item?.jobProvider.logo" class="img-cover" [alt]="item?.jobProvider.companyName">
@@ -87,7 +87,7 @@
             </div>
         </section>
         </div>
-    
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -125,7 +125,7 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    @for (item of AllJobPosts?.data; track item?.id) 
+                    @for (item of AllJobPosts?.data; track item?.id)
                     {
                         <div class="p-2 job-list" >
                             <div class="d-flex justify-content-between gap-2 p-2">
@@ -152,10 +152,10 @@
                 </div>
             </div>
         </div>
-       
+
       </div>
     </div>
-  </div> 
+  </div>
   <!--  -->
   <!-- Updation Modal -->
   <div class="modal fade" id="UpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -291,7 +291,7 @@
                 </div>
             </div>
         </div>
-        
+
       </div>
     </div>
   </div>

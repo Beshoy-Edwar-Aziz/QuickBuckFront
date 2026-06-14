@@ -16,7 +16,7 @@ export class CandidatesComponent implements OnInit {
   constructor(private _userService:UsersService, private _router:Router, private _authService:AuthServiceService, private _chatService:ChatService){}
   Candidates:any=[];
   ngOnInit(): void {
-    
+
   }
   onEnter():void{
     let Input:any = document.getElementById('SearchInput');
@@ -36,7 +36,7 @@ export class CandidatesComponent implements OnInit {
     })
   }
   openMessageTO(id:number):void{
-    if(this._authService.Token.sub=="JobProvider"){
+    if(this._authService.Token().sub=="JobProvider"){
       this._userService.GetJobSeekerById(id).subscribe({
         next:(data)=>{
           console.log(data);
@@ -53,13 +53,13 @@ export class CandidatesComponent implements OnInit {
               next:(data)=>{
                 localStorage.setItem('JobProviderId',JSON.stringify(data))
                 console.log(data);
-                
+
               }
             })
           }
         }
       )
-     
+
     }
     this._router.navigate(['/chat'])
   }

@@ -29,7 +29,7 @@ export class LoginComponent {
   });
   handleLogin(){
     console.log(this.Login.value);
-    let body:any={  
+    let body:any={
         "Email":this.Login.value.email,
         "Password":this.Login.value.password
     }
@@ -41,12 +41,12 @@ export class LoginComponent {
        this._authService.updateToken(data.token);
        let tok:any=jwtDecode(data.token);
        console.log(tok.sub);
-       
+       this._authService.TokenBehavior.set(data.token);
        if(tok.sub=="JobSeeker"){
        this._userService.GetJobSeekerByUserName(tok.name).subscribe({
         next:(data)=>{
           console.log(data);
-          
+
           this._authService.updateJobSeekerId(data.id);
           this._authService.updateUserInfo(data);
           this._authService.updateId(data.id);
@@ -57,7 +57,7 @@ export class LoginComponent {
         this._userService.GetJobProviderByIdOrByUserName('',tok.name).subscribe({
           next:(data)=>{
             console.log(data);
-            
+
             this._authService.updateJobProviderId(data.id);
             this._authService.updateUserInfo(data);
             this._authService.updateId(data.id);
@@ -76,5 +76,7 @@ export class LoginComponent {
         });
       }
     });
+
   }
+
 }

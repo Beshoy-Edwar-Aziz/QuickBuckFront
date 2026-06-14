@@ -129,7 +129,7 @@ export class CheckoutComponent {
           if (result.paymentIntent.status === 'succeeded') {
             // Show a success message to your customer
             let token = this._authService.Token;
-            if(token.sub=="JobProvider"){
+            if(token().sub=="JobProvider"){
             this._userService.GetJobProviderByIdOrByUserName(this.JobProviderIdSet,'').subscribe({
               next:(data)=>{
                 console.log(data);
@@ -153,7 +153,7 @@ export class CheckoutComponent {
                 })
               }
             })
-          }else if(token.sub=="JobSeeker"){
+          }else if(token().sub=="JobSeeker"){
             let id:any = localStorage.getItem('Token');
             let res= JSON.parse(id);
             res = jwtDecode(res);

@@ -8,11 +8,12 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root'
 })
 export class AuthServiceService {
-  Token:any;
+  Token:WritableSignal<any>=signal<any>('');
   TokenBehavior:WritableSignal<string>=signal<string>('');
   currentToken=computed(()=>this.TokenBehavior());
  updateToken(newToken:any){
     this.TokenBehavior.set(newToken);
+    this.Token.set(newToken);
  }
  JobSeekerId:BehaviorSubject<any>=new BehaviorSubject('');
   CurrentJobSeeker=this.JobSeekerId.asObservable();
@@ -39,7 +40,7 @@ export class AuthServiceService {
     // this.Token = jwtDecode(token);
     if(localStorage.getItem('Token')!=null){
       let token:any = localStorage.getItem('Token');
-      this.Token = jwtDecode(token);
+      this.Token.set(jwtDecode(token));
     }
   }
   BaseURL:string= "https://quickbuckproject-production.up.railway.app";
@@ -49,5 +50,12 @@ export class AuthServiceService {
   }
   Login(userData:any):Observable<any>{
     return this._httpClient.post(`${this.BaseURL}/api/Account/Login`,userData);
+  }
+  signOut(){
+   if(localStorage.getItem('Token')){
+    localStorage.removeItem('Token');
+    this.updateToken(null);
+   };
+
   }
 }
