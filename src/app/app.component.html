@@ -15,14 +15,14 @@
       <li class="nav-item">
         <a class="nav-link pointer"  routerLinkActive="green" routerLink="Companies">Companies</a>
       </li>
-    @if(TokenService?.sub=="JobProvider"){
+    @if(Token()?.sub=="JobProvider"){
       <li class="nav-item">
         <a class="nav-link pointer"  routerLinkActive="green" routerLink="Candidates">People</a>
       </li>
       }
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center gap-2">
-        @if(Token==null){
+        @if(Token()==null){
         <li class="nav-item">
           <a class="nav-link" routerLink="Register">Register</a>
         </li>
@@ -36,9 +36,9 @@
               <i class="fa-regular fa-message"></i>
             </button>
             <ul class="dropdown-menu p-3">
-              @for (item of Messages; track $index) {
-                @if(TokenService?.sub=="JobSeeker"){
-              <li class="dropdown-item" (click)="openMessage(item?.jobProvider?.id)">
+              @for (item of Messages(); track $index) {
+                @if(Token()?.sub=="JobSeeker"){
+              <li class="dropdown-item" (click)="openMessage(item?.jobProvider!.id)">
                   <div class="d-flex gap-2">
                     <div>
                       <img [src]="item?.jobProvider?.logo" class="img-cover" alt="">
@@ -46,12 +46,12 @@
                     <div class="d-flex flex-column font-lato justify-content-center">
                       <p class="font-size-16 fw-bold">{{item?.jobProvider?.companyName}}</p>
                       <p class="fw-normal font-size-14">{{item?.content}}</p>
-                      <p class="fw-light font-size-12">{{item?.dateTime?.split('T')[1]?.split('.')[0]}}</p>
+                      <p class="fw-light font-size-12">{{item?.dateTime!.split('T')[1]!.split('.')[0]}}</p>
                     </div>
                   </div>
                 </li>
-              }@else if(TokenService?.sub=="JobProvider"){
-                <li class="dropdown-item" (click)="openMessageTO(item?.jobSeeker?.id)">
+              }@else if(Token()?.sub=="JobProvider"){
+                <li class="dropdown-item" (click)="openMessageTO(item?.jobSeeker!.id)">
                   <div class="d-flex gap-2">
                     <div>
                       <img [src]="item?.jobSeeker?.photo" class="img-cover" alt="">
@@ -59,7 +59,7 @@
                     <div class="d-flex flex-column font-lato justify-content-center">
                       <p class="font-size-16 fw-bold">{{item?.jobSeeker?.userName}}</p>
                       <p class="fw-normal font-size-14">{{item?.content}}</p>
-                      <p class="fw-light font-size-12">{{item?.dateTime?.split('T')[1]?.split('.')[0]}}</p>
+                      <p class="fw-light font-size-12">{{item?.dateTime!.split('T')[1]!.split('.')[0]}}</p>
                     </div>
                   </div>
                 </li>
@@ -68,11 +68,11 @@
             </ul>
           </div>
         </li>
-        @if(TokenService?.sub=="JobSeeker"){
+        @if(Token()?.sub=="JobSeeker"){
           <li class="nav-item" (click)="openBookmarks(Id)" data-bs-toggle="dropdown" data-bs-target="#Koi">
             <div class="dropdown">
               <i class="btn  fa-regular fa-bookmark dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                
+
               </i>
               <ul class="dropdown-menu">
                 @for (item of BookMarks; track $index) {
@@ -95,10 +95,10 @@
           <h3 class="mx-2 font-lato font-size-20 fw-normal text-warning"><i class="fa-solid fa-id-badge"></i></h3>
         }
       }
-      @else if(TokenService?.sub=="JobProvider") {
+      @else if(Token()?.sub=="JobProvider") {
         <a class="" [routerLink]="'CompanyProfile/'+Id">
           <img [src]="UserInfo?.logo"  class="img-cover" onerror="this.src='assets/Images/PlaceHolder.jpg'" [alt]="UserInfo?.companyName">
-          
+
         </a>
         @if(UserInfo?.premium==false){
         <button class="btn btn-outline-dark mx-2" data-bs-toggle="modal" data-bs-target="#SubProvider">Upgrade To Premium</button>
@@ -110,7 +110,7 @@
           <p class="nav-link pointer">SignOut</p>
         </li>
       }
-     
+
       </ul>
     </div>
   </div>
@@ -142,7 +142,7 @@
             </div>
              <!--  -->
         </div>
-       
+
       </div>
     </div>
   </div>
@@ -174,11 +174,11 @@
                 </div>
               </div>
             </div>
-            
+
             </div>
              <!--  -->
         </div>
-       
+
       </div>
     </div>
   </div>

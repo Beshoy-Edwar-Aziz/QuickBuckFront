@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
+import { MessagesInterface } from '../../../models/messages-interface';
 
 @Component({
   selector: 'app-chat-room',
@@ -41,7 +42,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit, OnDestroy {
   CurrentToken: any = localStorage.getItem('Token');
   Token: any = jwtDecode(this.CurrentToken);
   TokenRole: string = this.Token.sub;
-  Messages: WritableSignal<any[]> = signal<any[]>([]);
+  Messages: WritableSignal<MessagesInterface[]> = signal<MessagesInterface[]>([]);
   JobProviderInfo: WritableSignal<any> = signal<any>({});
   TalkedToPreviously: any;
   user: any;
@@ -110,7 +111,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit, OnDestroy {
                   content: message.Message,
                   userName: message.name,
                   dateTime: new Date().toISOString(),
-                };
+                } as MessagesInterface;
                 this.Messages.set([...this.Messages(), newMessage]);
               },
               error: (err) => {

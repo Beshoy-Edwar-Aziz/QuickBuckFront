@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal, WritableSignal } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
@@ -9,10 +9,10 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class AuthServiceService {
   Token:any;
-  TokenBehavior:BehaviorSubject<any>=new BehaviorSubject('');
-  currentToken=this.TokenBehavior.asObservable();
+  TokenBehavior:WritableSignal<string>=signal<string>('');
+  currentToken=computed(()=>this.TokenBehavior());
  updateToken(newToken:any){
-    this.TokenBehavior.next(newToken);
+    this.TokenBehavior.set(newToken);
  }
  JobSeekerId:BehaviorSubject<any>=new BehaviorSubject('');
   CurrentJobSeeker=this.JobSeekerId.asObservable();
