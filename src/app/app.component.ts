@@ -13,7 +13,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { UsersService } from './Services/users.service';
 import { jwtDecode } from 'jwt-decode';
 import { AuthServiceService } from './Services/auth-service.service';
-import { NgOptimizedImage, NgStyle } from '@angular/common';
+import { DatePipe, NgOptimizedImage, NgStyle } from '@angular/common';
 import { FooterComponent } from './Components/footer/footer.component';
 import { ChatService } from './Services/chat.service';
 import { JobPostingService } from './Services/job-posting.service';
@@ -35,6 +35,7 @@ import { switchMap } from 'rxjs';
     NgOptimizedImage,
     FooterComponent,
     MatButtonModule,
+    DatePipe
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -301,7 +302,6 @@ export class AppComponent implements OnInit {
         .subscribe({
           next: (data) => {
             console.log(data);
-
             this._userService.GetJobSeekerById(data.id).subscribe({
               next: () => {
                 this._chatService.jobSeekerId = data.id;

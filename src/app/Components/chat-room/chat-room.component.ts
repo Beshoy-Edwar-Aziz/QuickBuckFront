@@ -2,16 +2,18 @@ import {
   AfterViewInit,
   Component,
   DestroyRef,
+  ElementRef,
   inject,
   OnDestroy,
   OnInit,
   signal,
+  ViewChild,
   WritableSignal,
 } from '@angular/core';
 import { ChatService } from '../../Services/chat.service';
 import { UsersService } from '../../Services/users.service';
 import { AuthServiceService } from '../../Services/auth-service.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
@@ -20,11 +22,12 @@ import { MessagesInterface } from '../../../models/messages-interface';
 @Component({
   selector: 'app-chat-room',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,DatePipe],
   templateUrl: './chat-room.component.html',
   styleUrl: './chat-room.component.css',
 })
 export class ChatRoomComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('msgInput') msgInput!:ElementRef;
   private chatService = inject(ChatService);
   private _userService = inject(UsersService);
   private _authService = inject(AuthServiceService);
@@ -76,7 +79,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log(data);
           console.log(this.jobProviderId);
 
-          this.Messages.set(data);
+          this.Messages.set(data.reverse());
         },
         error: (err) => {
           console.log(err);
@@ -113,6 +116,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit, OnDestroy {
                   dateTime: new Date().toISOString(),
                 } as MessagesInterface;
                 this.Messages.set([...this.Messages(), newMessage]);
+                this.msgInput.nativeElement.value='';
               },
               error: (err) => {
                 console.log(err);
@@ -201,7 +205,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   JobSeekerInfo: any;
   sendMessage(jobSeekerId: number, jobProviderId: number): void {
-    let msgInpu: any = document.getElementById('msg');
+
 
     if (this.TokenRole == 'JobSeeker') {
       this._userService
@@ -212,7 +216,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit, OnDestroy {
             console.log(data);
             try {
               this.chatService.sendMessage(
-                msgInpu.value,
+                this.msgInput.nativeElement.value,
                 jobProviderId,
                 jobSeekerId,
                 this.TokenRole,
@@ -231,7 +235,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit, OnDestroy {
           next: (data) => {
             console.log(data);
             this.chatService.sendMessage(
-              msgInpu.value,
+              this.msgInput.nativeElement.value,
               jobProviderId,
               jobSeekerId,
               this.TokenRole,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../../Services/users.service';
 import { JobPostingService } from '../../Services/job-posting.service';
@@ -27,7 +27,7 @@ export class CompanyProfileComponent implements OnInit {
   jobProviderDetails:any;
   latestJobPosts:any;
   AllJobPosts:any;
-  Token = this._authService.Token;
+  Token:WritableSignal<any>= signal<any>( this._authService.Token());
   UpdateJob:FormGroup=new FormGroup({
     title: new FormControl('',[maxLength(20),minLength(2)]),
     requiredSkills:new FormControl('',[maxLength(50),minLength(2)]),
@@ -66,7 +66,7 @@ export class CompanyProfileComponent implements OnInit {
           })
         }
       })
-      
+
     }
     PayForCharge(){
       let input:any = document.getElementById('balance');
@@ -75,7 +75,7 @@ export class CompanyProfileComponent implements OnInit {
       let PaymentType = localStorage.getItem('PaymentType');
       console.log(PaymentType);
       console.log(Balance);
-      
+
         this._paymentService.createOrUpdatePaymentIntent(this.jobProviderDetails.wallet.id,Balance).subscribe({
           next:(data)=>{
             console.log(data);
@@ -87,7 +87,7 @@ export class CompanyProfileComponent implements OnInit {
           error:(err)=>{
             console.log(err);
           }
-        });      
+        });
     }
     ShowProvidersJobPosts(JobProviderId:number){
         this._jobPostingService.getAllJobPostsByJobProviderId(JobProviderId).subscribe({
@@ -132,7 +132,7 @@ export class CompanyProfileComponent implements OnInit {
           {
             "name": this.UpdateJob.value.requiredSkills4==''?this.JobPost?.requiredSkills[3]?.name:this.UpdateJob.value.requiredSkills4
           }
-          
+
         ],
         "email": this.UpdateJob.value.email==''?this.JobPost?.email:this.UpdateJob.value.email,
         "description": this.UpdateJob.value.description==''?this.JobPost?.description:this.UpdateJob.value.description,
@@ -182,7 +182,7 @@ export class CompanyProfileComponent implements OnInit {
       JobPostId:number=0;
       ConfirmDelete(JobPostId:number){
        this.JobPostId=JobPostId;
-        
+
       }
      DeleteJobPost():void{
         this._jobPostingService.deleteJobPost(this.JobPostId).subscribe({
@@ -202,6 +202,6 @@ export class CompanyProfileComponent implements OnInit {
             })
           }
         })
-     } 
+     }
     }
 

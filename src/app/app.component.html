@@ -46,7 +46,7 @@
                     <div class="d-flex flex-column font-lato justify-content-center">
                       <p class="font-size-16 fw-bold">{{item?.jobProvider?.companyName}}</p>
                       <p class="fw-normal font-size-14">{{item?.content}}</p>
-                      <p class="fw-light font-size-12">{{item?.dateTime!.split('T')[1]!.split('.')[0]}}</p>
+                      <p class="fw-light font-size-12">{{item?.dateTime|date:'short'}}</p>
                     </div>
                   </div>
                 </li>
@@ -59,7 +59,7 @@
                     <div class="d-flex flex-column font-lato justify-content-center">
                       <p class="font-size-16 fw-bold">{{item?.jobSeeker?.userName}}</p>
                       <p class="fw-normal font-size-14">{{item?.content}}</p>
-                      <p class="fw-light font-size-12">{{item?.dateTime!.split('T')[1]!.split('.')[0]}}</p>
+                      <p class="fw-light font-size-12">{{item?.dateTime|date:'short'}}</p>
                     </div>
                   </div>
                 </li>
