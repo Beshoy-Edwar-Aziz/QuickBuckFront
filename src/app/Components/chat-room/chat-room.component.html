@@ -97,7 +97,7 @@
             <li class="my-2 p-2 rounded-end" (click)="getMessageById(item.id)">
               <div class="d-flex align-items-center">
                 @if (item?.userName == item?.jobSeeker?.userName) {
-                  <div class="">
+                  <div>
                     <img
                       [src]="item?.jobSeeker?.photo"
                       onerror="this.src = 'assets/Images/PlaceHolder.jpg'"
@@ -106,7 +106,7 @@
                     />
                   </div>
                 } @else if (item?.userName == item?.jobProvider?.companyName) {
-                  <div class="">
+                  <div>
                     <img
                       [src]="item?.jobProvider?.logo"
                       onerror="this.src = 'assets/Images/PlaceHolder.jpg'"

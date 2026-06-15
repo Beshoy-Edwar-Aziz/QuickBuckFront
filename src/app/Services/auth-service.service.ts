@@ -8,9 +8,8 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root'
 })
 export class AuthServiceService {
-  Token:WritableSignal<any>=signal<any>('');
-  TokenBehavior:WritableSignal<string>=signal<string>('');
-  currentToken=computed(()=>this.TokenBehavior());
+  Token:WritableSignal<any|null>=signal<any|null>('');
+  TokenBehavior:WritableSignal<string|null>=signal<string|null>('');
  updateToken(newToken:any){
     this.TokenBehavior.set(newToken);
     this.Token.set(newToken);

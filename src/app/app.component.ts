@@ -62,6 +62,14 @@ export class AppComponent implements OnInit {
   //   }
   //   console.log(this.Token());
   // }
+  ngAfterContentChecked():void{
+      const receivedToken =signal<any>( localStorage.getItem('Token'));
+    if (receivedToken()) {
+      this.Token.set(jwtDecode(receivedToken()));
+    } else {
+      this.Token.set(null);
+    }
+  }
   User: any;
   Token: WritableSignal<any> = signal<any>('');
   UserInfo: WritableSignal<any> = signal<any>('');
@@ -72,9 +80,9 @@ export class AppComponent implements OnInit {
   Count: number = 0;
   BookMarks: any;
   ngOnInit(): void {
-    const receivedToken = localStorage.getItem('Token');
-    if (receivedToken) {
-      this.Token.set(jwtDecode(receivedToken));
+    const receivedToken =signal<any>( localStorage.getItem('Token'));
+    if (receivedToken()) {
+      this.Token.set(jwtDecode(receivedToken()));
     } else {
       this.Token.set(null);
     }
@@ -164,7 +172,8 @@ export class AppComponent implements OnInit {
     }
   }
   signOut(): void {
-    this._authService.signOut();
+    localStorage.removeItem('Token')
+    this.Token.set(null);
   }
   openBookmarks(JobSeekerId: number): void {
     this._jobPostingService
@@ -220,9 +229,9 @@ export class AppComponent implements OnInit {
     let PaymentType = localStorage.getItem('PaymentType');
     console.log(PaymentType);
     let User: any;
-    if (this._authService.Token().sub == 'JobSeeker') {
+    if (this.Token().sub == 'JobSeeker') {
       this._userService
-        .GetJobSeekerByUserName(this._authService.Token().name)
+        .GetJobSeekerByUserName(this.Token().name)
         .pipe(
           takeUntilDestroyed(this.destroy),
           switchMap((data) => {
@@ -253,9 +262,9 @@ export class AppComponent implements OnInit {
             console.log(err);
           },
         });
-    } else if (this._authService.Token().sub == 'JobProvider') {
+    } else if (this.Token().sub == 'JobProvider') {
       this._userService
-        .GetJobProviderByIdOrByUserName('', this._authService.Token().name)
+        .GetJobProviderByIdOrByUserName('', this.Token().name)
         .pipe(
           takeUntilDestroyed(this.destroy),
           switchMap((data) => {
@@ -290,15 +299,16 @@ export class AppComponent implements OnInit {
   openMessage(id: number): void {
     console.log(id);
     if (this.Token().sub == 'JobSeeker') {
-      this._userService.GetJobProviderByIdOrByUserName(id, '').subscribe({
+      this._userService.GetJobProviderByIdOrByUserName(id, '').pipe(takeUntilDestroyed(this.destroy)).subscribe({
         next: (data) => {
           console.log(data);
           localStorage.setItem('JobProviderId', JSON.stringify(id));
         },
       });
-      console.log(this._authService.Token().name);
+
       this._userService
-        .GetJobSeekerByUserName(this._authService.Token().name)
+        .GetJobSeekerByUserName(this.Token().name)
+        .pipe(takeUntilDestroyed(this.destroy))
         .subscribe({
           next: (data) => {
             console.log(data);

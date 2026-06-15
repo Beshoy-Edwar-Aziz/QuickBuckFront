@@ -38,7 +38,6 @@ export class LoginComponent {
         console.log(data);
        let JSONString:any= JSON.stringify(data.token);
        localStorage.setItem('Token',JSONString);
-       this._authService.updateToken(data.token);
        let tok:any=jwtDecode(data.token);
        console.log(tok.sub);
        this._authService.TokenBehavior.set(data.token);
