@@ -7,8 +7,9 @@ import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { httpInterceptor } from './Interceptors/http.interceptor';
+import { loadingInterceptor } from './Interceptors/loading.interceptor';
 
 export const appConfig: ApplicationConfig = {
 
-  providers: [provideRouter(routes,withHashLocation()),provideHttpClient(withInterceptors([httpInterceptor])),provideNgxStripe(), provideAnimationsAsync(),provideNativeDateAdapter()],
+  providers: [provideRouter(routes,withHashLocation()),provideHttpClient(withInterceptors([httpInterceptor,loadingInterceptor])),provideNgxStripe(), provideAnimationsAsync(),provideNativeDateAdapter()],
 };

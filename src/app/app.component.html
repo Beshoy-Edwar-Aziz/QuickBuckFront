@@ -64,6 +64,10 @@
                   </div>
                 </li>
               }
+                }@empty {
+                  <div class="text-center fw-bold">
+              <p class="fw-bold">No Messages Available</p>
+            </div>
                 }
             </ul>
           </div>
@@ -82,6 +86,10 @@
 
                   </div>
                 </li>
+              }@empty {
+                <div class="text-center fw-bold">
+              <p class="fw-bold">No BookMarks Available</p>
+            </div>
               }
               </ul>
             </div>
@@ -186,5 +194,7 @@
 </nav>
 <section>
  <router-outlet></router-outlet>
+ <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+
 </section>
 <app-footer></app-footer>

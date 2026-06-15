@@ -22,12 +22,12 @@ import { MessagesInterface } from '../../../models/messages-interface';
 @Component({
   selector: 'app-chat-room',
   standalone: true,
-  imports: [CommonModule,DatePipe],
+  imports: [CommonModule, DatePipe],
   templateUrl: './chat-room.component.html',
   styleUrl: './chat-room.component.css',
 })
 export class ChatRoomComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('msgInput') msgInput!:ElementRef;
+  @ViewChild('msgInput') msgInput!: ElementRef;
   private chatService = inject(ChatService);
   private _userService = inject(UsersService);
   private _authService = inject(AuthServiceService);
@@ -45,7 +45,9 @@ export class ChatRoomComponent implements OnInit, AfterViewInit, OnDestroy {
   CurrentToken: any = localStorage.getItem('Token');
   Token: any = jwtDecode(this.CurrentToken);
   TokenRole: string = this.Token.sub;
-  Messages: WritableSignal<MessagesInterface[]> = signal<MessagesInterface[]>([]);
+  Messages: WritableSignal<MessagesInterface[]> = signal<MessagesInterface[]>(
+    [],
+  );
   JobProviderInfo: WritableSignal<any> = signal<any>({});
   TalkedToPreviously: any;
   user: any;
@@ -64,8 +66,6 @@ export class ChatRoomComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(data);
       }
     });
-    let x: any = localStorage.getItem('JobSeekerId');
-    let result = JSON.parse(x);
     console.log(this.Token);
     console.log(this.TokenRole);
     console.log(this.jobSeekerId);
@@ -116,7 +116,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit, OnDestroy {
                   dateTime: new Date().toISOString(),
                 } as MessagesInterface;
                 this.Messages.set([...this.Messages(), newMessage]);
-                this.msgInput.nativeElement.value='';
+                this.msgInput.nativeElement.value = '';
               },
               error: (err) => {
                 console.log(err);
@@ -205,8 +205,6 @@ export class ChatRoomComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   JobSeekerInfo: any;
   sendMessage(jobSeekerId: number, jobProviderId: number): void {
-
-
     if (this.TokenRole == 'JobSeeker') {
       this._userService
         .GetJobProviderByIdOrByUserName(jobProviderId, '')

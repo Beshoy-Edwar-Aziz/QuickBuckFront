@@ -23,6 +23,7 @@ import Swal from 'sweetalert2';
 import { MessagesInterface } from '../models/messages-interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
+import { NgxSpinnerComponent } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +36,8 @@ import { switchMap } from 'rxjs';
     NgOptimizedImage,
     FooterComponent,
     MatButtonModule,
-    DatePipe
+    DatePipe,
+    NgxSpinnerComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -128,20 +130,10 @@ export class AppComponent implements OnInit {
               this._authService.updateId(data.id);
               console.log(this.Id());
 
-              this._chatService
-                .getMessagesByJobSeekerId(this.Id(), 0)
-                .pipe(takeUntilDestroyed(this.destroy))
-                .subscribe({
-                  next: (data) => {
-                    console.log(data);
-                    this.Messages.set(data);
-                  },
-                  error: (err) => {
-                    console.log(err);
-                  },
-                });
+
             },
-          });
+          })
+
       } else {
         this._userService
           .GetJobProviderByIdOrByUserName('', this.Token().name)
@@ -154,18 +146,7 @@ export class AppComponent implements OnInit {
 
               this.Id.set(data.id);
               this._authService.updateId(data.id);
-              this._chatService
-                .getMessagesByJobSeekerId(0, this.Id())
-                .pipe(takeUntilDestroyed(this.destroy))
-                .subscribe({
-                  next: (data) => {
-                    console.log(data);
-                    this.Messages.set(data);
-                  },
-                  error: (err) => {
-                    console.log(err);
-                  },
-                });
+
             },
           });
       }
