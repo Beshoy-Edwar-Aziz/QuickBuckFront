@@ -54,6 +54,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit, OnDestroy {
   user: any;
 
   ngOnInit(): void {
+    console.log(this.Token);
     this._authService.CurrentJobSeeker.subscribe((data) => {
       if (data != '') {
         console.log('behavior', data);

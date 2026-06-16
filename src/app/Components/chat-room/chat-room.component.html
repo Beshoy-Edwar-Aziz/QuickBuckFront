@@ -96,12 +96,12 @@
           @for (item of Messages(); track item.id) {
             <li
             #chatBox
-              class="d-flex align-items-end gap-5"
+              class="d-flex align-items-end gap-5 "
               [class]="{
                 'justify-content-start':
-                  item?.userName === item?.jobSeeker?.userName,
-                'justify-content-end flex-row-reverse':
-                  item?.userName === item?.jobProvider?.companyName,
+                  item?.userName === Token?.name,
+                'justify-content-end':
+                  item?.userName !== Token?.name ,
               }"
               (click)="getMessageById(item.id)"
             >
@@ -126,18 +126,18 @@
                 class="d-flex flex-column max-w-75"
                 [class]="{
                   'align-items-start':
-                    item?.userName === item?.jobSeeker?.userName,
+                    item?.userName === Token?.name,
                   'align-items-end':
-                    item?.userName === item?.jobProvider?.companyName,
+                    item?.userName === Token?.name,
                 }"
               >
                 <span class="fs-6 text-muted fw-medium">{{
                   item?.userName
                 }}</span>
 
-                <div class="m-2 p-3 shadow" [class]="{
-                  'left-message':item?.userName === item?.jobSeeker?.userName,
-                  'right-message':item?.userName === item?.jobProvider?.companyName
+                <div class="m-2 p-3 shadow box" [class]="{
+                  'left-message':item?.userName === Token?.name,
+                  'right-message':item?.userName === Token?.name
                 }">
                   {{ item?.content }}
 
@@ -184,6 +184,21 @@
             <a href="" class="text-decoration-none">{{
               JobProviderInfo()?.webSite
             }}</a>
+          </p>
+        </div>
+      </div>
+    }@else {
+       <div class="col-lg-2 col-12 justify-content-center">
+        <div
+          class="d-flex flex-column align-items-center justify-content-center border-bottom"
+        >
+          <div class="my-2">
+            <img [src]="JobSeekerInfo?.logo" alt="" class="img-cover2" />
+          </div>
+          <p class="font-lato">{{ JobSeekerInfo?.userName }}</p>
+          <p>Hiring Contact</p>
+          <p>
+            <a href="" class="text-decoration-none"></a>
           </p>
         </div>
       </div>
