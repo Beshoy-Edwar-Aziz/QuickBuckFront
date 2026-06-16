@@ -94,48 +94,60 @@
       <div class="border px-5 position-relative">
         <ul class="text-decoration-none list-unstyled" id="MessageWindow">
           @for (item of Messages(); track item.id) {
-            <li class="my-2 p-2 rounded-end" (click)="getMessageById(item.id)">
-              <div class="d-flex align-items-center">
-                @if (item?.userName == item?.jobSeeker?.userName) {
-                  <div>
-                    <img
-                      [src]="item?.jobSeeker?.photo"
-                      onerror="this.src = 'assets/Images/PlaceHolder.jpg'"
-                      class="img-cover rounded-circle"
-                      alt=""
-                    />
-                  </div>
-                } @else if (item?.userName == item?.jobProvider?.companyName) {
-                  <div>
-                    <img
-                      [src]="item?.jobProvider?.logo"
-                      onerror="this.src = 'assets/Images/PlaceHolder.jpg'"
-                      class="img-cover rounded-circle"
-                      alt=""
-                    />
-
-                  </div>
+            <li
+            #chatBox
+              class="d-flex align-items-end gap-5"
+              [class]="{
+                'justify-content-start':
+                  item?.userName === item?.jobSeeker?.userName,
+                'justify-content-end flex-row-reverse':
+                  item?.userName === item?.jobProvider?.companyName,
+              }"
+              (click)="getMessageById(item.id)"
+            >
+              <!-- <div #chatBox class="flex-shrink-0 avatar">
+                @if (item?.userName === item?.jobSeeker?.userName) {
+                  <img
+                    [src]="item?.jobSeeker?.photo"
+                    onerror="this.src = 'assets/Images/PlaceHolder.jpg'"
+                    class="img-cover rounded-circle"
+                    alt=""
+                  />
+                } @else if (item?.userName === item?.jobProvider?.companyName) {
+                  <img
+                    [src]="item?.jobProvider?.logo"
+                    onerror="this.src = 'assets/Images/PlaceHolder.jpg'"
+                    class="img-cover rounded-circle"
+                    alt=""
+                  />
                 }
-                <div
-                  [ngClass]="{
-                    'left-message': item?.userName == item?.jobSeeker?.userName,
-                    'right-message':
-                      item?.userName == item?.jobProvider?.companyName,
-                  }"
-                >
-                  <div>
-                    <p class="fs-6 fw-medium">{{ item?.userName }}</p>
-                  </div>
-                  <div>
-                    {{ item?.content }}
-                  </div>
+              </div> -->
+              <div
+                class="d-flex flex-column max-w-75"
+                [class]="{
+                  'align-items-start':
+                    item?.userName === item?.jobSeeker?.userName,
+                  'align-items-end':
+                    item?.userName === item?.jobProvider?.companyName,
+                }"
+              >
+                <span class="fs-6 text-muted fw-medium">{{
+                  item?.userName
+                }}</span>
+
+                <div class="m-2 p-3 shadow" [class]="{
+                  'left-message':item?.userName === item?.jobSeeker?.userName,
+                  'right-message':item?.userName === item?.jobProvider?.companyName
+                }">
+                  {{ item?.content }}
+
                 </div>
-                <p class="font-lato font-size-14 fw-normal">
-                  {{ item?.dateTime|date:'short'}}
-                </p>
+                  <p class="font-lato font-size-10 fw-normal">
+                    {{ item?.dateTime | date: "shortTime" }}
+                  </p>
               </div>
             </li>
-          }@empty {
+          } @empty {
             <div class="text-center fw-bold">
               <p class="fw-bold">No Messages Available</p>
             </div>
@@ -144,7 +156,7 @@
       </div>
       <div class="d-flex gap-2">
         <input
-        #msgInput
+          #msgInput
           type="text"
           class="form-control bg-body-secondary"
           id="msg"

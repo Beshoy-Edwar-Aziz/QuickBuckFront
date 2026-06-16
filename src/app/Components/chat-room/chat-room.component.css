@@ -28,7 +28,7 @@ i{
     display: inline-block;
     max-width: 70%;
   }
-  
+
   .right-message {
     text-align: right;
     background-color: #F2F2F2; /* Light grey for JobProvider messages */
@@ -50,4 +50,21 @@ i{
   }
   div a.x{
     font-size: 20px;
+  }
+  .avatar{
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+  }
+  .font-size-10{
+    font-size: 10px;
+  }
+  .chat-bubble{
+    padding: 10px 14px;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+  position: relative;
+  word-break: break-word;
   }

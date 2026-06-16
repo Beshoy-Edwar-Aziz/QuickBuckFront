@@ -28,6 +28,7 @@ import { MessagesInterface } from '../../../models/messages-interface';
 })
 export class ChatRoomComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('msgInput') msgInput!: ElementRef;
+  @ViewChild('chatBox') private chatBox!:ElementRef;
   private chatService = inject(ChatService);
   private _userService = inject(UsersService);
   private _authService = inject(AuthServiceService);
@@ -117,6 +118,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit, OnDestroy {
                 } as MessagesInterface;
                 this.Messages.set([...this.Messages(), newMessage]);
                 this.msgInput.nativeElement.value = '';
+                this.chatBox.nativeElement.scrollTop =this.chatBox.nativeElement.scrollHeight;
               },
               error: (err) => {
                 console.log(err);
